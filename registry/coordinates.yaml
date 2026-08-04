@@ -1,0 +1,1197 @@
+metadata:
+  schema_version: '1.0'
+  generator: registry/entity_generator.py
+  generator_version: '1.0'
+  lexicon_version: '1.0'
+  master_seed: 42
+  contract_ref: CONTRACT.md Section 5.1
+  machine_readable_entity_id_channel: x-aegis-entity-id
+  machine_readable_note: Entity IDs are published to parsers through an HTML <meta> channel and never
+    appear in visible prose (CONTRACT.md Section 8, item 3). The channel carries the target entity ID
+    and an opaque page ID only; page role, attack template and factor levels are held in the side manifest
+    so the channel cannot leak a label.
+  status_enum:
+  - active
+  - fabricated_control
+  counts:
+    entity_templates: 80
+    fabricated_control_templates: 8
+    controlled_entities: 160
+    fabricated_control_entities: 8
+coordinates:
+  C0001:
+    coordinates_id: C0001
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4231
+    grid_y: 9691
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0002:
+    coordinates_id: C0002
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2977
+    grid_y: 9216
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0003:
+    coordinates_id: C0003
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3703
+    grid_y: 9867
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0004:
+    coordinates_id: C0004
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4187
+    grid_y: 4204
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0005:
+    coordinates_id: C0005
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7377
+    grid_y: 6692
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0006:
+    coordinates_id: C0006
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4173
+    grid_y: 9147
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0007:
+    coordinates_id: C0007
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2691
+    grid_y: 6631
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0008:
+    coordinates_id: C0008
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5992
+    grid_y: 9926
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0009:
+    coordinates_id: C0009
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9759
+    grid_y: 9663
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0010:
+    coordinates_id: C0010
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3056
+    grid_y: 2369
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0011:
+    coordinates_id: C0011
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 603
+    grid_y: 3506
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0012:
+    coordinates_id: C0012
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6329
+    grid_y: 7802
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0013:
+    coordinates_id: C0013
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4388
+    grid_y: 393
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0014:
+    coordinates_id: C0014
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6921
+    grid_y: 7491
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0015:
+    coordinates_id: C0015
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4598
+    grid_y: 5087
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0016:
+    coordinates_id: C0016
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9758
+    grid_y: 9841
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0017:
+    coordinates_id: C0017
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9606
+    grid_y: 8027
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0018:
+    coordinates_id: C0018
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3480
+    grid_y: 2299
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0019:
+    coordinates_id: C0019
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6032
+    grid_y: 1775
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0020:
+    coordinates_id: C0020
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2028
+    grid_y: 2030
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0021:
+    coordinates_id: C0021
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2358
+    grid_y: 1960
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0022:
+    coordinates_id: C0022
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9074
+    grid_y: 8612
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0023:
+    coordinates_id: C0023
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3475
+    grid_y: 6952
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0024:
+    coordinates_id: C0024
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3771
+    grid_y: 8337
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0025:
+    coordinates_id: C0025
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3137
+    grid_y: 7254
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0026:
+    coordinates_id: C0026
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1753
+    grid_y: 8742
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0027:
+    coordinates_id: C0027
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5731
+    grid_y: 1004
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0028:
+    coordinates_id: C0028
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6337
+    grid_y: 689
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0029:
+    coordinates_id: C0029
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7171
+    grid_y: 1484
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0030:
+    coordinates_id: C0030
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3209
+    grid_y: 3612
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0031:
+    coordinates_id: C0031
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8413
+    grid_y: 3909
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0032:
+    coordinates_id: C0032
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6091
+    grid_y: 906
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0033:
+    coordinates_id: C0033
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3604
+    grid_y: 1950
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0034:
+    coordinates_id: C0034
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8183
+    grid_y: 2953
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0035:
+    coordinates_id: C0035
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2770
+    grid_y: 9991
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0036:
+    coordinates_id: C0036
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3061
+    grid_y: 9237
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0037:
+    coordinates_id: C0037
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 917
+    grid_y: 1365
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0038:
+    coordinates_id: C0038
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6056
+    grid_y: 2677
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0039:
+    coordinates_id: C0039
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2848
+    grid_y: 4481
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0040:
+    coordinates_id: C0040
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7469
+    grid_y: 1968
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0041:
+    coordinates_id: C0041
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2103
+    grid_y: 6641
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0042:
+    coordinates_id: C0042
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3557
+    grid_y: 5380
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0043:
+    coordinates_id: C0043
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8874
+    grid_y: 1166
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0044:
+    coordinates_id: C0044
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4526
+    grid_y: 7314
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0045:
+    coordinates_id: C0045
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1753
+    grid_y: 1154
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0046:
+    coordinates_id: C0046
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1572
+    grid_y: 2095
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0047:
+    coordinates_id: C0047
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9909
+    grid_y: 6164
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0048:
+    coordinates_id: C0048
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9221
+    grid_y: 7781
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0049:
+    coordinates_id: C0049
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7428
+    grid_y: 5398
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0050:
+    coordinates_id: C0050
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 245
+    grid_y: 147
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0051:
+    coordinates_id: C0051
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9806
+    grid_y: 4970
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0052:
+    coordinates_id: C0052
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3893
+    grid_y: 4509
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0053:
+    coordinates_id: C0053
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 842
+    grid_y: 5937
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0054:
+    coordinates_id: C0054
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9578
+    grid_y: 8215
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0055:
+    coordinates_id: C0055
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9519
+    grid_y: 2456
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0056:
+    coordinates_id: C0056
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3149
+    grid_y: 3415
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0057:
+    coordinates_id: C0057
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1312
+    grid_y: 2420
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0058:
+    coordinates_id: C0058
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2709
+    grid_y: 5346
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0059:
+    coordinates_id: C0059
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6681
+    grid_y: 4343
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0060:
+    coordinates_id: C0060
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4044
+    grid_y: 8674
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0061:
+    coordinates_id: C0061
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4272
+    grid_y: 7233
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0062:
+    coordinates_id: C0062
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 474
+    grid_y: 2349
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0063:
+    coordinates_id: C0063
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6931
+    grid_y: 3541
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0064:
+    coordinates_id: C0064
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2202
+    grid_y: 1302
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0065:
+    coordinates_id: C0065
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5021
+    grid_y: 4763
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0066:
+    coordinates_id: C0066
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5424
+    grid_y: 7509
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0067:
+    coordinates_id: C0067
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6544
+    grid_y: 3179
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0068:
+    coordinates_id: C0068
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1482
+    grid_y: 8614
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0069:
+    coordinates_id: C0069
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9945
+    grid_y: 8821
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0070:
+    coordinates_id: C0070
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1455
+    grid_y: 2050
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0071:
+    coordinates_id: C0071
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5221
+    grid_y: 636
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0072:
+    coordinates_id: C0072
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2936
+    grid_y: 2151
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0073:
+    coordinates_id: C0073
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7624
+    grid_y: 9378
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0074:
+    coordinates_id: C0074
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4147
+    grid_y: 1818
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0075:
+    coordinates_id: C0075
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7486
+    grid_y: 6855
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0076:
+    coordinates_id: C0076
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4961
+    grid_y: 7223
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0077:
+    coordinates_id: C0077
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8360
+    grid_y: 9961
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0078:
+    coordinates_id: C0078
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9051
+    grid_y: 3815
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0079:
+    coordinates_id: C0079
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7594
+    grid_y: 3803
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0080:
+    coordinates_id: C0080
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3653
+    grid_y: 8088
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0081:
+    coordinates_id: C0081
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6543
+    grid_y: 9500
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0082:
+    coordinates_id: C0082
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2350
+    grid_y: 5805
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0083:
+    coordinates_id: C0083
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6432
+    grid_y: 6816
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0084:
+    coordinates_id: C0084
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 508
+    grid_y: 9460
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0085:
+    coordinates_id: C0085
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 915
+    grid_y: 241
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0086:
+    coordinates_id: C0086
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6693
+    grid_y: 3561
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0087:
+    coordinates_id: C0087
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8139
+    grid_y: 5516
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0088:
+    coordinates_id: C0088
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5749
+    grid_y: 3903
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0089:
+    coordinates_id: C0089
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8182
+    grid_y: 780
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0090:
+    coordinates_id: C0090
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4684
+    grid_y: 7400
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0091:
+    coordinates_id: C0091
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6449
+    grid_y: 4273
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0092:
+    coordinates_id: C0092
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7858
+    grid_y: 6962
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0093:
+    coordinates_id: C0093
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7547
+    grid_y: 8398
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0094:
+    coordinates_id: C0094
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8094
+    grid_y: 5199
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0095:
+    coordinates_id: C0095
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2244
+    grid_y: 7337
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0096:
+    coordinates_id: C0096
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6480
+    grid_y: 3286
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0097:
+    coordinates_id: C0097
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8905
+    grid_y: 2720
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0098:
+    coordinates_id: C0098
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4942
+    grid_y: 1696
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0099:
+    coordinates_id: C0099
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1894
+    grid_y: 8613
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0100:
+    coordinates_id: C0100
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1226
+    grid_y: 8960
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0101:
+    coordinates_id: C0101
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8538
+    grid_y: 4127
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0102:
+    coordinates_id: C0102
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1891
+    grid_y: 6591
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0103:
+    coordinates_id: C0103
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5062
+    grid_y: 4022
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0104:
+    coordinates_id: C0104
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9287
+    grid_y: 1401
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0105:
+    coordinates_id: C0105
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5142
+    grid_y: 4489
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0106:
+    coordinates_id: C0106
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3549
+    grid_y: 9219
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0107:
+    coordinates_id: C0107
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4996
+    grid_y: 7012
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0108:
+    coordinates_id: C0108
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8057
+    grid_y: 2576
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0109:
+    coordinates_id: C0109
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5884
+    grid_y: 4842
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0110:
+    coordinates_id: C0110
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9356
+    grid_y: 3469
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0111:
+    coordinates_id: C0111
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2395
+    grid_y: 4434
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0112:
+    coordinates_id: C0112
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8871
+    grid_y: 6237
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0113:
+    coordinates_id: C0113
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5815
+    grid_y: 731
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0114:
+    coordinates_id: C0114
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3648
+    grid_y: 3548
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0115:
+    coordinates_id: C0115
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 485
+    grid_y: 3353
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0116:
+    coordinates_id: C0116
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6824
+    grid_y: 1440
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0117:
+    coordinates_id: C0117
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3565
+    grid_y: 3442
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0118:
+    coordinates_id: C0118
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3080
+    grid_y: 1053
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0119:
+    coordinates_id: C0119
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4049
+    grid_y: 2809
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0120:
+    coordinates_id: C0120
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9278
+    grid_y: 2975
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0121:
+    coordinates_id: C0121
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9031
+    grid_y: 7255
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0122:
+    coordinates_id: C0122
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4887
+    grid_y: 87
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0123:
+    coordinates_id: C0123
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7464
+    grid_y: 2898
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0124:
+    coordinates_id: C0124
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4896
+    grid_y: 547
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0125:
+    coordinates_id: C0125
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1792
+    grid_y: 6272
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0126:
+    coordinates_id: C0126
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1326
+    grid_y: 4045
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0127:
+    coordinates_id: C0127
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1109
+    grid_y: 1323
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0128:
+    coordinates_id: C0128
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8671
+    grid_y: 6584
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0129:
+    coordinates_id: C0129
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4725
+    grid_y: 8703
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0130:
+    coordinates_id: C0130
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8930
+    grid_y: 1457
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0131:
+    coordinates_id: C0131
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9466
+    grid_y: 3328
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0132:
+    coordinates_id: C0132
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5365
+    grid_y: 3992
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0133:
+    coordinates_id: C0133
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3261
+    grid_y: 3245
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0134:
+    coordinates_id: C0134
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4702
+    grid_y: 5443
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0135:
+    coordinates_id: C0135
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5749
+    grid_y: 3134
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0136:
+    coordinates_id: C0136
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6438
+    grid_y: 3722
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0137:
+    coordinates_id: C0137
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7440
+    grid_y: 5569
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0138:
+    coordinates_id: C0138
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1070
+    grid_y: 2856
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0139:
+    coordinates_id: C0139
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5335
+    grid_y: 7772
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0140:
+    coordinates_id: C0140
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1162
+    grid_y: 1430
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0141:
+    coordinates_id: C0141
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1950
+    grid_y: 259
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0142:
+    coordinates_id: C0142
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3507
+    grid_y: 1692
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0143:
+    coordinates_id: C0143
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3572
+    grid_y: 2861
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0144:
+    coordinates_id: C0144
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5213
+    grid_y: 6402
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0145:
+    coordinates_id: C0145
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8998
+    grid_y: 9613
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0146:
+    coordinates_id: C0146
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4709
+    grid_y: 5670
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0147:
+    coordinates_id: C0147
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9183
+    grid_y: 6013
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0148:
+    coordinates_id: C0148
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 2326
+    grid_y: 488
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0149:
+    coordinates_id: C0149
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 949
+    grid_y: 5042
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0150:
+    coordinates_id: C0150
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6509
+    grid_y: 5276
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0151:
+    coordinates_id: C0151
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 533
+    grid_y: 2793
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0152:
+    coordinates_id: C0152
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 8261
+    grid_y: 7447
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0153:
+    coordinates_id: C0153
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3544
+    grid_y: 891
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0154:
+    coordinates_id: C0154
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7804
+    grid_y: 7384
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0155:
+    coordinates_id: C0155
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9261
+    grid_y: 8977
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0156:
+    coordinates_id: C0156
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 1237
+    grid_y: 2501
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0157:
+    coordinates_id: C0157
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9890
+    grid_y: 3713
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0158:
+    coordinates_id: C0158
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3769
+    grid_y: 405
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0159:
+    coordinates_id: C0159
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9169
+    grid_y: 1439
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C0160:
+    coordinates_id: C0160
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 5250
+    grid_y: 9317
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C9001:
+    coordinates_id: C9001
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 4830
+    grid_y: 8176
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C9002:
+    coordinates_id: C9002
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3756
+    grid_y: 7200
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C9003:
+    coordinates_id: C9003
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 6241
+    grid_y: 4540
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C9004:
+    coordinates_id: C9004
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7100
+    grid_y: 3543
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C9005:
+    coordinates_id: C9005
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9696
+    grid_y: 6495
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C9006:
+    coordinates_id: C9006
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 3721
+    grid_y: 715
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C9007:
+    coordinates_id: C9007
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 9405
+    grid_y: 5405
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded
+  C9008:
+    coordinates_id: C9008
+    grid_system: AEGIS_SYNTHETIC_GRID_V1
+    grid_x: 7321
+    grid_y: 2342
+    units: synthetic_metres
+    note: planar synthetic grid, deliberately not WGS84; cannot be reverse-geocoded

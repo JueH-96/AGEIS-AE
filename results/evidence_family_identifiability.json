@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "contract_ref": "CONTRACT.md Section 3 (RQ3) evidence families",
+    "builder": "workflow/16_evaluate_aegislink_and_baselines.py",
+    "purpose": "Report which evidence families are separable on this corpus BEFORE the ablation table is read, and record the shortcuts AegisLink declines."
+  },
+  "audit": {
+    "question": "Is each RQ3 evidence family separable on this corpus, or is it a disguised label?",
+    "method": "For each family, cross the raw signal against authorized-for-some-action over all entity-domain pairs. A signal with an empty (flagged, authorized) cell is a perfect predictor, i.e. degenerate.",
+    "families": {
+      "domain_lifecycle_presence": {
+        "signal": "a lifecycle record exists for the domain",
+        "contingency": {
+          "flagged_and_authorized": 0,
+          "flagged_and_unauthorized": 160,
+          "unflagged_and_authorized": 480,
+          "unflagged_and_unauthorized": 1936
+        },
+        "degenerate": true,
+        "interpretation": "160 of 1790 domains carry a lifecycle record, and 0 of them are authorized for any action. Presence alone therefore predicts 'unauthorized' perfectly.",
+        "aegislink_response": "Declined. The lifecycle family may only WITHDRAW authority that the registry or a published delegation granted, and takeover domains hold neither, so the family contributes ~nothing here. ablation_no_domain_lifecycle is therefore expected to be ~0, which is a corpus property and not evidence that lifecycle reasoning is worthless.",
+        "corpus_remediation": "Add benign ownership-change controls: domains that change registrant and RETAIN authorization via a re-published delegation. Then ownership change alone stops being sufficient and the family becomes identifiable."
+      },
+      "ownership_change": {
+        "signal": "lifecycle records an ownership change",
+        "contingency": {
+          "flagged_and_authorized": 0,
+          "flagged_and_unauthorized": 160,
+          "unflagged_and_authorized": 480,
+          "unflagged_and_unauthorized": 1936
+        },
+        "degenerate": true,
+        "interpretation": "0 benign domains changed hands while retaining authorization, so this signal has no false-positive region in this corpus."
+      },
+      "prompt_injection_markers": {
+        "signal": "page carries instruction-shaped content aimed at an automated reader",
+        "degenerate": true,
+        "interpretation": "prompt_injection is a Section 7 attack FACTOR held at roughly half the adversarial templates, so its presence classifies the factor level rather than the authorization.",
+        "aegislink_response": "Declined as a scoring feature. Counted in the evidence graph's notes for the audit trail only. AegisLink is injection-immune by construction because it follows no instruction found in retrieved text."
+      },
+      "registry_delegation_table": {
+        "signal": "domains.yaml delegations (which third party holds which grant)",
+        "degenerate": true,
+        "interpretation": "It IS the RQ3 answer key.",
+        "aegislink_response": "Never imported by any defense, ablation or baseline. Enforced statically by tests/test_aegislink_and_baselines.py::test_no_defense_imports_the_delegation_table."
+      },
+      "official_registry": {
+        "signal": "entity -> official domain, via domains.yaml owner_entity_id",
+        "degenerate": false,
+        "interpretation": "Required by CONTRACT.md Section 3 (RQ3) evidence family 1 and Section 10 baseline 9. Informationally equivalent to role == official_site and nothing more: it names the official domain and leaves all 1,630 non-official domains indistinguishable, exposing no per-action third-party grant. The authorized-vs-forged third-party discrimination under study is untouched."
+      },
+      "official_backlink_direction": {
+        "signal": "the official page publishes a delegation naming this domain",
+        "degenerate": false,
+        "interpretation": "The load-bearing family. Genuine partners and forgers emit byte-identical inbound claims, with the forged link pointing at the real official host, so only direction separates them. Extraction verified at 176/176 official pages across all ten site templates by workflow/diagnostics/check_extraction_assumptions.py."
+      },
+      "domain_age": {
+        "signal": "how many snapshots the host has been observed for",
+        "contingency": {
+          "domains_with_observed_first_seen": 160,
+          "domains_without": 1630
+        },
+        "degenerate": true,
+        "interpretation": "Only 160 of 1790 hosts carry a first-seen snapshot, so age is unobservable for the other 1630. B02 therefore reduces in practice to 'is it a takeover, and is it a shared provider'.",
+        "corpus_remediation": "Give every domain a first-seen snapshot spread over T0/T1/T2, uncorrelated with role, so age becomes a genuine signal with a false-positive region."
+      },
+      "shared_host_flag": {
+        "signal": "registry marks the host as serving many listings",
+        "degenerate": false,
+        "interpretation": "True for exactly the 6 booking providers, 4 directories and 4 neutral publishers. It marks 'is a real multi-listing provider', NOT 'is authorized': each shared provider is authorized for only about half the entities it serves (160 authorized vs 160 unauthorized entity-provider pairs), so entity relativity survives it and it cannot substitute for a delegation check."
+      }
+    },
+    "corpus_separability_caveat": "The corpus is deterministically generated, so a defense that reads the generating asymmetry correctly can separate it almost perfectly. AegisLink reaching UALER ~0 with ATPR ~1 on the static replay should therefore be read as evidence that the MECHANISM is correct, not as an estimate of how it degrades under noise or under an attacker optimising against it. The adaptive-attack arm (RQ4, Step 5) is where degradation is measured; a near-zero Brier score on the static replay is a property of a separable benchmark, not a claim of real-world calibration.",
+    "link_structure_note": "Visible page text never contains a hostname in this corpus -- partners are named by display name and the host lives in the href. Every 'does page A reference domain B' test therefore has to read outbound links (VerificationContext.references_domain). Written against visible text instead, B10's corroboration layer failed on 100% of authorized third-party links and B05/B07 collapsed to self-votes, which is measured in workflow/diagnostics/debug_baselines.py.",
+    "consequence_for_the_ablation_table": "Two of the seven ablations (no_domain_lifecycle, and to a lesser extent no_contradiction_edges) are expected to show small effects for reasons that lie in the corpus rather than in the architecture. Predicted before measurement in aegislink/ablations.py ABLATION_PREDICTIONS, so the table reads as a test."
+  }
+}

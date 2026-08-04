@@ -1,0 +1,332 @@
+# AegisLink literature-collision scoring rubric
+# Frozen artifact supporting CONTRACT.md Section 13.
+#
+# PURPOSE
+#   CONTRACT.md Section 13 requires each candidate paper to receive four integer overlap
+#   scores in [0, 3] plus a boolean `direct_collision`. Integer judgement scores are the
+#   usual place where a novelty check silently becomes an argument for a foregone
+#   conclusion. This rubric removes that discretion: every score is the count of distinct
+#   named concept markers whose regular expressions fire against the paper's
+#   title + abstract, capped at 3. The matched marker names are emitted alongside every
+#   score in results/literature_matrix.yaml, so any reader can recompute each number by
+#   hand from the same abstract text.
+#
+#   No language model assigns, adjusts, or reviews these scores. CONTRACT.md Section 5.2
+#   forbids LLM-generated ground truth; the same discipline is applied here.
+#
+# SCORE SEMANTICS (identical on all four axes)
+#   0 -> no marker fired: the axis is absent from the paper.
+#   1 -> one marker fired: incidental or single-facet contact with the axis.
+#   2 -> two markers fired: substantial partial overlap.
+#   3 -> three or more markers fired: the axis is a core concern of the paper.
+#
+# MATCHING PROCEDURE
+#   1. haystack = lowercase(title + "\n" + abstract [+ contract characterization]),
+#      whitespace-normalized.
+#   2. A marker fires if ANY of its `patterns` matches (Python `re.search`, already lowercase).
+#   3. score = min(3, number of distinct markers that fired).
+#
+# WORD-SEPARATOR CONVENTION
+#   Compound terms are written with the explicit optional-separator class `[-_\s]?`, which
+#   matches a hyphen, an underscore, a single whitespace character, or nothing at all. So
+#   `mis[-_\s]?bind` matches "misbinding", "mis-binding" and "mis binding" alike.
+#
+#   This convention replaced an earlier one that used a bare `.` between words. That was a
+#   defect, not a stylistic choice: `.` matches EXACTLY ONE character, so `mis.bind` matched
+#   "mis-binding" but NOT the joined spelling "misbinding" -- the single most natural way to
+#   write the central term of this project, and likewise "misattribution". The effect was to
+#   under-detect overlap on the decisive axes, which is the dangerous direction of error: a
+#   missed collision yields a false novelty claim. Verified by
+#   workflow/03_probe_rubric_separator.py and locked by
+#   tests/test_literature_checker.py::test_compound_terms_match_joined_spelling.
+#
+#   All patterns are single-quoted YAML scalars so that regex backslashes are literal and
+#   need no double-escaping.
+
+rubric_version: "1.1"
+frozen_date: "2026-07-30"
+contract_ref: "CONTRACT.md Section 13"
+score_range: [0, 3]
+score_rule: "min(3, count_of_distinct_markers_matched)"
+separator_class: '[-_\s]?'
+
+revision_history:
+  - version: "1.0"
+    note: >
+      Initial rubric. Used a bare `.` as the compound-word separator, which failed to match
+      joined spellings such as "misbinding" and "misattribution". Superseded before any
+      pilot data was collected.
+  - version: "1.1"
+    note: >
+      Replaced the `.` separator with the explicit class `[-_\s]?` throughout, added the
+      real-world-business joined-spelling fix, and converted all patterns to single-quoted
+      YAML. Scores for every paper were recomputed from scratch under 1.1.
+
+axes:
+
+  problem_overlap:
+    description: >
+      Does the paper study the AegisLink problem itself: a web-enabled LLM that correctly
+      identifies a legitimate business entity but presents an unauthorized or
+      attacker-controlled action endpoint for it (CONTRACT.md Section 1)?
+    markers:
+      legitimate_entity_focus:
+        rationale: >
+          The distinguishing feature of the AegisLink problem is that the recommended entity
+          is real and correctly identified. Papers about fabricated entities or products
+          score elsewhere on this axis but not here.
+        patterns:
+          - 'legitimate (business |commercial )?entit'
+          - 'real[-_\s]?world business'
+          - 'real (business|merchant|entity)'
+          - 'genuine (business|entit|merchant|brand)'
+          - 'existing business'
+          - 'correctly (identif|recogni|resolv)\w* (the )?(entity|business|merchant)'
+      action_endpoint_focus:
+        rationale: >
+          The object of harm is a specific action endpoint (booking, login, payment,
+          official site), not a page ranking or a product description.
+        patterns:
+          - 'action[-_\s]?link'
+          - 'action[-_\s]?(specific |level )?endpoint'
+          - 'booking (link|portal|page|endpoint|url)'
+          - '(login|log[-_\s]?in|sign[-_\s]?in) (link|portal|page|endpoint|url)'
+          - 'payment (link|portal|page|endpoint|url)'
+          - 'checkout (link|page|url|endpoint)'
+          - 'official (website|site|domain|url|page)'
+      llm_mediated_recommendation:
+        rationale: >
+          The setting is an LLM or generative search system that recommends entities to
+          users, as opposed to a classical search engine or standalone crawler.
+        patterns:
+          - 'large language model'
+          - '\bllm'
+          - 'generative (search|recommend|engine|retriev)'
+          - '(web[-_\s]?enabled|web[-_\s]?connected|browsing) (llm|language model|agent|assistant)'
+          - 'recommend\w* (system|engine|er)'
+      misbinding_framing:
+        rationale: >
+          Explicit framing of the failure as a wrong or unauthorized binding between an
+          entity and a domain/link, rather than as poisoning, ranking, or fabrication.
+        patterns:
+          - 'mis[-_\s]?bind'
+          - 'mis[-_\s]?attribut'
+          - 'wrong\w*\s+(link|url|domain|endpoint|website)'
+          - 'unauthoriz\w*\s+(link|url|domain|endpoint|website|action)'
+          - '(link|url|endpoint|domain)\s+hijack'
+          - 'attacker[-_\s]?controlled\s+(link|url|domain|endpoint)'
+
+  attack_overlap:
+    description: >
+      Does the paper's attack surface overlap with the AegisLink attack families of
+      CONTRACT.md Section 7 (page pollution, corroborating sources, impersonation,
+      endpoint substitution)? High scores here are EXPECTED and benign: Section 2 permits
+      prior attacks to be reused as attack components, and Section 10 requires several of
+      them as baselines. This axis does not participate in the collision rule.
+    markers:
+      web_content_pollution:
+        rationale: "Shared substrate: attacker-authored web content entering a retrieval corpus."
+        patterns:
+          - 'poison'
+          - 'pollut'
+          - '(prompt|content|context) inject'
+          - 'indirect prompt inject'
+          - 'adversarial (seo|search engine optimi)'
+      multi_source_corroboration:
+        rationale: "Shared tactic: several mutually supporting attacker pages defeating source counting."
+        patterns:
+          - 'sybil'
+          - 'corroborat'
+          - 'collud'
+          - 'coordinat\w* (attack|poison|page|source)'
+          - 'split[-_\s]?knowledge'
+          - 'multiple (pages|sources|documents|websites)'
+      entity_impersonation:
+        rationale: "Shared tactic: attacker page claiming to be, or to represent, the target entity."
+        patterns:
+          - 'impersonat'
+          - 'spoof'
+          - 'phish'
+          - 'typo[-_\s]?squat'
+          - 'counterfeit'
+          - 'fake (site|website|page|business|entity|product|shop)'
+      endpoint_substitution:
+        rationale: "Shared tactic: leaving context correct while swapping the final actionable endpoint."
+        patterns:
+          - 'replac\w*\s+\w*\s?(endpoint|link|url|domain)'
+          - 'expired domain'
+          - 'domain (takeover|hijack|expir)'
+          - 'malicious redirect'
+          - 'url (manipulat|substitut|swap)'
+
+  method_overlap:
+    description: >
+      Does the paper's DEFENSE perform action-aware entity-domain-action authorization
+      verification (CONTRACT.md Section 9)? This is the decisive axis for novelty: several
+      priors defend RAG pipelines, but the contract's claim is specifically about verifying
+      whether a domain is authorized to perform a NAMED ACTION for a NAMED ENTITY.
+    scoring_note: >
+      The `authorization_as_defense` marker deliberately requires the word "authoriz*" to
+      appear in a verification, inference, modelling, or policy context. A bare "unauthorized
+      access" in a threat-model sentence is not evidence that a paper implements an
+      authorization model, and matching it would inflate this axis for essentially every
+      security paper. This restriction makes the axis stricter, not more permissive.
+    markers:
+      authorization_as_defense:
+        rationale: "Authorization treated as the quantity being inferred or verified, not merely as a word describing the threat."
+        patterns:
+          - 'authoriz\w*\s+(model|graph|relation|status|function|inference|verif|check|polic|decision|label)'
+          - '(verif|infer|predict|determin|check)\w*\s+\w{0,12}\s?authoriz'
+          - 'permission (model|graph|inference|check|verif)'
+          - 'delegat\w*\s+(authorit|permission|right)'
+      action_risk_awareness:
+        rationale: "Defense differentiates its decision by action type or action risk level (browse/contact/book/login/pay)."
+        patterns:
+          - 'action[-_\s]?aware'
+          - 'action[-_\s]?(specific|level|conditional|dependent)'
+          - 'per[-_\s]?action'
+          - 'risk[-_\s]?(aware|tiered|graded|specific) (threshold|polic|decision|verif)'
+          - 'action[-_\s]?risk'
+      cross_source_evidence_graph:
+        rationale: "Defense builds a multi-source evidence structure rather than scoring a URL in isolation."
+        patterns:
+          - 'evidence graph'
+          - 'cross[-_\s]?source (verif|check|evidence|consist)'
+          - 'source[-_\s]?dependency'
+          - 'provenance'
+          - 'backlink'
+          - 'graph[-_\s]?(based|theoretic)\w*\s+defen'
+      entity_domain_binding_check:
+        rationale: "Defense explicitly validates the entity-to-domain relation using identity or ownership evidence."
+        patterns:
+          - 'entity[-_\s]?domain'
+          - 'entity[-_\s]?(link|url) (binding|bind|associat)'
+          - 'domain (ownership|lifecycle|registration|whois)'
+          - 'identity (field|consistency|attribute) (check|verif|match|consist)'
+          - 'authoritative registry'
+
+  evaluation_overlap:
+    description: >
+      Does the paper's evaluation design overlap with CONTRACT.md Sections 5 and 11: a
+      generated benchmark with authorization-graph ground truth, action-level exposure
+      metrics, and joint security-utility reporting?
+    markers:
+      generated_benchmark:
+        rationale: "Shared design: fully synthetic or sandboxed corpus rather than scraped live web data."
+        patterns:
+          - 'synthetic (dataset|benchmark|corpus|data|page|web)'
+          - 'generated (dataset|benchmark|corpus|page|site)'
+          - '(controlled|sandbox\w*|simulat\w*) (environment|testbed|setting|web|corpus)'
+          - 'template[-_\s]?(generated|based) (page|site|entit)'
+      action_level_metrics:
+        rationale: "Shared measurement granularity: outcomes reported per action rather than pooled."
+        patterns:
+          - 'per[-_\s]?action (metric|result|breakdown|rate)'
+          - 'action[-_\s]?level (metric|evaluat|result|rate)'
+          - 'exposure rate'
+          - 'misattribution rate'
+      authorization_ground_truth:
+        rationale: "Shared ground-truth source: machine-checkable authorization labels, not human annotation."
+        patterns:
+          - 'authorization graph'
+          - 'ground[-_\s]?truth\w*\s+authoriz'
+          - 'authoriz\w*\s+(ground[-_\s]?truth|label|annotation)'
+          - 'machine[-_\s]?(checkable|verifiable) (ground[-_\s]?truth|label)'
+      security_utility_tradeoff:
+        rationale: "Shared reporting requirement: defense benefit reported jointly with utility cost."
+        patterns:
+          - '(security|robustness)[-_/\s]?(utility|performance) (trade[-_\s]?off|frontier|balance)'
+          - 'false (rejection|refusal) rate'
+          - 'over[-_\s]?(block|refus|reject)'
+          - 'utility (preserv|retain|loss|cost|degrad)'
+          - 'benign (recall|accuracy|retention|performance)'
+
+# ---------------------------------------------------------------------------
+# COLLISION DECISION RULE
+# ---------------------------------------------------------------------------
+# CONTRACT.md Section 13 verbatim: "A paper is a direct collision if it matches the
+# legitimate-entity/unauthorized-action-link problem AND action-level authorization
+# defense, not merely web poisoning or phishing."
+#
+# The rule is conjunctive over exactly the two axes named in that sentence. attack_overlap
+# and evaluation_overlap are recorded for transparency but MUST NOT trigger a collision:
+# the contract explicitly says shared attacks alone ("merely web poisoning or phishing")
+# do not constitute one.
+collision_rule:
+  expression: "problem_overlap >= 3 AND method_overlap >= 3"
+  problem_threshold: 3
+  method_threshold: 3
+  axes_excluded_from_rule: [attack_overlap, evaluation_overlap]
+  exclusion_rationale: >
+    Section 13 states a shared attack surface or a shared phishing framing is explicitly
+    insufficient for collision. Sections 2 and 10 further require prior attacks and
+    defenses to be reused as components and baselines, so high attack_overlap and
+    evaluation_overlap are the intended state of a correctly scoped project.
+
+# A deliberately weaker screen than the hard rule. Any paper reaching 2 on BOTH decisive
+# axes is reported for manual differentiation in the manuscript's related-work section and
+# for re-checking at the Section 13 checkpoints (post-pilot, pre-full-experiment,
+# pre-manuscript-freeze), even though it does not block the novelty claim.
+near_collision_rule:
+  expression: "problem_overlap >= 2 AND method_overlap >= 2 AND NOT direct_collision"
+  threshold: 2
+
+# ---------------------------------------------------------------------------
+# FALSIFIABILITY REQUIREMENT
+# ---------------------------------------------------------------------------
+# A novelty check that cannot return DIRECT_COLLISION is not a check, it is a rubber stamp.
+# tests/test_literature_checker.py feeds this rubric a synthetic abstract that deliberately
+# occupies the Section 4.2 contribution and asserts the verdict flips to DIRECT_COLLISION,
+# and feeds it a pure web-poisoning abstract and asserts it does not. Both directions are
+# exercised on every test run.
+falsifiability:
+  positive_control: "tests/test_literature_checker.py::test_synthetic_colliding_paper_is_detected"
+  negative_control: "tests/test_literature_checker.py::test_pure_poisoning_paper_is_not_a_collision"
+
+# ---------------------------------------------------------------------------
+# EVIDENCE TIERS
+# ---------------------------------------------------------------------------
+# Scores must state what text they were computed from. A score derived from the contract's
+# own one-line description of a paper is weaker evidence than one derived from the paper's
+# real abstract, and the matrix labels it as such rather than blurring the two.
+#
+# SCORING TEXT IS A UNION. The contract's Section 4.1 characterization is appended to the
+# haystack at BOTH tiers, not only as a tier-2 substitute. A marker therefore fires if
+# either the paper's own abstract or the contract's description of the paper indicates the
+# concept. This is the conservative direction: failing to detect a collision produces a
+# false novelty claim, which is the more damaging error. The tier label records whether a
+# real abstract was retrieved; each record's `scored_text_sources` field enumerates the
+# exact components that were concatenated.
+evidence_tiers:
+  tier_1_verified_abstract:
+    description: >
+      Title and abstract retrieved live from the arXiv API for the cited identifier, plus
+      the contract's characterization.
+    strength: primary
+  tier_2_contract_declaration:
+    description: >
+      arXiv identifier did not resolve. Scored from the contract's own characterization
+      (Section 4.1 bullet plus the Section 20 cited title). Flagged unverified; the novelty
+      claim for these entries rests on the contract's declared scope, not on retrieved
+      evidence.
+    strength: provisional
+    required_action: >
+      Re-run the checker at each Section 13 checkpoint. If an identifier resolves later,
+      the record MUST be rescored at tier 1 before manuscript freeze.
+
+# ---------------------------------------------------------------------------
+# CITATION INTEGRITY CHECK
+# ---------------------------------------------------------------------------
+# An identifier that resolves is not necessarily the paper the contract cites. arXiv
+# returns a genuine abstract for whatever work occupies that identifier, so a wrong or
+# retitled identifier yields scores that look tier-1 verified while describing a different
+# paper. Every resolved record therefore has its retrieved title compared against the
+# Section 20 cited title.
+citation_integrity:
+  method: "Jaccard similarity over content tokens (stopwords removed) of the two titles."
+  title_match_threshold: 0.50
+  on_mismatch: >
+    Flag the record with `title_consistent: false` and a caveat. The collision verdict is
+    still computed from the retrieved abstract, since that is the only real evidence
+    available, but the citation MUST be reconciled before manuscript freeze by correcting
+    either the identifier or the cited title and its Section 4.1 characterization.

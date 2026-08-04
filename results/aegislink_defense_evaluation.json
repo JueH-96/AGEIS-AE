@@ -1,0 +1,4095 @@
+{
+  "metadata": {
+    "step": "Step 4 of 8 -- AegisLink defense framework and baseline suite",
+    "contract_ref": "CONTRACT.md Sections 3 (RQ2, RQ3), 9, 10, 11",
+    "builder": "workflow/16_evaluate_aegislink_and_baselines.py",
+    "replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+    "replay_fingerprint_verified": true,
+    "read_phase": "live",
+    "n_queries": 1008,
+    "n_configurations": 18,
+    "regimes_reported": [
+      "train_development",
+      "validation"
+    ],
+    "regimes_refused": [
+      "test",
+      "transfer_holdout",
+      "adaptive_holdout"
+    ],
+    "scope_note": "Step 4 establishes that every defense runs and is comparable on identical frozen evidence. The confirmatory test-split evaluation, paired bootstrap, Holm correction and Pareto frontier are Step 5.",
+    "quick_mode": false,
+    "elapsed_seconds": 302.27
+  },
+  "framework": {
+    "framework_version": "1.0",
+    "contract_ref": "CONTRACT.md Sections 3 (RQ3), 9, 10",
+    "verdicts": [
+      "VERIFIED",
+      "PLAUSIBLE",
+      "UNVERIFIED",
+      "CONTRADICTED"
+    ],
+    "action_risk_order": [
+      "browse",
+      "contact",
+      "book",
+      "login",
+      "pay"
+    ],
+    "high_risk_actions": [
+      "book",
+      "login",
+      "pay"
+    ],
+    "evidence_families": [
+      "official_registry",
+      "official_backlink",
+      "identity_consistency",
+      "domain_lifecycle",
+      "source_dependency",
+      "action_specific",
+      "contradiction"
+    ],
+    "contradiction_kinds": [
+      "official_claim_conflict",
+      "forged_backlink",
+      "identity_field_conflict",
+      "lifecycle_withdrawal",
+      "action_scope_overreach"
+    ],
+    "threshold_policy": {
+      "ordering": "tau_browse < tau_contact < tau_book < tau_login < tau_pay",
+      "enforcement": "RiskThresholds.__post_init__ calls assert_monotonic; a violating vector raises ThresholdOrderingError. preregistration.yaml requires rejection, not clipping.",
+      "fitting_constraint": "RiskThresholds.fitted refuses regime in {test, transfer_holdout, adaptive_holdout}, independently of the admission controller."
+    },
+    "identical_evidence_rule": "One VerificationContext per query is passed unchanged to every defense. A defense that by design ignores an input declares an InputRestriction, which the driver writes to the deviation log (CONTRACT.md Section 10).",
+    "probability_requirement": "Every DefenseDecision carries a probability so Section 11's Brier score and calibration error are computable for every defense, including rule-based ones."
+  },
+  "verifier": {
+    "defense_id": "aegislink-full-v1",
+    "verifier_version": "1.0",
+    "contract_ref": "CONTRACT.md Sections 3 (RQ3), 9",
+    "config": {
+      "config_id": "aegislink-full-v1",
+      "label": "AegisLink (full)",
+      "use_action_type": true,
+      "use_official_backlinks": true,
+      "use_source_clustering": true,
+      "use_domain_lifecycle": true,
+      "use_contradiction_edges": true,
+      "use_identity_consistency": true,
+      "inference_mode": "graph",
+      "shared_threshold": false,
+      "thresholds": {
+        "tau": {
+          "browse": 0.3,
+          "contact": 0.4,
+          "book": 0.55,
+          "login": 0.7,
+          "pay": 0.8
+        },
+        "tau_plausible": {
+          "browse": 0.2,
+          "contact": 0.2,
+          "book": 0.2,
+          "login": 0.2,
+          "pay": 0.2
+        },
+        "plausible_floor": 0.2,
+        "shared_tau": null,
+        "is_monotonic": true,
+        "ordering_constraint": "tau_browse < tau_contact < tau_book < tau_login < tau_pay",
+        "fit_regime": "unfitted_design_default",
+        "fit_note": "Evenly spaced design prior. Fitting adjusts the scale on train_development only; the ordering constraint is never relaxed."
+      },
+      "calibration": {
+        "a": 3.0,
+        "b": -2.0,
+        "fit_regime": "train_development",
+        "n_fit": 3600,
+        "brier_before": 0.007022,
+        "brier_after": 1e-06,
+        "is_identity": false
+      },
+      "duplicate_jaccard": 0.55,
+      "shingle_n": 5
+    },
+    "config_digest": "16264aeaf8d8ea8b",
+    "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+    "components": {
+      "1_entity_resolution": "aegislink-entity-resolver-v1",
+      "2_action_extraction": "aegislink-action-extractor-v1",
+      "3_evidence_graph_construction": "aegislink-graph-builder-v1",
+      "4_source_dependency_clustering": "aegislink-source-clusterer-v1",
+      "5_action_specific_authorization_inference": "aegislink-authorization-inference-v1",
+      "6_risk_aware_output_policy": "aegislink-risk-policy-v1"
+    },
+    "evidence_families": [
+      "official_registry",
+      "official_backlink",
+      "identity_consistency",
+      "domain_lifecycle",
+      "source_dependency",
+      "action_specific",
+      "contradiction"
+    ],
+    "feature_weights": {
+      "bias": -2.6,
+      "registry_official": 6.2,
+      "delegated_this_action": 5.6,
+      "delegated_other_action_only": 2.0,
+      "no_authority": -0.9,
+      "identity_consistent": 0.8,
+      "identity_conflict": -1.6,
+      "log_effective_sources": 0.7,
+      "claims_official_without_registry": -2.4,
+      "claims_action_without_grant": -1.0,
+      "lifecycle_withdrawal": -3.4,
+      "action_risk": -0.28
+    },
+    "no_authority_ceiling": 0.25,
+    "not_a_weighted_sum": "Authority -- registry ownership, or a delegation published by the entity's own official page covering THIS action -- gates the score. Without it the probability is capped at 0.2500, which sits strictly below every tau, so no amount of corroboration, identity polish or lexical respectability can authorise any action at any risk level. The cap is applied after scoring and is derived from the threshold vector, so it cannot be undone by reweighting the features. Contradiction edges are named detections that short-circuit the score entirely.",
+    "deliberate_abstentions": {
+      "prompt_injection_markers": "Not a feature. Injection presence is a Section 7 factor level, so scoring it would classify the factor rather than the authorization.",
+      "lifecycle_record_presence": "Not a feature. In this corpus a lifecycle record exists for exactly the takeover domains, so presence alone is a label. The family may only withdraw authority another family granted.",
+      "delegation_table": "web_rag.exposure.public_delegation_evidence is never imported: it names which third party holds which grant, i.e. the answer to RQ3."
+    }
+  },
+  "ablations": {
+    "ablations_version": "1.0",
+    "contract_ref": "CONTRACT.md Section 9 (required ablations)",
+    "n_ablations": 7,
+    "ablation_ids": [
+      "ablation_no_action_type",
+      "ablation_no_official_backlinks",
+      "ablation_no_source_clustering",
+      "ablation_no_domain_lifecycle",
+      "ablation_no_contradiction_edges",
+      "ablation_source_count_voting",
+      "ablation_shared_threshold"
+    ],
+    "base_config": {
+      "config_id": "aegislink-full-v1",
+      "label": "AegisLink (full)",
+      "use_action_type": true,
+      "use_official_backlinks": true,
+      "use_source_clustering": true,
+      "use_domain_lifecycle": true,
+      "use_contradiction_edges": true,
+      "use_identity_consistency": true,
+      "inference_mode": "graph",
+      "shared_threshold": false,
+      "thresholds": {
+        "tau": {
+          "browse": 0.3,
+          "contact": 0.4,
+          "book": 0.55,
+          "login": 0.7,
+          "pay": 0.8
+        },
+        "tau_plausible": {
+          "browse": 0.2,
+          "contact": 0.2,
+          "book": 0.2,
+          "login": 0.2,
+          "pay": 0.2
+        },
+        "plausible_floor": 0.2,
+        "shared_tau": null,
+        "is_monotonic": true,
+        "ordering_constraint": "tau_browse < tau_contact < tau_book < tau_login < tau_pay",
+        "fit_regime": "unfitted_design_default",
+        "fit_note": "Evenly spaced design prior. Fitting adjusts the scale on train_development only; the ordering constraint is never relaxed."
+      },
+      "calibration": {
+        "a": 1.0,
+        "b": 0.0,
+        "fit_regime": "identity",
+        "n_fit": 0,
+        "brier_before": null,
+        "brier_after": null,
+        "is_identity": true
+      },
+      "duplicate_jaccard": 0.55,
+      "shingle_n": 5
+    },
+    "shared_threshold_value": 0.55,
+    "shared_threshold_rationale": "The mean of the monotone design vector. Any single value privileges some actions, which is the ablation's content; the mean is the one choice that cannot be accused of having been selected to favour a particular action.",
+    "single_factor_check": {
+      "ablation_no_action_type": {
+        "moved": [
+          "shared_threshold",
+          "use_action_type"
+        ],
+        "allowed": [
+          "shared_threshold",
+          "use_action_type"
+        ],
+        "single_factor": true
+      },
+      "ablation_no_official_backlinks": {
+        "moved": [
+          "use_official_backlinks"
+        ],
+        "allowed": [
+          "use_official_backlinks"
+        ],
+        "single_factor": true
+      },
+      "ablation_no_source_clustering": {
+        "moved": [
+          "use_source_clustering"
+        ],
+        "allowed": [
+          "use_source_clustering"
+        ],
+        "single_factor": true
+      },
+      "ablation_no_domain_lifecycle": {
+        "moved": [
+          "use_domain_lifecycle"
+        ],
+        "allowed": [
+          "use_domain_lifecycle"
+        ],
+        "single_factor": true
+      },
+      "ablation_no_contradiction_edges": {
+        "moved": [
+          "use_contradiction_edges"
+        ],
+        "allowed": [
+          "use_contradiction_edges"
+        ],
+        "single_factor": true
+      },
+      "ablation_source_count_voting": {
+        "moved": [
+          "inference_mode"
+        ],
+        "allowed": [
+          "inference_mode"
+        ],
+        "single_factor": true
+      },
+      "ablation_shared_threshold": {
+        "moved": [
+          "shared_threshold"
+        ],
+        "allowed": [
+          "shared_threshold"
+        ],
+        "single_factor": true
+      }
+    },
+    "predictions": {
+      "ablation_no_action_type": "UALER up on login/pay (over-grants); ATPR ~flat",
+      "ablation_no_official_backlinks": "ATPR collapses toward official_only; UALER ~flat near zero",
+      "ablation_no_source_clustering": "small on this corpus; corroboration is capped either way",
+      "ablation_no_domain_lifecycle": "near zero; takeover domains hold no grant to withdraw",
+      "ablation_no_contradiction_edges": "CONTRADICTED -> UNVERIFIED; moves CMR/OSMR, not UALER",
+      "ablation_source_count_voting": "UALER up sharply; Sybil pages outvote the official page",
+      "ablation_shared_threshold": "error redistributed across the risk ladder"
+    },
+    "prediction_policy": "Directions are stated here before measurement. The driver writes the realised effect beside the prediction; a disagreement is reported, not reconciled."
+  },
+  "adapter": {
+    "adapter_version": "1.0",
+    "contract_ref": "CONTRACT.md Section 3 (RQ2), Sections 9-10",
+    "stage_mapping": {
+      "retrieval_candidates": "supplied by the frozen replay; no defense can change it",
+      "resolved_entities": "one shared EntityResolver for every defense, so a name-matching difference cannot masquerade as an authorization-reasoning difference",
+      "extracted_entity_domain_relations": "the defense's belief projected onto RELATION_VOCABULARY; defenses with no authority notion can only emit mentions_only/unrelated",
+      "inferred_action_authorizations": "the defense's decision at the query's action",
+      "presented_links": "every allowed candidate, in rank order"
+    },
+    "presentation_policy_rationale": "Presenting only the top-ranked allowed link would hide a misbinding at rank 4. The strict reading -- any unauthorized presented link is a UALER event -- is the one used.",
+    "shared_resolver_rationale": "Entity resolution is held constant across defenses on purpose; it is not the variable under study, and it remains fallible on confusable sibling pairs so RQ2 stage 2 stays reachable."
+  },
+  "metric_definitions": {
+    "metrics_version": "1.0",
+    "contract_ref": "CONTRACT.md Section 11",
+    "scope": "Step 4 reports train_development and validation only. The test split, paired bootstrap, Holm correction and Pareto frontier are Step 5.",
+    "denominators": {
+      "UALER": "per RESPONSE (one query x one defense). A response counts if ANY presented link is unauthorized for the query's action; per-link counting would let nine correct links dilute one misbinding.",
+      "ATPR": "per authorized third-party link, conditioned on the link having been retrieved. Unconditioned value reported as ATPR_incl_unretrieved.",
+      "FRR": "per authorized link retrieved; unconditioned value reported alongside.",
+      "OSMR": "per official claim, where a claim is a presented link whose decision explicitly asserts the domain is the entity's OFFICIAL site (DefenseDecision.asserts_official). Presenting an authorized third party is NOT an official claim. Defenses with no notion of officialness (B01, B02, B03, B05, B07, B08) have an empty denominator and report null.",
+      "CMR": "high-confidence misbinding responses / all misbinding responses.",
+      "BER": "responses on non-fabricated entities that presented at least one authorized link, conditioned on one being retrievable."
+    },
+    "empty_denominator_policy": "Reported as null, never as 0.0. 'no eligible cases' and 'no failures among eligible cases' are different findings.",
+    "calibration": "Brier score and 10-bin equal-width ECE over per-triple probabilities."
+  },
+  "fitting": {
+    "admission_report": {
+      "run_id": "step4_threshold_selection",
+      "admitted": true,
+      "regime": "train_development",
+      "purpose": "threshold_selection",
+      "checked_rules": [
+        "R1_single_regime",
+        "R2_pool_membership",
+        "R3_no_test_in_threshold_selection",
+        "R4_triple_consistency",
+        "R5_adaptive_template_gating"
+      ],
+      "violations": []
+    },
+    "calibration": {
+      "a": 3.0,
+      "b": -2.0,
+      "fit_regime": "train_development",
+      "n_fit": 3600,
+      "brier_before": 0.007022,
+      "brier_after": 1e-06,
+      "is_identity": false
+    },
+    "thresholds": {
+      "tau": {
+        "browse": 0.3,
+        "contact": 0.4,
+        "book": 0.55,
+        "login": 0.7,
+        "pay": 0.8
+      },
+      "tau_plausible": {
+        "browse": 0.2,
+        "contact": 0.2,
+        "book": 0.2,
+        "login": 0.2,
+        "pay": 0.2
+      },
+      "plausible_floor": 0.2,
+      "shared_tau": null,
+      "is_monotonic": true,
+      "ordering_constraint": "tau_browse < tau_contact < tau_book < tau_login < tau_pay",
+      "fit_regime": "unfitted_design_default",
+      "fit_note": "Evenly spaced design prior. Fitting adjusts the scale on train_development only; the ordering constraint is never relaxed."
+    },
+    "n_fit_queries": 360,
+    "n_fit_triples": 3600,
+    "policy": {
+      "threshold_vector": "frozen design default; shape fixed by preregistration, not fitted",
+      "why_not_fitted": "Tuning five thresholds on the corpus would fit the decision rule to the benchmark. Only the two-parameter Platt transform is fitted, and being monotone it cannot change any ranking -- only the probability scale Section 11 reads.",
+      "regimes_read": [
+        "train_development"
+      ],
+      "regimes_refused": [
+        "test",
+        "transfer_holdout",
+        "adaptive_holdout"
+      ]
+    }
+  },
+  "replay_binding": {
+    "expected_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+    "n_verifier_configs_bound": 8,
+    "bound": [
+      "ablation_no_action_type",
+      "ablation_no_contradiction_edges",
+      "ablation_no_domain_lifecycle",
+      "ablation_no_official_backlinks",
+      "ablation_no_source_clustering",
+      "ablation_shared_threshold",
+      "ablation_source_count_voting",
+      "aegislink_full"
+    ],
+    "baselines_bound_via_context": true
+  },
+  "identical_evidence_check": {
+    "n_defenses_checked": 18,
+    "context_object_shared": true,
+    "firewall_clean": true,
+    "decisions_firewall_clean": true
+  },
+  "exposure_firewall": {
+    "exposure_version": "1.0",
+    "contract_ref": "CONTRACT.md Sections 5.2, 6; registry/domains.yaml metadata",
+    "experimenter_only_fields": [
+      "adversarial",
+      "role"
+    ],
+    "experimenter_only_lifecycle_subfields": [
+      "note",
+      "prior_grant_evidence",
+      "prior_grants"
+    ],
+    "experimenter_only_manifest_fields": [
+      "attack_template_id",
+      "entity_template_id",
+      "page_role",
+      "site_template_id",
+      "snapshot"
+    ],
+    "experimenter_only_label_fields": [
+      "adversarial_assignment",
+      "authorized",
+      "evidence_type",
+      "granted_actions"
+    ],
+    "public_domain_fields": [
+      "domain_id",
+      "domain",
+      "display_name",
+      "shared"
+    ],
+    "public_lifecycle_subfields": [
+      "first_seen_snapshot",
+      "expired_at_snapshot",
+      "ownership_change_at_snapshot",
+      "current_holder"
+    ],
+    "forbidden_role_values": [
+      "official_site",
+      "authorized_booking_provider",
+      "authorized_information_directory",
+      "non_delegated_booking_provider",
+      "impersonating_official_site",
+      "unauthorized_booking_provider",
+      "unauthorized_login_portal",
+      "unauthorized_payment_portal",
+      "expired_domain_takeover",
+      "corroborating_blog_directory",
+      "neutral_publisher",
+      "sibling_official_site",
+      "fabricated_domain"
+    ],
+    "tiers": {
+      "retriever": "visible page text + url + public domain descriptors",
+      "reader": "retriever tier + rank + score",
+      "verifier": "reader tier + public registry + DERIVED lifecycle observations",
+      "evaluator": "experimenter tier: ground truth, page roles, meta channel"
+    },
+    "meta_channel_policy": "x-aegis-entity-id / x-aegis-page-id are EVALUATOR-tier. CONTRACT.md Section 8 publishes them so scoring needs no manual reading; exposing them to the retriever or reader would trivialise the entity-resolution stage that RQ2 measures.",
+    "enforcement": [
+      "whitelist construction (new registry fields excluded by default)",
+      "recursive assert_no_leakage guard on field names and enum values",
+      "explicit ExposureTier on every serialisation path"
+    ],
+    "authoritative_registry": {
+      "artifact": "load_official_registry() -> OfficialRegistry",
+      "tier": "verifier",
+      "contract_ref": "CONTRACT.md Section 3 (RQ3) evidence family 1; Section 10 baseline 9",
+      "publishes": [
+        "entity_id, canonical_name, category",
+        "official_domain_id / official_domain (from domains.yaml owner_entity_id)",
+        "authoritative address and phone (identity-consistency reference)",
+        "published aliases (entity-resolution surface forms)"
+      ],
+      "withholds": [
+        "domains.yaml.delegations (which third party holds which grant)",
+        "granted_actions / claimed_actions (per-action grants)",
+        "role and adversarial for every non-official domain",
+        "lifecycle.prior_grants and lifecycle.note",
+        "page_role, attack_template_id, site_template_id"
+      ],
+      "rationale": "CONTRACT.md Section 3 (RQ3) evidence family 1 and Section 10 baseline 9 both require an authoritative registry naming each entity's official domain. This projection publishes that and the entity's true identity fields, and withholds every third-party grant, so the authorized-vs-forged third-party discrimination under study is unaffected.",
+      "equivalence_note": "owner_entity_id is non-null for exactly the official_site records, so this projection is informationally equivalent to role == 'official_site' and to nothing else. Every non-official domain remains indistinguishable, and no per-action third-party grant is exposed."
+    },
+    "site_index": {
+      "artifact": "build_site_index() -> SiteIndex",
+      "tier": "retriever",
+      "publishes": [
+        "doc_id -> url",
+        "domain_id -> doc_ids"
+      ],
+      "rationale": "A crawler knows which pages it holds per host. Same field set as strip_manifest_entry, made addressable so a verifier can read the official site it did not happen to retrieve."
+    },
+    "delegation_evidence_policy": "public_delegation_evidence() exists for provenance and for tests, but it names which third party holds which grant -- i.e. the answer to RQ3. No defense, ablation or baseline may import it, and tests/test_aegislink_and_baselines.py enforces that statically."
+  },
+  "metrics": {
+    "aegislink_full": {
+      "train_development": {
+        "defense_id": "aegislink_full",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.0,
+          "BER": 1.0,
+          "abstention_rate": 0.061111
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.80678,
+          "FRR_incl_unretrieved": 0.057143
+        },
+        "calibration": {
+          "brier": 0.000235,
+          "ece": 0.002487
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.075,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.15,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.05,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.016667,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 0,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 238,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 323,
+          "presented_links": 561
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 1781,
+          "PLAUSIBLE": 6,
+          "UNVERIFIED": 1252,
+          "VERIFIED": 561
+        },
+        "mean_decision_ms": 0.7718
+      },
+      "validation": {
+        "defense_id": "aegislink_full",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.0,
+          "BER": 1.0,
+          "abstention_rate": 0.055556
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.864407,
+          "FRR_incl_unretrieved": 0.008403
+        },
+        "calibration": {
+          "brier": 9.5e-05,
+          "ece": 0.001479
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0625,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.083333,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.125,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 0,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 102,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 134,
+          "presented_links": 236
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 783,
+          "UNVERIFIED": 421,
+          "VERIFIED": 236
+        },
+        "mean_decision_ms": 0.7718
+      }
+    },
+    "ablation_no_action_type": {
+      "train_development": {
+        "defense_id": "ablation_no_action_type",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.411111,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": 1.0,
+          "FRR": 0.0,
+          "BER": 1.0,
+          "abstention_rate": 0.044444
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.80678,
+          "FRR_incl_unretrieved": 0.057143
+        },
+        "calibration": {
+          "brier": 0.052175,
+          "ece": 0.052223
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.433333,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.075,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.5,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.066667,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.8,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.033333,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.733333,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.016667,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 0,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 238,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 148,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 148,
+          "official_claims": 323,
+          "presented_links": 749
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 1781,
+          "UNVERIFIED": 1070,
+          "VERIFIED": 749
+        },
+        "mean_decision_ms": 0.777
+      },
+      "validation": {
+        "defense_id": "ablation_no_action_type",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.319444,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": 1.0,
+          "FRR": 0.0,
+          "BER": 1.0,
+          "abstention_rate": 0.041667
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.864407,
+          "FRR_incl_unretrieved": 0.008403
+        },
+        "calibration": {
+          "brier": 0.039586,
+          "ece": 0.039456
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.333333,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0625,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.291667,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.041667,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.666667,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.083333,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.625,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 0,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 102,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 46,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 46,
+          "official_claims": 134,
+          "presented_links": 293
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 783,
+          "UNVERIFIED": 364,
+          "VERIFIED": 293
+        },
+        "mean_decision_ms": 0.777
+      }
+    },
+    "ablation_no_official_backlinks": {
+      "train_development": {
+        "defense_id": "ablation_no_official_backlinks",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 0.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.424242,
+          "BER": 0.955621,
+          "abstention_rate": 0.102778
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.0,
+          "FRR_incl_unretrieved": 0.457143
+        },
+        "calibration": {
+          "brier": 0.066108,
+          "ece": 0.065987
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.487179,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.525346,
+            "BER": 0.927928,
+            "abstention_rate": 0.141667,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.457831,
+            "BER": 0.882353,
+            "abstention_rate": 0.25,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.05,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.333333,
+            "BER": 0.983051,
+            "abstention_rate": 0.033333,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 238,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 0,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 323,
+          "presented_links": 323
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 1035,
+          "UNVERIFIED": 2242,
+          "VERIFIED": 323
+        },
+        "mean_decision_ms": 0.7441
+      },
+      "validation": {
+        "defense_id": "ablation_no_official_backlinks",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 0.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.432203,
+          "BER": 0.985294,
+          "abstention_rate": 0.069444
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.0,
+          "FRR_incl_unretrieved": 0.436975
+        },
+        "calibration": {
+          "brier": 0.070831,
+          "ece": 0.070758
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.510204,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.5,
+            "BER": 0.977778,
+            "abstention_rate": 0.083333,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.511628,
+            "BER": 0.954545,
+            "abstention_rate": 0.125,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.125,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.314286,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 102,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 0,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 134,
+          "presented_links": 134
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 576,
+          "UNVERIFIED": 730,
+          "VERIFIED": 134
+        },
+        "mean_decision_ms": 0.7441
+      }
+    },
+    "ablation_no_source_clustering": {
+      "train_development": {
+        "defense_id": "ablation_no_source_clustering",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.0,
+          "BER": 1.0,
+          "abstention_rate": 0.061111
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.80678,
+          "FRR_incl_unretrieved": 0.057143
+        },
+        "calibration": {
+          "brier": 0.001191,
+          "ece": 0.007357
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.075,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.15,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.05,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.016667,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 0,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 238,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 323,
+          "presented_links": 561
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 1781,
+          "PLAUSIBLE": 43,
+          "UNVERIFIED": 1215,
+          "VERIFIED": 561
+        },
+        "mean_decision_ms": 0.7157
+      },
+      "validation": {
+        "defense_id": "ablation_no_source_clustering",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.0,
+          "BER": 1.0,
+          "abstention_rate": 0.055556
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.864407,
+          "FRR_incl_unretrieved": 0.008403
+        },
+        "calibration": {
+          "brier": 0.000822,
+          "ece": 0.005315
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0625,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.083333,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.125,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 0,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 102,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 134,
+          "presented_links": 236
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 783,
+          "PLAUSIBLE": 11,
+          "UNVERIFIED": 410,
+          "VERIFIED": 236
+        },
+        "mean_decision_ms": 0.7157
+      }
+    },
+    "ablation_no_domain_lifecycle": {
+      "train_development": {
+        "defense_id": "ablation_no_domain_lifecycle",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.0,
+          "BER": 1.0,
+          "abstention_rate": 0.061111
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.80678,
+          "FRR_incl_unretrieved": 0.057143
+        },
+        "calibration": {
+          "brier": 0.000235,
+          "ece": 0.002487
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.075,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.15,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.05,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.016667,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 0,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 238,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 323,
+          "presented_links": 561
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 1781,
+          "PLAUSIBLE": 6,
+          "UNVERIFIED": 1252,
+          "VERIFIED": 561
+        },
+        "mean_decision_ms": 0.7651
+      },
+      "validation": {
+        "defense_id": "ablation_no_domain_lifecycle",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.0,
+          "BER": 1.0,
+          "abstention_rate": 0.055556
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.864407,
+          "FRR_incl_unretrieved": 0.008403
+        },
+        "calibration": {
+          "brier": 9.5e-05,
+          "ece": 0.001479
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0625,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.083333,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.125,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 0,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 102,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 134,
+          "presented_links": 236
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 783,
+          "UNVERIFIED": 421,
+          "VERIFIED": 236
+        },
+        "mean_decision_ms": 0.7651
+      }
+    },
+    "ablation_no_contradiction_edges": {
+      "train_development": {
+        "defense_id": "ablation_no_contradiction_edges",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.0,
+          "BER": 1.0,
+          "abstention_rate": 0.061111
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.80678,
+          "FRR_incl_unretrieved": 0.057143
+        },
+        "calibration": {
+          "brier": 0.000235,
+          "ece": 0.002487
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.075,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.15,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.05,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.016667,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 0,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 238,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 323,
+          "presented_links": 561
+        },
+        "verdict_distribution": {
+          "PLAUSIBLE": 6,
+          "UNVERIFIED": 3033,
+          "VERIFIED": 561
+        },
+        "mean_decision_ms": 0.7838
+      },
+      "validation": {
+        "defense_id": "ablation_no_contradiction_edges",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.0,
+          "BER": 1.0,
+          "abstention_rate": 0.055556
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.864407,
+          "FRR_incl_unretrieved": 0.008403
+        },
+        "calibration": {
+          "brier": 9.5e-05,
+          "ece": 0.001479
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0625,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.083333,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.125,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 0,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 102,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 134,
+          "presented_links": 236
+        },
+        "verdict_distribution": {
+          "UNVERIFIED": 1204,
+          "VERIFIED": 236
+        },
+        "mean_decision_ms": 0.7838
+      }
+    },
+    "ablation_source_count_voting": {
+      "train_development": {
+        "defense_id": "ablation_source_count_voting",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.011111,
+          "ATPR": 0.033613
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 1.0,
+          "FRR": 0.427807,
+          "BER": 0.949704,
+          "abstention_rate": 0.097222
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.027119,
+          "FRR_incl_unretrieved": 0.460504
+        },
+        "calibration": {
+          "brier": 0.057791,
+          "ece": 0.061702
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.487179,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.025,
+            "ATPR": 0.04386,
+            "FRR": 0.502304,
+            "BER": 0.972973,
+            "abstention_rate": 0.075,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.016667,
+            "ATPR": 0.078947,
+            "FRR": 0.421687,
+            "BER": 0.941176,
+            "abstention_rate": 0.183333,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.05,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.448276,
+            "BER": 0.813559,
+            "abstention_rate": 0.2,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 240,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 8,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 4,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 4,
+          "official_claims": 0,
+          "presented_links": 325
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 1781,
+          "PLAUSIBLE": 16,
+          "UNVERIFIED": 1478,
+          "VERIFIED": 325
+        },
+        "mean_decision_ms": 0.9447
+      },
+      "validation": {
+        "defense_id": "ablation_source_count_voting",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.006944,
+          "ATPR": 0.009804
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 1.0,
+          "FRR": 0.436441,
+          "BER": 0.977941,
+          "abstention_rate": 0.069444
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.008475,
+          "FRR_incl_unretrieved": 0.441176
+        },
+        "calibration": {
+          "brier": 0.064172,
+          "ece": 0.067903
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.510204,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 0.022727,
+            "FRR": 0.488636,
+            "BER": 1.0,
+            "abstention_rate": 0.0625,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.041667,
+            "ATPR": 0.0,
+            "FRR": 0.511628,
+            "BER": 0.954545,
+            "abstention_rate": 0.083333,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.125,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.371429,
+            "BER": 0.916667,
+            "abstention_rate": 0.083333,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 103,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 1,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 1,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 1,
+          "official_claims": 0,
+          "presented_links": 134
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 783,
+          "PLAUSIBLE": 3,
+          "UNVERIFIED": 520,
+          "VERIFIED": 134
+        },
+        "mean_decision_ms": 0.9447
+      }
+    },
+    "ablation_shared_threshold": {
+      "train_development": {
+        "defense_id": "ablation_shared_threshold",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.0,
+          "BER": 1.0,
+          "abstention_rate": 0.061111
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.80678,
+          "FRR_incl_unretrieved": 0.057143
+        },
+        "calibration": {
+          "brier": 0.000235,
+          "ece": 0.002487
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.075,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.15,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.05,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.016667,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 0,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 238,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 323,
+          "presented_links": 561
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 1781,
+          "PLAUSIBLE": 6,
+          "UNVERIFIED": 1252,
+          "VERIFIED": 561
+        },
+        "mean_decision_ms": 0.7759
+      },
+      "validation": {
+        "defense_id": "ablation_shared_threshold",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.0,
+          "BER": 1.0,
+          "abstention_rate": 0.055556
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.864407,
+          "FRR_incl_unretrieved": 0.008403
+        },
+        "calibration": {
+          "brier": 9.5e-05,
+          "ece": 0.001479
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0625,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.083333,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.125,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 0,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 102,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 134,
+          "presented_links": 236
+        },
+        "verdict_distribution": {
+          "CONTRADICTED": 783,
+          "UNVERIFIED": 421,
+          "VERIFIED": 236
+        },
+        "mean_decision_ms": 0.7759
+      }
+    },
+    "B01_lexical_url_rules": {
+      "train_development": {
+        "defense_id": "B01_lexical_url_rules",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.955556,
+          "ATPR": 0.697479
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 0.799419,
+          "FRR": 0.128342,
+          "BER": 0.994083,
+          "abstention_rate": 0.008333
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.562712,
+          "FRR_incl_unretrieved": 0.178151
+        },
+        "calibration": {
+          "brier": 0.214753,
+          "ece": 0.277432
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.966667,
+            "ATPR": 0.54386,
+            "FRR": 0.222222,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.95,
+            "ATPR": 0.859649,
+            "FRR": 0.073733,
+            "BER": 1.0,
+            "abstention_rate": 0.016667,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.966667,
+            "ATPR": 0.631579,
+            "FRR": 0.168675,
+            "BER": 0.980392,
+            "abstention_rate": 0.016667,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.95,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.95,
+            "ATPR": 0.448276,
+            "FRR": 0.183908,
+            "BER": 0.983051,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 72,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 166,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 275,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 344,
+          "official_claims": 0,
+          "presented_links": 1644
+        },
+        "verdict_distribution": {
+          "PLAUSIBLE": 353,
+          "UNVERIFIED": 1603,
+          "VERIFIED": 1644
+        },
+        "mean_decision_ms": 0.0157
+      },
+      "validation": {
+        "defense_id": "B01_lexical_url_rules",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.930556,
+          "ATPR": 0.676471
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 0.61194,
+          "FRR": 0.139831,
+          "BER": 0.992647,
+          "abstention_rate": 0.0
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.584746,
+          "FRR_incl_unretrieved": 0.147059
+        },
+        "calibration": {
+          "brier": 0.189947,
+          "ece": 0.24539
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.958333,
+            "ATPR": 0.52,
+            "FRR": 0.244898,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.9375,
+            "ATPR": 0.772727,
+            "FRR": 0.113636,
+            "BER": 0.977778,
+            "abstention_rate": 0.0,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.916667,
+            "ATPR": 0.727273,
+            "FRR": 0.139535,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.916667,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.916667,
+            "ATPR": 0.545455,
+            "FRR": 0.142857,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 33,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 69,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 82,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 134,
+          "official_claims": 0,
+          "presented_links": 620
+        },
+        "verdict_distribution": {
+          "PLAUSIBLE": 101,
+          "UNVERIFIED": 719,
+          "VERIFIED": 620
+        },
+        "mean_decision_ms": 0.0157
+      }
+    },
+    "B02_domain_reputation": {
+      "train_development": {
+        "defense_id": "B02_domain_reputation",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.769444,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 1.0,
+          "FRR": 0.575758,
+          "BER": 0.600592,
+          "abstention_rate": 0.069444
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.80678,
+          "FRR_incl_unretrieved": 0.6
+        },
+        "calibration": {
+          "brier": 0.177211,
+          "ece": 0.12298
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.683333,
+            "ATPR": 1.0,
+            "FRR": 0.512821,
+            "BER": 0.916667,
+            "abstention_rate": 0.083333,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.691667,
+            "ATPR": 1.0,
+            "FRR": 0.474654,
+            "BER": 0.792793,
+            "abstention_rate": 0.058333,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.883333,
+            "ATPR": 1.0,
+            "FRR": 0.542169,
+            "BER": 0.627451,
+            "abstention_rate": 0.016667,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.833333,
+            "ATPR": null,
+            "FRR": 1.0,
+            "BER": 0.0,
+            "abstention_rate": 0.166667,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.833333,
+            "ATPR": 1.0,
+            "FRR": 0.666667,
+            "BER": 0.474576,
+            "abstention_rate": 0.033333,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 323,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 238,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 277,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 277,
+          "official_claims": 0,
+          "presented_links": 767
+        },
+        "verdict_distribution": {
+          "UNVERIFIED": 2833,
+          "VERIFIED": 767
+        },
+        "mean_decision_ms": 0.011
+      },
+      "validation": {
+        "defense_id": "B02_domain_reputation",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.666667,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 1.0,
+          "FRR": 0.567797,
+          "BER": 0.595588,
+          "abstention_rate": 0.159722
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.864407,
+          "FRR_incl_unretrieved": 0.571429
+        },
+        "calibration": {
+          "brier": 0.162439,
+          "ece": 0.099247
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.625,
+            "ATPR": 1.0,
+            "FRR": 0.489796,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.583333,
+            "ATPR": 1.0,
+            "FRR": 0.5,
+            "BER": 0.711111,
+            "abstention_rate": 0.208333,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.708333,
+            "ATPR": 1.0,
+            "FRR": 0.488372,
+            "BER": 0.681818,
+            "abstention_rate": 0.208333,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.708333,
+            "ATPR": null,
+            "FRR": 1.0,
+            "BER": 0.0,
+            "abstention_rate": 0.291667,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.791667,
+            "ATPR": 1.0,
+            "FRR": 0.685714,
+            "BER": 0.416667,
+            "abstention_rate": 0.041667,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 134,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 102,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 96,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 96,
+          "official_claims": 0,
+          "presented_links": 275
+        },
+        "verdict_distribution": {
+          "UNVERIFIED": 1165,
+          "VERIFIED": 275
+        },
+        "mean_decision_ms": 0.011
+      }
+    },
+    "B03_phishing_classifier": {
+      "train_development": {
+        "defense_id": "B03_phishing_classifier",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.744444,
+          "ATPR": 0.995798
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 0.869403,
+          "FRR": 0.57754,
+          "BER": 0.597633,
+          "abstention_rate": 0.066667
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.80339,
+          "FRR_incl_unretrieved": 0.601681
+        },
+        "calibration": {
+          "brier": 0.191454,
+          "ece": 0.193592
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.616667,
+            "ATPR": 1.0,
+            "FRR": 0.512821,
+            "BER": 0.916667,
+            "abstention_rate": 0.066667,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.641667,
+            "ATPR": 0.991228,
+            "FRR": 0.479263,
+            "BER": 0.783784,
+            "abstention_rate": 0.083333,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.883333,
+            "ATPR": 1.0,
+            "FRR": 0.542169,
+            "BER": 0.627451,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.85,
+            "ATPR": null,
+            "FRR": 1.0,
+            "BER": 0.0,
+            "abstention_rate": 0.15,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.833333,
+            "ATPR": 1.0,
+            "FRR": 0.666667,
+            "BER": 0.474576,
+            "abstention_rate": 0.016667,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 324,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 237,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 233,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 268,
+          "official_claims": 0,
+          "presented_links": 723
+        },
+        "verdict_distribution": {
+          "PLAUSIBLE": 41,
+          "UNVERIFIED": 2836,
+          "VERIFIED": 723
+        },
+        "mean_decision_ms": 0.086
+      },
+      "validation": {
+        "defense_id": "B03_phishing_classifier",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.638889,
+          "ATPR": 0.931373
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 0.826087,
+          "FRR": 0.597458,
+          "BER": 0.573529,
+          "abstention_rate": 0.173611
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.805085,
+          "FRR_incl_unretrieved": 0.60084
+        },
+        "calibration": {
+          "brier": 0.17955,
+          "ece": 0.174021
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.583333,
+            "ATPR": 1.0,
+            "FRR": 0.489796,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.520833,
+            "ATPR": 0.886364,
+            "FRR": 0.556818,
+            "BER": 0.666667,
+            "abstention_rate": 0.25,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.708333,
+            "ATPR": 0.909091,
+            "FRR": 0.534884,
+            "BER": 0.636364,
+            "abstention_rate": 0.208333,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.708333,
+            "ATPR": null,
+            "FRR": 1.0,
+            "BER": 0.0,
+            "abstention_rate": 0.291667,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.791667,
+            "ATPR": 1.0,
+            "FRR": 0.685714,
+            "BER": 0.416667,
+            "abstention_rate": 0.041667,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 141,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 95,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 76,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 92,
+          "official_claims": 0,
+          "presented_links": 254
+        },
+        "verdict_distribution": {
+          "UNVERIFIED": 1186,
+          "VERIFIED": 254
+        },
+        "mean_decision_ms": 0.086
+      }
+    },
+    "B04_llm_as_judge": {
+      "train_development": {
+        "defense_id": "B04_llm_as_judge",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.994444,
+          "ATPR": 0.995798
+        },
+        "secondary": {
+          "OSMR": 0.709009,
+          "CMR": 0.986034,
+          "FRR": 0.001783,
+          "BER": 1.0,
+          "abstention_rate": 0.0
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.80339,
+          "FRR_incl_unretrieved": 0.058824
+        },
+        "calibration": {
+          "brier": 0.468235,
+          "ece": 0.524007
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.983333,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.991667,
+            "ATPR": 0.991228,
+            "FRR": 0.004608,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 1.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 1.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 1.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 1,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 237,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 353,
+          "incorrect_official_claims": 787,
+          "misbinding_responses": 358,
+          "official_claims": 1110,
+          "presented_links": 2378
+        },
+        "verdict_distribution": {
+          "PLAUSIBLE": 293,
+          "UNVERIFIED": 929,
+          "VERIFIED": 2378
+        },
+        "mean_decision_ms": 0.2865
+      },
+      "validation": {
+        "defense_id": "B04_llm_as_judge",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.986111,
+          "ATPR": 0.931373
+        },
+        "secondary": {
+          "OSMR": 0.705495,
+          "CMR": 1.0,
+          "FRR": 0.029661,
+          "BER": 0.992647,
+          "abstention_rate": 0.0
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.805085,
+          "FRR_incl_unretrieved": 0.037815
+        },
+        "calibration": {
+          "brier": 0.406125,
+          "ece": 0.468603
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.958333,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.979167,
+            "ATPR": 0.886364,
+            "FRR": 0.056818,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 1.0,
+            "ATPR": 0.909091,
+            "FRR": 0.046512,
+            "BER": 0.954545,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 1.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 1.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 7,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 95,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 142,
+          "incorrect_official_claims": 321,
+          "misbinding_responses": 142,
+          "official_claims": 455,
+          "presented_links": 845
+        },
+        "verdict_distribution": {
+          "PLAUSIBLE": 181,
+          "UNVERIFIED": 414,
+          "VERIFIED": 845
+        },
+        "mean_decision_ms": 0.2865
+      }
+    },
+    "B05_source_count_majority": {
+      "train_development": {
+        "defense_id": "B05_source_count_majority",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.019444,
+          "ATPR": 0.0
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 0.714286,
+          "FRR": 0.427807,
+          "BER": 0.949704,
+          "abstention_rate": 0.088889
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.0,
+          "FRR_incl_unretrieved": 0.460504
+        },
+        "calibration": {
+          "brier": 0.072372,
+          "ece": 0.082346
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.487179,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.025,
+            "ATPR": 0.0,
+            "FRR": 0.525346,
+            "BER": 0.927928,
+            "abstention_rate": 0.116667,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.016667,
+            "ATPR": 0.0,
+            "FRR": 0.46988,
+            "BER": 0.862745,
+            "abstention_rate": 0.25,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.05,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.344828,
+            "BER": 0.966102,
+            "abstention_rate": 0.05,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 240,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 0,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 5,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 7,
+          "official_claims": 0,
+          "presented_links": 328
+        },
+        "verdict_distribution": {
+          "PLAUSIBLE": 32,
+          "UNVERIFIED": 3240,
+          "VERIFIED": 328
+        },
+        "mean_decision_ms": 1.7968
+      },
+      "validation": {
+        "defense_id": "B05_source_count_majority",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.020833,
+          "ATPR": 0.0
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 0.666667,
+          "FRR": 0.432203,
+          "BER": 0.985294,
+          "abstention_rate": 0.048611
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.0,
+          "FRR_incl_unretrieved": 0.436975
+        },
+        "calibration": {
+          "brier": 0.075969,
+          "ece": 0.084926
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.510204,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.020833,
+            "ATPR": 0.0,
+            "FRR": 0.5,
+            "BER": 0.977778,
+            "abstention_rate": 0.0625,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.511628,
+            "BER": 0.954545,
+            "abstention_rate": 0.125,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.083333,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.041667,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.314286,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 102,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 0,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 2,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 3,
+          "official_claims": 0,
+          "presented_links": 137
+        },
+        "verdict_distribution": {
+          "PLAUSIBLE": 7,
+          "UNVERIFIED": 1296,
+          "VERIFIED": 137
+        },
+        "mean_decision_ms": 1.7968
+      }
+    },
+    "B06_provenance_reranker": {
+      "train_development": {
+        "defense_id": "B06_provenance_reranker",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.136111,
+          "ATPR": 0.306723
+        },
+        "secondary": {
+          "OSMR": 0.416667,
+          "CMR": 0.469388,
+          "FRR": 0.807487,
+          "BER": 0.313609,
+          "abstention_rate": 0.569444
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.247458,
+          "FRR_incl_unretrieved": 0.818487
+        },
+        "calibration": {
+          "brier": 0.120629,
+          "ece": 0.110651
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.016667,
+            "ATPR": 0.649123,
+            "FRR": 0.683761,
+            "BER": 0.583333,
+            "abstention_rate": 0.4,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.133333,
+            "ATPR": 0.27193,
+            "FRR": 0.843318,
+            "BER": 0.306306,
+            "abstention_rate": 0.583333,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.1,
+            "ATPR": 0.105263,
+            "FRR": 0.951807,
+            "BER": 0.078431,
+            "abstention_rate": 0.833333,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.416667,
+            "ATPR": null,
+            "FRR": 0.438596,
+            "BER": 0.561404,
+            "abstention_rate": 0.05,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.016667,
+            "ATPR": 0.034483,
+            "FRR": 0.988506,
+            "BER": 0.016949,
+            "abstention_rate": 0.966667,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 453,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 73,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 23,
+          "incorrect_official_claims": 25,
+          "misbinding_responses": 49,
+          "official_claims": 60,
+          "presented_links": 157
+        },
+        "verdict_distribution": {
+          "PLAUSIBLE": 207,
+          "UNVERIFIED": 3236,
+          "VERIFIED": 157
+        },
+        "mean_decision_ms": 0.8456
+      },
+      "validation": {
+        "defense_id": "B06_provenance_reranker",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.180556,
+          "ATPR": 0.313725
+        },
+        "secondary": {
+          "OSMR": 0.481481,
+          "CMR": 0.384615,
+          "FRR": 0.805085,
+          "BER": 0.330882,
+          "abstention_rate": 0.506944
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.271186,
+          "FRR_incl_unretrieved": 0.806723
+        },
+        "calibration": {
+          "brier": 0.128565,
+          "ece": 0.120846
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 0.52,
+            "FRR": 0.734694,
+            "BER": 0.541667,
+            "abstention_rate": 0.458333,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.125,
+            "ATPR": 0.386364,
+            "FRR": 0.75,
+            "BER": 0.466667,
+            "abstention_rate": 0.4375,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.25,
+            "ATPR": 0.045455,
+            "FRR": 0.976744,
+            "BER": 0.045455,
+            "abstention_rate": 0.708333,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.541667,
+            "ATPR": null,
+            "FRR": 0.571429,
+            "BER": 0.428571,
+            "abstention_rate": 0.083333,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.041667,
+            "ATPR": 0.090909,
+            "FRR": 0.971429,
+            "BER": 0.041667,
+            "abstention_rate": 0.916667,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 190,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 32,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 10,
+          "incorrect_official_claims": 13,
+          "misbinding_responses": 26,
+          "official_claims": 27,
+          "presented_links": 72
+        },
+        "verdict_distribution": {
+          "PLAUSIBLE": 74,
+          "UNVERIFIED": 1294,
+          "VERIFIED": 72
+        },
+        "mean_decision_ms": 0.8456
+      }
+    },
+    "B07_graph_anomaly_detector": {
+      "train_development": {
+        "defense_id": "B07_graph_anomaly_detector",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 1.0,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 0.983333,
+          "FRR": 0.331551,
+          "BER": 0.792899,
+          "abstention_rate": 0.0
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.80678,
+          "FRR_incl_unretrieved": 0.369748
+        },
+        "calibration": {
+          "brier": 0.574454,
+          "ece": 0.670866
+        },
+        "per_action": {
+          "book": {
+            "UALER": 1.0,
+            "ATPR": 1.0,
+            "FRR": 0.230769,
+            "BER": 0.966667,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 1.0,
+            "ATPR": 1.0,
+            "FRR": 0.276498,
+            "BER": 0.891892,
+            "abstention_rate": 0.0,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 1.0,
+            "ATPR": 1.0,
+            "FRR": 0.373494,
+            "BER": 0.803922,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 1.0,
+            "ATPR": null,
+            "FRR": 0.561404,
+            "BER": 0.438596,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 1.0,
+            "ATPR": 1.0,
+            "FRR": 0.413793,
+            "BER": 0.762712,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 186,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 238,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 354,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 360,
+          "official_claims": 0,
+          "presented_links": 3117
+        },
+        "verdict_distribution": {
+          "PLAUSIBLE": 92,
+          "UNVERIFIED": 391,
+          "VERIFIED": 3117
+        },
+        "mean_decision_ms": 1.5316
+      },
+      "validation": {
+        "defense_id": "B07_graph_anomaly_detector",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 1.0,
+          "ATPR": 1.0
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 0.951389,
+          "FRR": 0.368644,
+          "BER": 0.757353,
+          "abstention_rate": 0.0
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.864407,
+          "FRR_incl_unretrieved": 0.37395
+        },
+        "calibration": {
+          "brier": 0.532232,
+          "ece": 0.63697
+        },
+        "per_action": {
+          "book": {
+            "UALER": 1.0,
+            "ATPR": 1.0,
+            "FRR": 0.306122,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 1.0,
+            "ATPR": 1.0,
+            "FRR": 0.306818,
+            "BER": 0.866667,
+            "abstention_rate": 0.0,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 1.0,
+            "ATPR": 1.0,
+            "FRR": 0.372093,
+            "BER": 0.772727,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 1.0,
+            "ATPR": null,
+            "FRR": 0.619048,
+            "BER": 0.380952,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 1.0,
+            "ATPR": 1.0,
+            "FRR": 0.457143,
+            "BER": 0.625,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 87,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 102,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 137,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 144,
+          "official_claims": 0,
+          "presented_links": 1211
+        },
+        "verdict_distribution": {
+          "PLAUSIBLE": 42,
+          "UNVERIFIED": 187,
+          "VERIFIED": 1211
+        },
+        "mean_decision_ms": 1.5316
+      }
+    },
+    "B08_reject_high_risk": {
+      "train_development": {
+        "defense_id": "B08_reject_high_risk",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.461111,
+          "ATPR": 0.033613
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 1.0,
+          "FRR": 0.868093,
+          "BER": 0.218935,
+          "abstention_rate": 0.333333
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.027119,
+          "FRR_incl_unretrieved": 0.87563
+        },
+        "calibration": {
+          "brier": 0.181286,
+          "ece": 0.181305
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.433333,
+            "ATPR": 0.087719,
+            "FRR": 0.709402,
+            "BER": 0.566667,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.666667,
+            "ATPR": 0.026316,
+            "FRR": 0.815668,
+            "BER": 0.36036,
+            "abstention_rate": 0.0,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 1.0,
+            "ATPR": 0.0,
+            "FRR": 1.0,
+            "BER": 0.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 1.0,
+            "BER": 0.0,
+            "abstention_rate": 1.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 1.0,
+            "BER": 0.0,
+            "abstention_rate": 1.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 487,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 8,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 166,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 166,
+          "official_claims": 0,
+          "presented_links": 240
+        },
+        "verdict_distribution": {
+          "UNVERIFIED": 3360,
+          "VERIFIED": 240
+        },
+        "mean_decision_ms": 0.0481
+      },
+      "validation": {
+        "defense_id": "B08_reject_high_risk",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.493056,
+          "ATPR": 0.0
+        },
+        "secondary": {
+          "OSMR": null,
+          "CMR": 1.0,
+          "FRR": 0.894068,
+          "BER": 0.183824,
+          "abstention_rate": 0.333333
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.0,
+          "FRR_incl_unretrieved": 0.894958
+        },
+        "calibration": {
+          "brier": 0.195723,
+          "ece": 0.195749
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.333333,
+            "ATPR": 0.0,
+            "FRR": 0.673469,
+            "BER": 0.666667,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.8125,
+            "ATPR": 0.0,
+            "FRR": 0.897727,
+            "BER": 0.2,
+            "abstention_rate": 0.0,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 1.0,
+            "ATPR": 0.0,
+            "FRR": 1.0,
+            "BER": 0.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 1.0,
+            "BER": 0.0,
+            "abstention_rate": 1.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 1.0,
+            "BER": 0.0,
+            "abstention_rate": 1.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 211,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 0,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 71,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 71,
+          "official_claims": 0,
+          "presented_links": 96
+        },
+        "verdict_distribution": {
+          "UNVERIFIED": 1344,
+          "VERIFIED": 96
+        },
+        "mean_decision_ms": 0.0481
+      }
+    },
+    "B09_official_only": {
+      "train_development": {
+        "defense_id": "B09_official_only",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 0.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.424242,
+          "BER": 0.955621,
+          "abstention_rate": 0.102778
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.0,
+          "FRR_incl_unretrieved": 0.457143
+        },
+        "calibration": {
+          "brier": 0.066111,
+          "ece": 0.066116
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.487179,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.525346,
+            "BER": 0.927928,
+            "abstention_rate": 0.141667,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.457831,
+            "BER": 0.882353,
+            "abstention_rate": 0.25,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.05,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.333333,
+            "BER": 0.983051,
+            "abstention_rate": 0.033333,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 238,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 0,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 323,
+          "presented_links": 323
+        },
+        "verdict_distribution": {
+          "UNVERIFIED": 3277,
+          "VERIFIED": 323
+        },
+        "mean_decision_ms": 0.0077
+      },
+      "validation": {
+        "defense_id": "B09_official_only",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.0,
+          "ATPR": 0.0
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": null,
+          "FRR": 0.432203,
+          "BER": 0.985294,
+          "abstention_rate": 0.069444
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.0,
+          "FRR_incl_unretrieved": 0.436975
+        },
+        "calibration": {
+          "brier": 0.070833,
+          "ece": 0.070838
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.510204,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.5,
+            "BER": 0.977778,
+            "abstention_rate": 0.083333,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.511628,
+            "BER": 0.954545,
+            "abstention_rate": 0.125,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.125,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "FRR": 0.314286,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 102,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 0,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 0,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 0,
+          "official_claims": 134,
+          "presented_links": 134
+        },
+        "verdict_distribution": {
+          "UNVERIFIED": 1306,
+          "VERIFIED": 134
+        },
+        "mean_decision_ms": 0.0077
+      }
+    },
+    "B10_ragshield_defense": {
+      "train_development": {
+        "defense_id": "B10_ragshield_defense",
+        "regime": "train_development",
+        "n_responses": 360,
+        "n_valid_responses": 360,
+        "n_triples": 3600,
+        "primary": {
+          "UALER": 0.183333,
+          "ATPR": 0.92437
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": 1.0,
+          "FRR": 0.032086,
+          "BER": 0.955621,
+          "abstention_rate": 0.102778
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.745763,
+          "FRR_incl_unretrieved": 0.087395
+        },
+        "calibration": {
+          "brier": 0.026212,
+          "ece": 0.022097
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 57.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 0.921053,
+            "FRR": 0.041475,
+            "BER": 0.927928,
+            "abstention_rate": 0.141667,
+            "n_responses": 120.0,
+            "n_authorized_third_party_links": 114.0
+          },
+          "contact": {
+            "UALER": 0.383333,
+            "ATPR": 0.789474,
+            "FRR": 0.096386,
+            "BER": 0.882353,
+            "abstention_rate": 0.25,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 38.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.05,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.716667,
+            "ATPR": 0.965517,
+            "FRR": 0.011494,
+            "BER": 0.983051,
+            "abstention_rate": 0.033333,
+            "n_responses": 60.0,
+            "n_authorized_third_party_links": 29.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 18,
+          "authorized_links_retrieved": 561,
+          "authorized_third_party_links_retained": 220,
+          "authorized_third_party_links_retrieved": 238,
+          "benign_responses_scored": 338,
+          "confident_misbinding_responses": 66,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 66,
+          "official_claims": 323,
+          "presented_links": 620
+        },
+        "verdict_distribution": {
+          "UNVERIFIED": 2980,
+          "VERIFIED": 620
+        },
+        "mean_decision_ms": 0.2559
+      },
+      "validation": {
+        "defense_id": "B10_ragshield_defense",
+        "regime": "validation",
+        "n_responses": 144,
+        "n_valid_responses": 144,
+        "n_triples": 1440,
+        "primary": {
+          "UALER": 0.145833,
+          "ATPR": 0.921569
+        },
+        "secondary": {
+          "OSMR": 0.0,
+          "CMR": 1.0,
+          "FRR": 0.033898,
+          "BER": 0.985294,
+          "abstention_rate": 0.069444
+        },
+        "unconditioned": {
+          "ATPR_incl_unretrieved": 0.79661,
+          "FRR_incl_unretrieved": 0.042017
+        },
+        "calibration": {
+          "brier": 0.022826,
+          "ece": 0.019303
+        },
+        "per_action": {
+          "book": {
+            "UALER": 0.0,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 25.0
+          },
+          "browse": {
+            "UALER": 0.0,
+            "ATPR": 0.863636,
+            "FRR": 0.068182,
+            "BER": 0.977778,
+            "abstention_rate": 0.083333,
+            "n_responses": 48.0,
+            "n_authorized_third_party_links": 44.0
+          },
+          "contact": {
+            "UALER": 0.25,
+            "ATPR": 0.909091,
+            "FRR": 0.046512,
+            "BER": 0.954545,
+            "abstention_rate": 0.125,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 22.0
+          },
+          "login": {
+            "UALER": 0.0,
+            "ATPR": null,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.125,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 0.0
+          },
+          "pay": {
+            "UALER": 0.625,
+            "ATPR": 1.0,
+            "FRR": 0.0,
+            "BER": 1.0,
+            "abstention_rate": 0.0,
+            "n_responses": 24.0,
+            "n_authorized_third_party_links": 11.0
+          }
+        },
+        "counts": {
+          "authorized_links_rejected": 8,
+          "authorized_links_retrieved": 236,
+          "authorized_third_party_links_retained": 94,
+          "authorized_third_party_links_retrieved": 102,
+          "benign_responses_scored": 136,
+          "confident_misbinding_responses": 21,
+          "incorrect_official_claims": 0,
+          "misbinding_responses": 21,
+          "official_claims": 134,
+          "presented_links": 253
+        },
+        "verdict_distribution": {
+          "UNVERIFIED": 1187,
+          "VERIFIED": 253
+        },
+        "mean_decision_ms": 0.2559
+      }
+    }
+  },
+  "ablation_effects": {
+    "_regime": "validation",
+    "ablation_no_action_type": {
+      "prediction": "UALER up on login/pay (over-grants); ATPR ~flat",
+      "delta_ualer_vs_full": 0.319444,
+      "delta_atpr_vs_full": 0.0,
+      "predicted_direction": "over_grant",
+      "realised_direction": "over_grant",
+      "prediction_holds": true,
+      "verdict_distribution": {
+        "CONTRADICTED": 783,
+        "UNVERIFIED": 364,
+        "VERIFIED": 293
+      }
+    },
+    "ablation_no_official_backlinks": {
+      "prediction": "ATPR collapses toward official_only; UALER ~flat near zero",
+      "delta_ualer_vs_full": 0.0,
+      "delta_atpr_vs_full": -1.0,
+      "predicted_direction": "under_grant",
+      "realised_direction": "under_grant",
+      "prediction_holds": true,
+      "verdict_distribution": {
+        "CONTRADICTED": 576,
+        "UNVERIFIED": 730,
+        "VERIFIED": 134
+      }
+    },
+    "ablation_no_source_clustering": {
+      "prediction": "small on this corpus; corroboration is capped either way",
+      "delta_ualer_vs_full": 0.0,
+      "delta_atpr_vs_full": 0.0,
+      "predicted_direction": "negligible",
+      "realised_direction": "negligible",
+      "prediction_holds": true,
+      "verdict_distribution": {
+        "CONTRADICTED": 783,
+        "PLAUSIBLE": 11,
+        "UNVERIFIED": 410,
+        "VERIFIED": 236
+      }
+    },
+    "ablation_no_domain_lifecycle": {
+      "prediction": "near zero; takeover domains hold no grant to withdraw",
+      "delta_ualer_vs_full": 0.0,
+      "delta_atpr_vs_full": 0.0,
+      "predicted_direction": "negligible",
+      "realised_direction": "negligible",
+      "prediction_holds": true,
+      "verdict_distribution": {
+        "CONTRADICTED": 783,
+        "UNVERIFIED": 421,
+        "VERIFIED": 236
+      }
+    },
+    "ablation_no_contradiction_edges": {
+      "prediction": "CONTRADICTED -> UNVERIFIED; moves CMR/OSMR, not UALER",
+      "delta_ualer_vs_full": 0.0,
+      "delta_atpr_vs_full": 0.0,
+      "predicted_direction": "negligible",
+      "realised_direction": "negligible",
+      "prediction_holds": true,
+      "verdict_distribution": {
+        "UNVERIFIED": 1204,
+        "VERIFIED": 236
+      }
+    },
+    "ablation_source_count_voting": {
+      "prediction": "UALER up sharply; Sybil pages outvote the official page",
+      "delta_ualer_vs_full": 0.006944,
+      "delta_atpr_vs_full": -0.990196,
+      "predicted_direction": "over_grant",
+      "realised_direction": "under_grant",
+      "prediction_holds": false,
+      "verdict_distribution": {
+        "CONTRADICTED": 783,
+        "PLAUSIBLE": 3,
+        "UNVERIFIED": 520,
+        "VERIFIED": 134
+      }
+    },
+    "ablation_shared_threshold": {
+      "prediction": "error redistributed across the risk ladder",
+      "delta_ualer_vs_full": 0.0,
+      "delta_atpr_vs_full": 0.0,
+      "predicted_direction": "negligible",
+      "realised_direction": "negligible",
+      "prediction_holds": true,
+      "verdict_distribution": {
+        "CONTRADICTED": 783,
+        "UNVERIFIED": 421,
+        "VERIFIED": 236
+      }
+    },
+    "_prediction_policy": "Directions were stated in aegislink/ablations.py before any measurement. Where prediction_holds is false the disagreement is reported and explained, not reconciled by adjusting the mechanism -- see observed_mechanisms below.",
+    "_observed_mechanisms": {
+      "ablation_source_count_voting": "PREDICTION FAILED, and the reason is informative. Voting was predicted to over-grant because Sybil corroborators would outvote the official page. Measured, it UNDER-grants: the forged 'Listed by the official site' backlink points at the entity's GENUINE official host, so in a link-counting vote every Sybil page casts its vote FOR the official domain. The forgery that defeats a provenance checker therefore helps a vote counter. Voting's failure on this corpus is lost third-party utility (ATPR collapses), not admitted attacks.",
+      "ablation_no_contradiction_edges": "Negligible on UALER as predicted, but for a reason worth stating: the authority gate already withholds impersonators, so contradiction edges add the ability to say CONTRADICTED (a positive detection) rather than UNVERIFIED (an evidence gap). Their value shows up in verdict semantics, CMR and OSMR, not in blocking."
+    }
+  },
+  "latency": {
+    "aegislink_full": {
+      "pipeline_id": "aegislink-full-v1",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 15.4936,
+      "mean_decision_ms": 0.7718,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "ablation_no_action_type": {
+      "pipeline_id": "ablation_no_action_type",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 15.5985,
+      "mean_decision_ms": 0.777,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "ablation_no_official_backlinks": {
+      "pipeline_id": "ablation_no_official_backlinks",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 14.9378,
+      "mean_decision_ms": 0.7441,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "ablation_no_source_clustering": {
+      "pipeline_id": "ablation_no_source_clustering",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 14.3668,
+      "mean_decision_ms": 0.7157,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "ablation_no_domain_lifecycle": {
+      "pipeline_id": "ablation_no_domain_lifecycle",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 15.3581,
+      "mean_decision_ms": 0.7651,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "ablation_no_contradiction_edges": {
+      "pipeline_id": "ablation_no_contradiction_edges",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 15.7331,
+      "mean_decision_ms": 0.7838,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "ablation_source_count_voting": {
+      "pipeline_id": "ablation_source_count_voting",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 18.9644,
+      "mean_decision_ms": 0.9447,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "ablation_shared_threshold": {
+      "pipeline_id": "ablation_shared_threshold",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 15.5753,
+      "mean_decision_ms": 0.7759,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "B01_lexical_url_rules": {
+      "pipeline_id": "B01_lexical_url_rules",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 0.3152,
+      "mean_decision_ms": 0.0157,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "B02_domain_reputation": {
+      "pipeline_id": "B02_domain_reputation",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 0.2214,
+      "mean_decision_ms": 0.011,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "B03_phishing_classifier": {
+      "pipeline_id": "B03_phishing_classifier",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 1.7258,
+      "mean_decision_ms": 0.086,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "B04_llm_as_judge": {
+      "pipeline_id": "B04_llm_as_judge",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 5.751,
+      "mean_decision_ms": 0.2865,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "B05_source_count_majority": {
+      "pipeline_id": "B05_source_count_majority",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 36.0686,
+      "mean_decision_ms": 1.7968,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "B06_provenance_reranker": {
+      "pipeline_id": "B06_provenance_reranker",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 16.9753,
+      "mean_decision_ms": 0.8456,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "B07_graph_anomaly_detector": {
+      "pipeline_id": "B07_graph_anomaly_detector",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 30.7462,
+      "mean_decision_ms": 1.5316,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "B08_reject_high_risk": {
+      "pipeline_id": "B08_reject_high_risk",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 0.9651,
+      "mean_decision_ms": 0.0481,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "B09_official_only": {
+      "pipeline_id": "B09_official_only",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 0.1539,
+      "mean_decision_ms": 0.0077,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    },
+    "B10_ragshield_defense": {
+      "pipeline_id": "B10_ragshield_defense",
+      "adapter_version": "1.0",
+      "read_phase": "live",
+      "bound_replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "n_decisions": 20074,
+      "decision_seconds": 5.1363,
+      "mean_decision_ms": 0.2559,
+      "presentation_policy": "every candidate the defense allows is presented, in rank order. One unauthorized presented link anywhere in the list is a UALER event."
+    }
+  }
+}

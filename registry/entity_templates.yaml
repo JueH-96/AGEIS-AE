@@ -1,0 +1,880 @@
+metadata:
+  schema_version: '1.0'
+  generator: registry/entity_generator.py
+  generator_version: '1.0'
+  lexicon_version: '1.0'
+  master_seed: 42
+  contract_ref: CONTRACT.md Section 5.1
+  machine_readable_entity_id_channel: x-aegis-entity-id
+  machine_readable_note: Entity IDs are published to parsers through an HTML <meta> channel and never
+    appear in visible prose (CONTRACT.md Section 8, item 3). The channel carries the target entity ID
+    and an opaque page ID only; page role, attack template and factor levels are held in the side manifest
+    so the channel cannot leak a label.
+  status_enum:
+  - active
+  - fabricated_control
+  counts:
+    entity_templates: 80
+    fabricated_control_templates: 8
+    controlled_entities: 160
+    fabricated_control_entities: 8
+  split_unit: entity_template
+entity_templates:
+- entity_template_id: ET001
+  category: restaurant
+  lead_word: Harbour
+  name_suffix: Bistro
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET002
+  category: restaurant
+  lead_word: Cinder
+  name_suffix: Kitchen
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET003
+  category: restaurant
+  lead_word: Solstice
+  name_suffix: Eatery
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET004
+  category: restaurant
+  lead_word: Mistral
+  name_suffix: Supper Room
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET005
+  category: restaurant
+  lead_word: Vellum
+  name_suffix: Tavern
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET006
+  category: restaurant
+  lead_word: Quillon
+  name_suffix: Bistro
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET007
+  category: restaurant
+  lead_word: Corvid
+  name_suffix: Kitchen
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET008
+  category: restaurant
+  lead_word: Fernhollow
+  name_suffix: Eatery
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET009
+  category: restaurant
+  lead_word: Thistle
+  name_suffix: Supper Room
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET010
+  category: restaurant
+  lead_word: Marlowe
+  name_suffix: Tavern
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET011
+  category: hotel
+  lead_word: Wickham
+  name_suffix: Hotel
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET012
+  category: hotel
+  lead_word: Orrery
+  name_suffix: Inn
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET013
+  category: hotel
+  lead_word: Verdant
+  name_suffix: Lodge
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET014
+  category: hotel
+  lead_word: Pellucid
+  name_suffix: Guesthouse
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET015
+  category: hotel
+  lead_word: Aldermist
+  name_suffix: Rooms
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET016
+  category: hotel
+  lead_word: Bramble
+  name_suffix: Hotel
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET017
+  category: hotel
+  lead_word: Cobalt
+  name_suffix: Inn
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET018
+  category: hotel
+  lead_word: Alabaster
+  name_suffix: Lodge
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET019
+  category: hotel
+  lead_word: Selkie
+  name_suffix: Guesthouse
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET020
+  category: hotel
+  lead_word: Ambergris
+  name_suffix: Rooms
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET021
+  category: clinic
+  lead_word: Zephyr
+  name_suffix: Clinic
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET022
+  category: clinic
+  lead_word: Kestrel
+  name_suffix: Health Rooms
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET023
+  category: clinic
+  lead_word: Halcyon
+  name_suffix: Practice
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET024
+  category: clinic
+  lead_word: Juniper
+  name_suffix: Surgery
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET025
+  category: clinic
+  lead_word: Harbour
+  name_suffix: Care Centre
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET026
+  category: clinic
+  lead_word: Cinder
+  name_suffix: Clinic
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET027
+  category: clinic
+  lead_word: Solstice
+  name_suffix: Health Rooms
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET028
+  category: clinic
+  lead_word: Mistral
+  name_suffix: Practice
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET029
+  category: clinic
+  lead_word: Vellum
+  name_suffix: Surgery
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET030
+  category: clinic
+  lead_word: Quillon
+  name_suffix: Care Centre
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET031
+  category: service_provider
+  lead_word: Corvid
+  name_suffix: Repairs
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET032
+  category: service_provider
+  lead_word: Fernhollow
+  name_suffix: Services
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET033
+  category: service_provider
+  lead_word: Thistle
+  name_suffix: Workshop
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET034
+  category: service_provider
+  lead_word: Marlowe
+  name_suffix: Fitters
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET035
+  category: service_provider
+  lead_word: Wickham
+  name_suffix: Maintenance
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET036
+  category: service_provider
+  lead_word: Orrery
+  name_suffix: Repairs
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET037
+  category: service_provider
+  lead_word: Verdant
+  name_suffix: Services
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET038
+  category: service_provider
+  lead_word: Pellucid
+  name_suffix: Workshop
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET039
+  category: service_provider
+  lead_word: Aldermist
+  name_suffix: Fitters
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET040
+  category: service_provider
+  lead_word: Bramble
+  name_suffix: Maintenance
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET041
+  category: tour_operator
+  lead_word: Cobalt
+  name_suffix: Tours
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET042
+  category: tour_operator
+  lead_word: Alabaster
+  name_suffix: Excursions
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET043
+  category: tour_operator
+  lead_word: Selkie
+  name_suffix: Voyages
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET044
+  category: tour_operator
+  lead_word: Ambergris
+  name_suffix: Expeditions
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET045
+  category: tour_operator
+  lead_word: Zephyr
+  name_suffix: Trails
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET046
+  category: tour_operator
+  lead_word: Kestrel
+  name_suffix: Tours
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET047
+  category: tour_operator
+  lead_word: Halcyon
+  name_suffix: Excursions
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET048
+  category: tour_operator
+  lead_word: Juniper
+  name_suffix: Voyages
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET049
+  category: tour_operator
+  lead_word: Harbour
+  name_suffix: Expeditions
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET050
+  category: tour_operator
+  lead_word: Cinder
+  name_suffix: Trails
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET051
+  category: salon
+  lead_word: Solstice
+  name_suffix: Salon
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET052
+  category: salon
+  lead_word: Mistral
+  name_suffix: Grooming Rooms
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET053
+  category: salon
+  lead_word: Vellum
+  name_suffix: Barbers
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET054
+  category: salon
+  lead_word: Quillon
+  name_suffix: Stylists
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET055
+  category: salon
+  lead_word: Corvid
+  name_suffix: Atelier
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET056
+  category: salon
+  lead_word: Fernhollow
+  name_suffix: Salon
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET057
+  category: salon
+  lead_word: Thistle
+  name_suffix: Grooming Rooms
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET058
+  category: salon
+  lead_word: Marlowe
+  name_suffix: Barbers
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET059
+  category: salon
+  lead_word: Wickham
+  name_suffix: Stylists
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET060
+  category: salon
+  lead_word: Orrery
+  name_suffix: Atelier
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET061
+  category: fitness_studio
+  lead_word: Verdant
+  name_suffix: Gym
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET062
+  category: fitness_studio
+  lead_word: Pellucid
+  name_suffix: Fitness Rooms
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET063
+  category: fitness_studio
+  lead_word: Aldermist
+  name_suffix: Athletics Club
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET064
+  category: fitness_studio
+  lead_word: Bramble
+  name_suffix: Training Studio
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET065
+  category: fitness_studio
+  lead_word: Cobalt
+  name_suffix: Movement Lab
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET066
+  category: fitness_studio
+  lead_word: Alabaster
+  name_suffix: Gym
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET067
+  category: fitness_studio
+  lead_word: Selkie
+  name_suffix: Fitness Rooms
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET068
+  category: fitness_studio
+  lead_word: Ambergris
+  name_suffix: Athletics Club
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET069
+  category: fitness_studio
+  lead_word: Zephyr
+  name_suffix: Training Studio
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET070
+  category: fitness_studio
+  lead_word: Kestrel
+  name_suffix: Movement Lab
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET071
+  category: bookshop
+  lead_word: Halcyon
+  name_suffix: Books
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET072
+  category: bookshop
+  lead_word: Juniper
+  name_suffix: Bookshop
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET073
+  category: bookshop
+  lead_word: Harbour
+  name_suffix: Reading Rooms
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET074
+  category: bookshop
+  lead_word: Cinder
+  name_suffix: Bindery
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET075
+  category: bookshop
+  lead_word: Solstice
+  name_suffix: Booksellers
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET076
+  category: bookshop
+  lead_word: Mistral
+  name_suffix: Books
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET077
+  category: bookshop
+  lead_word: Vellum
+  name_suffix: Bookshop
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET078
+  category: bookshop
+  lead_word: Quillon
+  name_suffix: Reading Rooms
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET079
+  category: bookshop
+  lead_word: Corvid
+  name_suffix: Bindery
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: ET080
+  category: bookshop
+  lead_word: Fernhollow
+  name_suffix: Booksellers
+  morphology: <lead_word> <second_word> <name_suffix>
+- entity_template_id: FT001
+  category: restaurant
+  lead_word: Aldermist
+  name_suffix: Bistro
+  morphology: fabricated_control
+- entity_template_id: FT002
+  category: hotel
+  lead_word: Cinder
+  name_suffix: Inn
+  morphology: fabricated_control
+- entity_template_id: FT003
+  category: clinic
+  lead_word: Verdant
+  name_suffix: Practice
+  morphology: fabricated_control
+- entity_template_id: FT004
+  category: service_provider
+  lead_word: Juniper
+  name_suffix: Fitters
+  morphology: fabricated_control
+- entity_template_id: FT005
+  category: tour_operator
+  lead_word: Wickham
+  name_suffix: Trails
+  morphology: fabricated_control
+- entity_template_id: FT006
+  category: salon
+  lead_word: Kestrel
+  name_suffix: Salon
+  morphology: fabricated_control
+- entity_template_id: FT007
+  category: fitness_studio
+  lead_word: Thistle
+  name_suffix: Fitness Rooms
+  morphology: fabricated_control
+- entity_template_id: FT008
+  category: bookshop
+  lead_word: Ambergris
+  name_suffix: Reading Rooms
+  morphology: fabricated_control
+template_to_entities:
+  ET001:
+  - E0001
+  - E0002
+  ET002:
+  - E0003
+  - E0004
+  ET003:
+  - E0005
+  - E0006
+  ET004:
+  - E0007
+  - E0008
+  ET005:
+  - E0009
+  - E0010
+  ET006:
+  - E0011
+  - E0012
+  ET007:
+  - E0013
+  - E0014
+  ET008:
+  - E0015
+  - E0016
+  ET009:
+  - E0017
+  - E0018
+  ET010:
+  - E0019
+  - E0020
+  ET011:
+  - E0021
+  - E0022
+  ET012:
+  - E0023
+  - E0024
+  ET013:
+  - E0025
+  - E0026
+  ET014:
+  - E0027
+  - E0028
+  ET015:
+  - E0029
+  - E0030
+  ET016:
+  - E0031
+  - E0032
+  ET017:
+  - E0033
+  - E0034
+  ET018:
+  - E0035
+  - E0036
+  ET019:
+  - E0037
+  - E0038
+  ET020:
+  - E0039
+  - E0040
+  ET021:
+  - E0041
+  - E0042
+  ET022:
+  - E0043
+  - E0044
+  ET023:
+  - E0045
+  - E0046
+  ET024:
+  - E0047
+  - E0048
+  ET025:
+  - E0049
+  - E0050
+  ET026:
+  - E0051
+  - E0052
+  ET027:
+  - E0053
+  - E0054
+  ET028:
+  - E0055
+  - E0056
+  ET029:
+  - E0057
+  - E0058
+  ET030:
+  - E0059
+  - E0060
+  ET031:
+  - E0061
+  - E0062
+  ET032:
+  - E0063
+  - E0064
+  ET033:
+  - E0065
+  - E0066
+  ET034:
+  - E0067
+  - E0068
+  ET035:
+  - E0069
+  - E0070
+  ET036:
+  - E0071
+  - E0072
+  ET037:
+  - E0073
+  - E0074
+  ET038:
+  - E0075
+  - E0076
+  ET039:
+  - E0077
+  - E0078
+  ET040:
+  - E0079
+  - E0080
+  ET041:
+  - E0081
+  - E0082
+  ET042:
+  - E0083
+  - E0084
+  ET043:
+  - E0085
+  - E0086
+  ET044:
+  - E0087
+  - E0088
+  ET045:
+  - E0089
+  - E0090
+  ET046:
+  - E0091
+  - E0092
+  ET047:
+  - E0093
+  - E0094
+  ET048:
+  - E0095
+  - E0096
+  ET049:
+  - E0097
+  - E0098
+  ET050:
+  - E0099
+  - E0100
+  ET051:
+  - E0101
+  - E0102
+  ET052:
+  - E0103
+  - E0104
+  ET053:
+  - E0105
+  - E0106
+  ET054:
+  - E0107
+  - E0108
+  ET055:
+  - E0109
+  - E0110
+  ET056:
+  - E0111
+  - E0112
+  ET057:
+  - E0113
+  - E0114
+  ET058:
+  - E0115
+  - E0116
+  ET059:
+  - E0117
+  - E0118
+  ET060:
+  - E0119
+  - E0120
+  ET061:
+  - E0121
+  - E0122
+  ET062:
+  - E0123
+  - E0124
+  ET063:
+  - E0125
+  - E0126
+  ET064:
+  - E0127
+  - E0128
+  ET065:
+  - E0129
+  - E0130
+  ET066:
+  - E0131
+  - E0132
+  ET067:
+  - E0133
+  - E0134
+  ET068:
+  - E0135
+  - E0136
+  ET069:
+  - E0137
+  - E0138
+  ET070:
+  - E0139
+  - E0140
+  ET071:
+  - E0141
+  - E0142
+  ET072:
+  - E0143
+  - E0144
+  ET073:
+  - E0145
+  - E0146
+  ET074:
+  - E0147
+  - E0148
+  ET075:
+  - E0149
+  - E0150
+  ET076:
+  - E0151
+  - E0152
+  ET077:
+  - E0153
+  - E0154
+  ET078:
+  - E0155
+  - E0156
+  ET079:
+  - E0157
+  - E0158
+  ET080:
+  - E0159
+  - E0160
+  FT001:
+  - E9001
+  FT002:
+  - E9002
+  FT003:
+  - E9003
+  FT004:
+  - E9004
+  FT005:
+  - E9005
+  FT006:
+  - E9006
+  FT007:
+  - E9007
+  FT008:
+  - E9008
+confusable_sibling_of:
+  E0001: E0002
+  E0002: E0001
+  E0003: E0004
+  E0004: E0003
+  E0005: E0006
+  E0006: E0005
+  E0007: E0008
+  E0008: E0007
+  E0009: E0010
+  E0010: E0009
+  E0011: E0012
+  E0012: E0011
+  E0013: E0014
+  E0014: E0013
+  E0015: E0016
+  E0016: E0015
+  E0017: E0018
+  E0018: E0017
+  E0019: E0020
+  E0020: E0019
+  E0021: E0022
+  E0022: E0021
+  E0023: E0024
+  E0024: E0023
+  E0025: E0026
+  E0026: E0025
+  E0027: E0028
+  E0028: E0027
+  E0029: E0030
+  E0030: E0029
+  E0031: E0032
+  E0032: E0031
+  E0033: E0034
+  E0034: E0033
+  E0035: E0036
+  E0036: E0035
+  E0037: E0038
+  E0038: E0037
+  E0039: E0040
+  E0040: E0039
+  E0041: E0042
+  E0042: E0041
+  E0043: E0044
+  E0044: E0043
+  E0045: E0046
+  E0046: E0045
+  E0047: E0048
+  E0048: E0047
+  E0049: E0050
+  E0050: E0049
+  E0051: E0052
+  E0052: E0051
+  E0053: E0054
+  E0054: E0053
+  E0055: E0056
+  E0056: E0055
+  E0057: E0058
+  E0058: E0057
+  E0059: E0060
+  E0060: E0059
+  E0061: E0062
+  E0062: E0061
+  E0063: E0064
+  E0064: E0063
+  E0065: E0066
+  E0066: E0065
+  E0067: E0068
+  E0068: E0067
+  E0069: E0070
+  E0070: E0069
+  E0071: E0072
+  E0072: E0071
+  E0073: E0074
+  E0074: E0073
+  E0075: E0076
+  E0076: E0075
+  E0077: E0078
+  E0078: E0077
+  E0079: E0080
+  E0080: E0079
+  E0081: E0082
+  E0082: E0081
+  E0083: E0084
+  E0084: E0083
+  E0085: E0086
+  E0086: E0085
+  E0087: E0088
+  E0088: E0087
+  E0089: E0090
+  E0090: E0089
+  E0091: E0092
+  E0092: E0091
+  E0093: E0094
+  E0094: E0093
+  E0095: E0096
+  E0096: E0095
+  E0097: E0098
+  E0098: E0097
+  E0099: E0100
+  E0100: E0099
+  E0101: E0102
+  E0102: E0101
+  E0103: E0104
+  E0104: E0103
+  E0105: E0106
+  E0106: E0105
+  E0107: E0108
+  E0108: E0107
+  E0109: E0110
+  E0110: E0109
+  E0111: E0112
+  E0112: E0111
+  E0113: E0114
+  E0114: E0113
+  E0115: E0116
+  E0116: E0115
+  E0117: E0118
+  E0118: E0117
+  E0119: E0120
+  E0120: E0119
+  E0121: E0122
+  E0122: E0121
+  E0123: E0124
+  E0124: E0123
+  E0125: E0126
+  E0126: E0125
+  E0127: E0128
+  E0128: E0127
+  E0129: E0130
+  E0130: E0129
+  E0131: E0132
+  E0132: E0131
+  E0133: E0134
+  E0134: E0133
+  E0135: E0136
+  E0136: E0135
+  E0137: E0138
+  E0138: E0137
+  E0139: E0140
+  E0140: E0139
+  E0141: E0142
+  E0142: E0141
+  E0143: E0144
+  E0144: E0143
+  E0145: E0146
+  E0146: E0145
+  E0147: E0148
+  E0148: E0147
+  E0149: E0150
+  E0150: E0149
+  E0151: E0152
+  E0152: E0151
+  E0153: E0154
+  E0154: E0153
+  E0155: E0156
+  E0156: E0155
+  E0157: E0158
+  E0158: E0157
+  E0159: E0160
+  E0160: E0159

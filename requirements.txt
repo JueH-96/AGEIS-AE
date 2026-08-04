@@ -1,0 +1,9 @@
+# AegisLink AE-check bundle. Python >= 3.12.
+# No TeX/LaTeX toolchain is required for any target in the Makefile.
+numpy>=1.26
+pandas>=2.2
+openpyxl>=3.1
+scipy>=1.13
+matplotlib>=3.8
+pyyaml>=6.0
+pytest>=8.0

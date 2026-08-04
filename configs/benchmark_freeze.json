@@ -1,0 +1,743 @@
+{
+  "benchmark_freeze_version": "1.0",
+  "step": 2,
+  "step_name": "Controlled world, authorization graph, and data splits",
+  "contract_ref": "CONTRACT.md Sections 5, 7, 8, 15, 16",
+  "purpose": "Reproducibility and tamper-evidence record for the Step 2 generated benchmark. Supplies the authorization_graph_hash and page_hashes entries required by CONTRACT.md Section 15. Distinct from configs/frozen_params.json, which records the Step 1 PREREGISTRATION freeze: these artifacts are generated data that legitimately changes when the generator version changes, whereas the preregistration must not change at all after the pilot begins.",
+  "hash_algorithm": "sha256",
+  "is_frozen_constraint": false,
+  "generator_versions": {
+    "lexicon": "1.0",
+    "entity_generator": "1.0",
+    "authorization_graph_builder": "1.0",
+    "site_generator": "1.0",
+    "safety_validator": "1.0"
+  },
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Linux-6.12.85+-x86_64-with-glibc2.36",
+    "git_commit": null
+  },
+  "master_seed": 42,
+  "artifact_sha256": {
+    "registry/entities.yaml": "dbaabcb0f6cfc05da45f91079da3dece932960ebca4a06b0ac62cc23fb51897a",
+    "registry/entity_templates.yaml": "d9391a822d48452582451e8070998d24664b78a665e9b7791dfc00a1212f6ab6",
+    "registry/addresses.yaml": "d468806c8ded0458b8286ec94177e4602c577188ae23e68ea1882b74f6fae158",
+    "registry/phones.yaml": "6cb49de4de73f4d9a26f09635c3d8695986051e6265ff03ec6b58afd977aefc8",
+    "registry/coordinates.yaml": "e9b6f5f3f9fa6914bc31dab4e247541db0fbc2d4d0356d2beaa9df3fa47863e2",
+    "registry/aliases.yaml": "e3f998fe55c36effce68f75c312b44a3b08d9ad97960fecc4967431aee6c442a",
+    "registry/authorization_graph.yaml": "c4b799d3b1af55fdfd33d884670f042b8a688cfeee11a148f4aabb389db3b68c",
+    "registry/domains.yaml": "99f226edde8e7280670e6b2d852aaa60de0ccf9cedb2b95407351dc2d5b195dd",
+    "site_generator/site_templates.yaml": "02a3fcc3318a6f1d6c719de4e0e38c9e11d8ab6d51ed7a840d0b480abd910af8",
+    "attacks/attack_matrix_full.yaml": "90f713e49e56511ff07619d23f8e580daa424ee185a16e0c0ee4348319909d98",
+    "attacks/attack_templates.yaml": "d10f1d9f8048fd8052535cb6f6da606122fd65fbe0f8f0683ff2bc80e3c851d5",
+    "configs/splits.yaml": "e7bb931af16fb354e752277b156027430dccbe74b33988da7d81fc426a7b27d4",
+    "data/benchmark/page_manifest.yaml": "e5d459b082db7b7dc4e165c22fa8ad158054f61edebff90a12d779d487ce5e14",
+    "data/benchmark/page_hashes.yaml": "092a7ea4051418e66363830f9828db15c5123221b32cf19a4c181f457b41f79c"
+  },
+  "authorization_graph_hash": "c4b799d3b1af55fdfd33d884670f042b8a688cfeee11a148f4aabb389db3b68c",
+  "page_corpus_hash": "f8101eaf7fe27942ecf170b70bd790cc6710cd2d1d7b720b397678e6aba48d0f",
+  "page_count": 2631,
+  "safety": {
+    "fail_closed_conditions": [
+      "public_ip_or_public_domain_deployment_target",
+      "credential_collection_fields",
+      "real_payment_processors",
+      "real_brand_names_in_adversarial_templates",
+      "crawler_submission_to_public_search_engines",
+      "outreach_to_real_users",
+      "malware_exploit_delivery_or_data_exfiltration_behavior"
+    ],
+    "files_scanned": 2646,
+    "files_exempted": 0,
+    "exempted_files": [],
+    "exemption_rationale": "The validator module and its negative-control tests contain the real brand and real payment-processor strings that constitute the blocklist, so scanning them would always fail. The exemption is a short explicit list, never a wildcard.",
+    "violations": 0,
+    "known_limitations": [
+      "Bare hostnames are detected heuristically: a token is treated as a hostname only when its final label is in PUBLIC_TLDS and not in FILE_EXTENSION_TLD_COLLISIONS. A real domain under an exotic TLD written without a scheme in free prose can therefore be missed. Domain-bearing fields in generated artifacts are schema-declared and validated directly by check_domain(), and full URLs are parsed, so this gap does not apply to any artifact this project generates.",
+      "Telephone detection ignores tokens with fewer than MIN_DIALABLE_DIGITS digits, so a bare local subscriber number written in free prose without a country code is not flagged. Every phone-bearing field in a generated artifact is validated directly by check_phone(), so the gap does not apply to anything this project produces.",
+      "The real-brand and real-payment-processor blocklists are finite. They cover the travel, hospitality, food-delivery, directory, platform and payment brands an adversarial template in this domain would plausibly use, but they are not exhaustive over all trademarks worldwide.",
+      "A generated name built from the frozen invented lexicon could coincidentally match a small real business not present in the blocklist. No real domain, phone, address or coordinate is ever used and nothing is deployed publicly, which bounds the consequence."
+    ]
+  },
+  "step2_summaries": {
+    "benchmark_entities_summary": {
+      "step": "2.2/2.3",
+      "entity_templates": 88,
+      "controlled_entities": 160,
+      "fabricated_control_entities": 8,
+      "entities_per_category": {
+        "bookshop": 20,
+        "clinic": 20,
+        "fitness_studio": 20,
+        "hotel": 20,
+        "restaurant": 20,
+        "salon": 20,
+        "service_provider": 20,
+        "tour_operator": 20
+      },
+      "domains": 1790,
+      "entity_domain_pairs": 2576,
+      "edges": 12880,
+      "authorized_edges": 1594,
+      "domain_roles": {
+        "authorized_booking_provider": 6,
+        "authorized_information_directory": 4,
+        "corroborating_blog_directory": 800,
+        "expired_domain_takeover": 160,
+        "fabricated_domain": 16,
+        "impersonating_official_site": 160,
+        "neutral_publisher": 4,
+        "official_site": 160,
+        "unauthorized_booking_provider": 160,
+        "unauthorized_login_portal": 160,
+        "unauthorized_payment_portal": 160
+      },
+      "evidence_types": {
+        "adversarial_assignment": 7200,
+        "benign_no_grant": 800,
+        "delegation_scope_limit": 806,
+        "fabricated_control": 80,
+        "lifecycle_revoked": 800,
+        "official_backlink": 794,
+        "registry": 800,
+        "registry_other_entity": 800,
+        "third_party_no_grant": 800
+      },
+      "safety_violations": 0,
+      "invariant_violations": 0,
+      "authorization_graph_sha256": "c4b799d3b1af55fdfd33d884670f042b8a688cfeee11a148f4aabb389db3b68c",
+      "domains_sha256": "99f226edde8e7280670e6b2d852aaa60de0ccf9cedb2b95407351dc2d5b195dd"
+    },
+    "benchmark_design_summary": {
+      "step": "2.4a",
+      "site_templates": 100,
+      "site_templates_per_role": {
+        "authorized_booking_provider": 10,
+        "authorized_information_directory": 10,
+        "benign_confusing_page": 10,
+        "corroborating_blog_directory": 10,
+        "expired_domain_takeover": 10,
+        "impersonating_official_site": 10,
+        "official_site": 10,
+        "unauthorized_booking_provider": 10,
+        "unauthorized_login_portal": 10,
+        "unauthorized_payment_portal": 10
+      },
+      "attack_full_factorial_cells": 1920,
+      "attack_core_templates": 600,
+      "attack_adaptive_holdout_templates": 80,
+      "attack_factors": {
+        "identity_consistency": [
+          "none",
+          "partial",
+          "full"
+        ],
+        "explicit_official_claim": [
+          "False",
+          "True"
+        ],
+        "action_claim": [
+          "browse",
+          "contact",
+          "book",
+          "login",
+          "pay"
+        ],
+        "official_backlink": [
+          "False",
+          "True"
+        ],
+        "corroborating_sources": [
+          "0",
+          "1",
+          "3",
+          "5"
+        ],
+        "lexical_diversity": [
+          "low",
+          "high"
+        ],
+        "prompt_injection": [
+          "False",
+          "True"
+        ],
+        "content_change_after_indexing": [
+          "False",
+          "True"
+        ]
+      },
+      "balance": {
+        "design": "fractional factorial, action_claim fully crossed",
+        "full_factorial_cells": 1920,
+        "core_templates": 600,
+        "templates_per_action": 120,
+        "adaptive_holdout_templates": 80,
+        "adaptive_holdout_region": {
+          "identity_consistency": [
+            "full"
+          ],
+          "official_backlink": [
+            "True"
+          ],
+          "corroborating_sources": [
+            "3",
+            "5"
+          ],
+          "lexical_diversity": [
+            "high"
+          ]
+        },
+        "per_action": {
+          "browse": {
+            "main_effects_exactly_balanced": true,
+            "main_effect_counts": {
+              "identity_consistency": {
+                "none": 40,
+                "partial": 40,
+                "full": 40
+              },
+              "explicit_official_claim": {
+                "False": 60,
+                "True": 60
+              },
+              "official_backlink": {
+                "False": 60,
+                "True": 60
+              },
+              "corroborating_sources": {
+                "0": 30,
+                "1": 30,
+                "3": 30,
+                "5": 30
+              },
+              "lexical_diversity": {
+                "low": 60,
+                "high": 60
+              },
+              "prompt_injection": {
+                "False": 60,
+                "True": 60
+              },
+              "content_change_after_indexing": {
+                "False": 60,
+                "True": 60
+              }
+            },
+            "max_pairwise_cell_deviation": 1.0,
+            "max_pairwise_cell_deviation_at": {
+              "factor_a": "explicit_official_claim",
+              "factor_b": "official_backlink",
+              "cell": [
+                "False",
+                "False"
+              ]
+            },
+            "pairwise_note": "Main effects are exact by construction. Pairwise cell counts are measured, not guaranteed: a mixed-level orthogonal array of strength 2 need not exist for this factor structure once the adaptive-holdout region is excluded, so the achieved deviation is reported and asserted against a declared tolerance instead."
+          },
+          "contact": {
+            "main_effects_exactly_balanced": true,
+            "main_effect_counts": {
+              "identity_consistency": {
+                "none": 40,
+                "partial": 40,
+                "full": 40
+              },
+              "explicit_official_claim": {
+                "False": 60,
+                "True": 60
+              },
+              "official_backlink": {
+                "False": 60,
+                "True": 60
+              },
+              "corroborating_sources": {
+                "0": 30,
+                "1": 30,
+                "3": 30,
+                "5": 30
+              },
+              "lexical_diversity": {
+                "low": 60,
+                "high": 60
+              },
+              "prompt_injection": {
+                "False": 60,
+                "True": 60
+              },
+              "content_change_after_indexing": {
+                "False": 60,
+                "True": 60
+              }
+            },
+            "max_pairwise_cell_deviation": 1.0,
+            "max_pairwise_cell_deviation_at": {
+              "factor_a": "explicit_official_claim",
+              "factor_b": "official_backlink",
+              "cell": [
+                "False",
+                "False"
+              ]
+            },
+            "pairwise_note": "Main effects are exact by construction. Pairwise cell counts are measured, not guaranteed: a mixed-level orthogonal array of strength 2 need not exist for this factor structure once the adaptive-holdout region is excluded, so the achieved deviation is reported and asserted against a declared tolerance instead."
+          },
+          "book": {
+            "main_effects_exactly_balanced": true,
+            "main_effect_counts": {
+              "identity_consistency": {
+                "none": 40,
+                "partial": 40,
+                "full": 40
+              },
+              "explicit_official_claim": {
+                "False": 60,
+                "True": 60
+              },
+              "official_backlink": {
+                "False": 60,
+                "True": 60
+              },
+              "corroborating_sources": {
+                "0": 30,
+                "1": 30,
+                "3": 30,
+                "5": 30
+              },
+              "lexical_diversity": {
+                "low": 60,
+                "high": 60
+              },
+              "prompt_injection": {
+                "False": 60,
+                "True": 60
+              },
+              "content_change_after_indexing": {
+                "False": 60,
+                "True": 60
+              }
+            },
+            "max_pairwise_cell_deviation": 1.0,
+            "max_pairwise_cell_deviation_at": {
+              "factor_a": "explicit_official_claim",
+              "factor_b": "official_backlink",
+              "cell": [
+                "False",
+                "False"
+              ]
+            },
+            "pairwise_note": "Main effects are exact by construction. Pairwise cell counts are measured, not guaranteed: a mixed-level orthogonal array of strength 2 need not exist for this factor structure once the adaptive-holdout region is excluded, so the achieved deviation is reported and asserted against a declared tolerance instead."
+          },
+          "login": {
+            "main_effects_exactly_balanced": true,
+            "main_effect_counts": {
+              "identity_consistency": {
+                "none": 40,
+                "partial": 40,
+                "full": 40
+              },
+              "explicit_official_claim": {
+                "False": 60,
+                "True": 60
+              },
+              "official_backlink": {
+                "False": 60,
+                "True": 60
+              },
+              "corroborating_sources": {
+                "0": 30,
+                "1": 30,
+                "3": 30,
+                "5": 30
+              },
+              "lexical_diversity": {
+                "low": 60,
+                "high": 60
+              },
+              "prompt_injection": {
+                "False": 60,
+                "True": 60
+              },
+              "content_change_after_indexing": {
+                "False": 60,
+                "True": 60
+              }
+            },
+            "max_pairwise_cell_deviation": 1.0,
+            "max_pairwise_cell_deviation_at": {
+              "factor_a": "explicit_official_claim",
+              "factor_b": "official_backlink",
+              "cell": [
+                "False",
+                "False"
+              ]
+            },
+            "pairwise_note": "Main effects are exact by construction. Pairwise cell counts are measured, not guaranteed: a mixed-level orthogonal array of strength 2 need not exist for this factor structure once the adaptive-holdout region is excluded, so the achieved deviation is reported and asserted against a declared tolerance instead."
+          },
+          "pay": {
+            "main_effects_exactly_balanced": true,
+            "main_effect_counts": {
+              "identity_consistency": {
+                "none": 40,
+                "partial": 40,
+                "full": 40
+              },
+              "explicit_official_claim": {
+                "False": 60,
+                "True": 60
+              },
+              "official_backlink": {
+                "False": 60,
+                "True": 60
+              },
+              "corroborating_sources": {
+                "0": 30,
+                "1": 30,
+                "3": 30,
+                "5": 30
+              },
+              "lexical_diversity": {
+                "low": 60,
+                "high": 60
+              },
+              "prompt_injection": {
+                "False": 60,
+                "True": 60
+              },
+              "content_change_after_indexing": {
+                "False": 60,
+                "True": 60
+              }
+            },
+            "max_pairwise_cell_deviation": 1.0,
+            "max_pairwise_cell_deviation_at": {
+              "factor_a": "explicit_official_claim",
+              "factor_b": "official_backlink",
+              "cell": [
+                "False",
+                "False"
+              ]
+            },
+            "pairwise_note": "Main effects are exact by construction. Pairwise cell counts are measured, not guaranteed: a mixed-level orthogonal array of strength 2 need not exist for this factor structure once the adaptive-holdout region is excluded, so the achieved deviation is reported and asserted against a declared tolerance instead."
+          }
+        }
+      },
+      "achieved_core_marginals": {
+        "identity_consistency": {
+          "counts": {
+            "none": 200,
+            "partial": 200,
+            "full": 200
+          },
+          "uniform_expectation": 200.0,
+          "max_deviation_from_uniform": 0.0
+        },
+        "explicit_official_claim": {
+          "counts": {
+            "False": 300,
+            "True": 300
+          },
+          "uniform_expectation": 300.0,
+          "max_deviation_from_uniform": 0.0
+        },
+        "action_claim": {
+          "counts": {
+            "browse": 120,
+            "contact": 120,
+            "book": 120,
+            "login": 120,
+            "pay": 120
+          },
+          "uniform_expectation": 120.0,
+          "max_deviation_from_uniform": 0.0
+        },
+        "official_backlink": {
+          "counts": {
+            "False": 300,
+            "True": 300
+          },
+          "uniform_expectation": 300.0,
+          "max_deviation_from_uniform": 0.0
+        },
+        "corroborating_sources": {
+          "counts": {
+            "0": 150,
+            "1": 150,
+            "3": 150,
+            "5": 150
+          },
+          "uniform_expectation": 150.0,
+          "max_deviation_from_uniform": 0.0
+        },
+        "lexical_diversity": {
+          "counts": {
+            "low": 300,
+            "high": 300
+          },
+          "uniform_expectation": 300.0,
+          "max_deviation_from_uniform": 0.0
+        },
+        "prompt_injection": {
+          "counts": {
+            "False": 300,
+            "True": 300
+          },
+          "uniform_expectation": 300.0,
+          "max_deviation_from_uniform": 0.0
+        },
+        "content_change_after_indexing": {
+          "counts": {
+            "False": 300,
+            "True": 300
+          },
+          "uniform_expectation": 300.0,
+          "max_deviation_from_uniform": 0.0
+        }
+      },
+      "site_templates_sha256": "02a3fcc3318a6f1d6c719de4e0e38c9e11d8ab6d51ed7a840d0b480abd910af8",
+      "attack_matrix_full_sha256": "90f713e49e56511ff07619d23f8e580daa424ee185a16e0c0ee4348319909d98",
+      "attack_templates_sha256": "d10f1d9f8048fd8052535cb6f6da606122fd65fbe0f8f0683ff2bc80e3c851d5"
+    },
+    "benchmark_splits_summary": {
+      "step": "2.5",
+      "axes": {
+        "entity_template": {
+          "core_pool_size": 60,
+          "split_sizes": {
+            "train_development": 30,
+            "validation": 12,
+            "test": 18
+          },
+          "achieved_fractions": {
+            "train_development": 0.5,
+            "validation": 0.2,
+            "test": 0.3
+          },
+          "holdout_name": "transfer_holdout",
+          "holdout_size": 20
+        },
+        "site_template": {
+          "core_pool_size": 100,
+          "split_sizes": {
+            "train_development": 50,
+            "validation": 20,
+            "test": 30
+          },
+          "achieved_fractions": {
+            "train_development": 0.5,
+            "validation": 0.2,
+            "test": 0.3
+          },
+          "holdout_name": null,
+          "holdout_size": 0
+        },
+        "attack_template": {
+          "core_pool_size": 600,
+          "split_sizes": {
+            "train_development": 300,
+            "validation": 120,
+            "test": 180
+          },
+          "achieved_fractions": {
+            "train_development": 0.5,
+            "validation": 0.2,
+            "test": 0.3
+          },
+          "holdout_name": "adaptive_holdout",
+          "holdout_size": 80
+        }
+      },
+      "transfer_holdout_categories": [
+        "fitness_studio",
+        "bookshop"
+      ],
+      "regime_pool_sizes": {
+        "train_development": {
+          "entity_template": 30,
+          "site_template": 50,
+          "attack_template": 300
+        },
+        "validation": {
+          "entity_template": 12,
+          "site_template": 20,
+          "attack_template": 120
+        },
+        "test": {
+          "entity_template": 18,
+          "site_template": 30,
+          "attack_template": 180
+        },
+        "transfer_holdout": {
+          "entity_template": 20,
+          "site_template": 30,
+          "attack_template": 180
+        },
+        "adaptive_holdout": {
+          "entity_template": 18,
+          "site_template": 30,
+          "attack_template": 80
+        },
+        "fabricated_control": {
+          "entity_template": 8,
+          "site_template": 30,
+          "attack_template": 180
+        }
+      },
+      "splits_sha256": "e7bb931af16fb354e752277b156027430dccbe74b33988da7d81fc426a7b27d4",
+      "leakage_violations": 0
+    },
+    "benchmark_corpus_summary": {
+      "step": "2.4b",
+      "pages": 2631,
+      "entities_with_pages": 168,
+      "pages_per_role": {
+        "authorized_booking_provider": 160,
+        "authorized_information_directory": 160,
+        "benign_confusing_page": 320,
+        "corroborating_blog_directory": 584,
+        "expired_domain_takeover": 241,
+        "impersonating_official_site": 247,
+        "official_site": 176,
+        "unauthorized_booking_provider": 249,
+        "unauthorized_login_portal": 241,
+        "unauthorized_payment_portal": 253
+      },
+      "pages_per_snapshot": {
+        "indexed": 629,
+        "live": 629,
+        "static": 1373
+      },
+      "corpus_bytes": 2859773,
+      "safety_violations": 0,
+      "metadata_leaks": 0,
+      "pages_straddling_regime": 0,
+      "distinct_site_templates_used": 100,
+      "distinct_attack_templates_used": 386,
+      "page_manifest_sha256": "e5d459b082db7b7dc4e165c22fa8ad158054f61edebff90a12d779d487ce5e14",
+      "page_hashes_sha256": "092a7ea4051418e66363830f9828db15c5123221b32cf19a4c181f457b41f79c",
+      "corpus_sha256": "e4d4e12475f8fa7bd3fa36a9589333c5ae3f6eae1e325b7d4514396aaae45af7"
+    },
+    "benchmark_falsifiability_controls": {
+      "step": "2.6",
+      "purpose": "Negative controls proving the Step 2 safety validator, label-leakage check, graph invariants and split invariants can report a defect. A check that cannot fail provides no protection while producing a passing CI signal.",
+      "controls_run": 19,
+      "controls_detected": 19,
+      "controls_missed": 0,
+      "controls": [
+        {
+          "control": "safety_baseline_is_clean",
+          "description": "an unmutated generated page must produce zero violations",
+          "detected": true,
+          "evidence": "0 violation(s) on PG000001.html"
+        },
+        {
+          "control": "safety_detects_credential_form",
+          "description": "injecting a password form must trip credential_collection_fields",
+          "detected": true,
+          "evidence": "4 violation(s); rules=['credential_field_name', 'form_element', 'input_element', 'password_type']"
+        },
+        {
+          "control": "safety_detects_real_brands",
+          "description": "injecting real brand names must trip real_brand_names_in_adversarial_templates",
+          "detected": true,
+          "evidence": "2 violation(s); rules=['real_brand_name']"
+        },
+        {
+          "control": "safety_detects_real_processor_and_public_domain",
+          "description": "injecting a real payment endpoint must trip both the processor and public-domain rules",
+          "detected": true,
+          "evidence": "conditions=['public_ip_or_public_domain_deployment_target', 'real_payment_processors']"
+        },
+        {
+          "control": "safety_detects_active_content",
+          "description": "injecting a script element must trip the malware/exfiltration family",
+          "detected": true,
+          "evidence": "rules=['script_element']"
+        },
+        {
+          "control": "safety_detects_public_tld_domain",
+          "description": "a domain outside the reserved TLDs must be rejected",
+          "detected": true,
+          "evidence": "1 violation(s)"
+        },
+        {
+          "control": "safety_detects_routable_phone",
+          "description": "a real international number must be rejected",
+          "detected": true,
+          "evidence": "1 violation(s)"
+        },
+        {
+          "control": "leak_detects_label_vocabulary",
+          "description": "the word 'authorized' in page bytes must be caught",
+          "detected": true,
+          "evidence": "tokens found=['authorized']"
+        },
+        {
+          "control": "leak_detects_entity_id_in_visible_prose",
+          "description": "the machine-readable entity ID must not be allowed into visible prose",
+          "detected": true,
+          "evidence": "entity_id=E0001 now visible; clean page visible=False"
+        },
+        {
+          "control": "graph_baseline_is_clean",
+          "description": "the unmutated graph must satisfy every invariant",
+          "detected": true,
+          "evidence": "0 violation(s)"
+        },
+        {
+          "control": "graph_detects_non_totality",
+          "description": "dropping every 'pay' edge for E0001 must trip the totality invariant",
+          "detected": true,
+          "evidence": "2 violation(s): ['16 (e,d) pairs are not total over all 5 actions', 'E0001 official domain is not authorized on all actions']"
+        },
+        {
+          "control": "graph_detects_collapsed_action_relativity",
+          "description": "making every edge authorized must trip the action- and entity-relativity invariants",
+          "detected": true,
+          "evidence": "10 violation(s): ['no (e,d) pair is authorized for one action and not another; ', 'no shared domain carries both authorized and unauthorized la', 'fabricated control E9001 has an authorized edge']"
+        },
+        {
+          "control": "graph_detects_unknown_evidence_type",
+          "description": "an evidence_type outside the frozen enum must be rejected",
+          "detected": true,
+          "evidence": "[\"unknown evidence_type values: ['vibes']\"]"
+        },
+        {
+          "control": "graph_detects_duplicate_triple",
+          "description": "two labels for one (e,d,a) triple must be rejected",
+          "detected": true,
+          "evidence": "['duplicate (e,d,a) triples present; a triple must have exactly one label']"
+        },
+        {
+          "control": "splits_baseline_is_clean",
+          "description": "the unmutated plan must satisfy every invariant",
+          "detected": true,
+          "evidence": "0 violation(s)"
+        },
+        {
+          "control": "splits_detect_train_test_leak",
+          "description": "copying a test entity template into train must be caught",
+          "detected": true,
+          "evidence": "2 violation(s): ['entity_template: pools test and train_development share 1 template(s),', 'entity_template: train_development fraction 0.516667 != required 0.5']"
+        },
+        {
+          "control": "splits_detect_broken_ratios",
+          "description": "moving one template between splits must break the exact 50/20/30 assertion",
+          "detected": true,
+          "evidence": "2 violation(s): ['entity_template: train_development fraction 0.516667 != required 0.5', 'entity_template: validation fraction 0.183333 != required 0.2']"
+        },
+        {
+          "control": "splits_detect_transfer_holdout_contamination",
+          "description": "training on a held-out entity category must be caught by the CATEGORY check, with pool sizes and ratios left intact so no other check can mask it",
+          "detected": true,
+          "evidence": "1 violation(s), 0 of them ratio-related: [\"transfer holdout categories ['bookshop', 'salon'] also appear in train/validatio\"]"
+        },
+        {
+          "control": "splits_detect_adaptive_region_contamination",
+          "description": "putting a strongest-region attack template into the core must be caught",
+          "detected": true,
+          "evidence": "1 violation(s): ['core attack template A1333 lies inside the adaptive-holdout region']"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "metadata": {
+    "contract_ref": "CONTRACT.md Section 5.2; registry/domains.yaml metadata",
+    "question": "Are role, adversarial and lifecycle.prior_grants provably absent from every artifact the indexer, retriever, reader or verifier can see?",
+    "method": "Three independent mechanisms: (1) whitelist projections, so a new registry field is excluded by default; (2) a recursive guard on field names and enum values applied at every public return; (3) this sweep, which serialises each artifact and searches for all forbidden keys and all 13 role values WITHOUT using the guard, so a guard bug cannot hide from it.",
+    "forbidden_fields": [
+      "adversarial",
+      "adversarial_assignment",
+      "attack_template_id",
+      "authorized",
+      "entity_template_id",
+      "evidence_type",
+      "granted_actions",
+      "note",
+      "page_role",
+      "prior_grant_evidence",
+      "prior_grants",
+      "role",
+      "site_template_id",
+      "snapshot"
+    ],
+    "forbidden_role_values": [
+      "official_site",
+      "authorized_booking_provider",
+      "authorized_information_directory",
+      "non_delegated_booking_provider",
+      "impersonating_official_site",
+      "unauthorized_booking_provider",
+      "unauthorized_login_portal",
+      "unauthorized_payment_portal",
+      "expired_domain_takeover",
+      "corroborating_blog_directory",
+      "neutral_publisher",
+      "sibling_official_site",
+      "fabricated_domain"
+    ],
+    "all_clean": true
+  },
+  "audits": [
+    {
+      "location": "retrieval_snapshots.snapshots",
+      "bytes_scanned": 6878701,
+      "forbidden_key_hits": [],
+      "forbidden_role_value_hits": [],
+      "guard_error": null,
+      "clean": true
+    },
+    {
+      "location": "stage_traces (EVALUATOR tier -- expected to carry expectations only)",
+      "bytes_scanned": 3468090,
+      "forbidden_key_hits": [],
+      "forbidden_role_value_hits": [],
+      "guard_error": null,
+      "clean": true
+    },
+    {
+      "location": "public_domain_registry",
+      "bytes_scanned": 252305,
+      "forbidden_key_hits": [],
+      "forbidden_role_value_hits": [],
+      "guard_error": null,
+      "clean": true
+    },
+    {
+      "location": "derived_lifecycle_observations",
+      "bytes_scanned": 34400,
+      "forbidden_key_hits": [],
+      "forbidden_role_value_hits": [],
+      "guard_error": null,
+      "clean": true
+    },
+    {
+      "location": "public_delegation_evidence",
+      "bytes_scanned": 38774,
+      "forbidden_key_hits": [],
+      "forbidden_role_value_hits": [],
+      "guard_error": null,
+      "clean": true
+    },
+    {
+      "location": "retriever_tier_document_views (first 200)",
+      "bytes_scanned": 173376,
+      "forbidden_key_hits": [],
+      "forbidden_role_value_hits": [],
+      "guard_error": null,
+      "clean": true
+    },
+    {
+      "location": "indexed_documents (first 200)",
+      "bytes_scanned": 43845,
+      "forbidden_key_hits": [],
+      "forbidden_role_value_hits": [],
+      "guard_error": null,
+      "clean": true
+    },
+    {
+      "location": "retrieval_snapshots.json (round-tripped from disk)",
+      "bytes_scanned": 6878701,
+      "forbidden_key_hits": [],
+      "forbidden_role_value_hits": [],
+      "guard_error": null,
+      "clean": true
+    }
+  ]
+}

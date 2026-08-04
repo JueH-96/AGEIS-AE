@@ -1,0 +1,123 @@
+{
+  "step": "2.6",
+  "purpose": "Negative controls proving the Step 2 safety validator, label-leakage check, graph invariants and split invariants can report a defect. A check that cannot fail provides no protection while producing a passing CI signal.",
+  "controls_run": 19,
+  "controls_detected": 19,
+  "controls_missed": 0,
+  "controls": [
+    {
+      "control": "safety_baseline_is_clean",
+      "description": "an unmutated generated page must produce zero violations",
+      "detected": true,
+      "evidence": "0 violation(s) on PG000001.html"
+    },
+    {
+      "control": "safety_detects_credential_form",
+      "description": "injecting a password form must trip credential_collection_fields",
+      "detected": true,
+      "evidence": "4 violation(s); rules=['credential_field_name', 'form_element', 'input_element', 'password_type']"
+    },
+    {
+      "control": "safety_detects_real_brands",
+      "description": "injecting real brand names must trip real_brand_names_in_adversarial_templates",
+      "detected": true,
+      "evidence": "2 violation(s); rules=['real_brand_name']"
+    },
+    {
+      "control": "safety_detects_real_processor_and_public_domain",
+      "description": "injecting a real payment endpoint must trip both the processor and public-domain rules",
+      "detected": true,
+      "evidence": "conditions=['public_ip_or_public_domain_deployment_target', 'real_payment_processors']"
+    },
+    {
+      "control": "safety_detects_active_content",
+      "description": "injecting a script element must trip the malware/exfiltration family",
+      "detected": true,
+      "evidence": "rules=['script_element']"
+    },
+    {
+      "control": "safety_detects_public_tld_domain",
+      "description": "a domain outside the reserved TLDs must be rejected",
+      "detected": true,
+      "evidence": "1 violation(s)"
+    },
+    {
+      "control": "safety_detects_routable_phone",
+      "description": "a real international number must be rejected",
+      "detected": true,
+      "evidence": "1 violation(s)"
+    },
+    {
+      "control": "leak_detects_label_vocabulary",
+      "description": "the word 'authorized' in page bytes must be caught",
+      "detected": true,
+      "evidence": "tokens found=['authorized']"
+    },
+    {
+      "control": "leak_detects_entity_id_in_visible_prose",
+      "description": "the machine-readable entity ID must not be allowed into visible prose",
+      "detected": true,
+      "evidence": "entity_id=E0001 now visible; clean page visible=False"
+    },
+    {
+      "control": "graph_baseline_is_clean",
+      "description": "the unmutated graph must satisfy every invariant",
+      "detected": true,
+      "evidence": "0 violation(s)"
+    },
+    {
+      "control": "graph_detects_non_totality",
+      "description": "dropping every 'pay' edge for E0001 must trip the totality invariant",
+      "detected": true,
+      "evidence": "2 violation(s): ['16 (e,d) pairs are not total over all 5 actions', 'E0001 official domain is not authorized on all actions']"
+    },
+    {
+      "control": "graph_detects_collapsed_action_relativity",
+      "description": "making every edge authorized must trip the action- and entity-relativity invariants",
+      "detected": true,
+      "evidence": "10 violation(s): ['no (e,d) pair is authorized for one action and not another; ', 'no shared domain carries both authorized and unauthorized la', 'fabricated control E9001 has an authorized edge']"
+    },
+    {
+      "control": "graph_detects_unknown_evidence_type",
+      "description": "an evidence_type outside the frozen enum must be rejected",
+      "detected": true,
+      "evidence": "[\"unknown evidence_type values: ['vibes']\"]"
+    },
+    {
+      "control": "graph_detects_duplicate_triple",
+      "description": "two labels for one (e,d,a) triple must be rejected",
+      "detected": true,
+      "evidence": "['duplicate (e,d,a) triples present; a triple must have exactly one label']"
+    },
+    {
+      "control": "splits_baseline_is_clean",
+      "description": "the unmutated plan must satisfy every invariant",
+      "detected": true,
+      "evidence": "0 violation(s)"
+    },
+    {
+      "control": "splits_detect_train_test_leak",
+      "description": "copying a test entity template into train must be caught",
+      "detected": true,
+      "evidence": "2 violation(s): ['entity_template: pools test and train_development share 1 template(s),', 'entity_template: train_development fraction 0.516667 != required 0.5']"
+    },
+    {
+      "control": "splits_detect_broken_ratios",
+      "description": "moving one template between splits must break the exact 50/20/30 assertion",
+      "detected": true,
+      "evidence": "2 violation(s): ['entity_template: train_development fraction 0.516667 != required 0.5', 'entity_template: validation fraction 0.183333 != required 0.2']"
+    },
+    {
+      "control": "splits_detect_transfer_holdout_contamination",
+      "description": "training on a held-out entity category must be caught by the CATEGORY check, with pool sizes and ratios left intact so no other check can mask it",
+      "detected": true,
+      "evidence": "1 violation(s), 0 of them ratio-related: [\"transfer holdout categories ['bookshop', 'salon'] also appear in train/validatio\"]"
+    },
+    {
+      "control": "splits_detect_adaptive_region_contamination",
+      "description": "putting a strongest-region attack template into the core must be caught",
+      "detected": true,
+      "evidence": "1 violation(s): ['core attack template A1333 lies inside the adaptive-holdout region']"
+    }
+  ]
+}

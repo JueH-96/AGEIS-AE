@@ -1,0 +1,48 @@
+{
+  "step": "2.2/2.3",
+  "entity_templates": 88,
+  "controlled_entities": 160,
+  "fabricated_control_entities": 8,
+  "entities_per_category": {
+    "bookshop": 20,
+    "clinic": 20,
+    "fitness_studio": 20,
+    "hotel": 20,
+    "restaurant": 20,
+    "salon": 20,
+    "service_provider": 20,
+    "tour_operator": 20
+  },
+  "domains": 1790,
+  "entity_domain_pairs": 2576,
+  "edges": 12880,
+  "authorized_edges": 1594,
+  "domain_roles": {
+    "authorized_booking_provider": 6,
+    "authorized_information_directory": 4,
+    "corroborating_blog_directory": 800,
+    "expired_domain_takeover": 160,
+    "fabricated_domain": 16,
+    "impersonating_official_site": 160,
+    "neutral_publisher": 4,
+    "official_site": 160,
+    "unauthorized_booking_provider": 160,
+    "unauthorized_login_portal": 160,
+    "unauthorized_payment_portal": 160
+  },
+  "evidence_types": {
+    "adversarial_assignment": 7200,
+    "benign_no_grant": 800,
+    "delegation_scope_limit": 806,
+    "fabricated_control": 80,
+    "lifecycle_revoked": 800,
+    "official_backlink": 794,
+    "registry": 800,
+    "registry_other_entity": 800,
+    "third_party_no_grant": 800
+  },
+  "safety_violations": 0,
+  "invariant_violations": 0,
+  "authorization_graph_sha256": "c4b799d3b1af55fdfd33d884670f042b8a688cfeee11a148f4aabb389db3b68c",
+  "domains_sha256": "99f226edde8e7280670e6b2d852aaa60de0ccf9cedb2b95407351dc2d5b195dd"
+}

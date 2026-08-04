@@ -1,0 +1,171 @@
+{
+  "metadata": {
+    "step": "Step 3 of 8 -- adaptive attacker",
+    "contract_ref": "CONTRACT.md Section 3 (RQ4), Section 7, Section 16",
+    "builder": "workflow/13_generate_adaptive_attacks.py",
+    "id_prefix": "AD-",
+    "adaptive_corpus_digest": "4d96927f1e7a89f85acee792b9683aa8919c81d4356a935f0a4b937d84e9bde6",
+    "adaptive_templates_sha256": "c4864daa6af7a9d2df3212768f6404f494ba8f352b591614f50339441a8880a3",
+    "adaptive_manifest_sha256": "e5cd1df22df2ddf90fe5583a58a655917399e2d9dc92c24299c08aa2adf4479f",
+    "elapsed_seconds": 11.54
+  },
+  "design": {
+    "n_templates": 80,
+    "stratum_a": 40,
+    "stratum_b": 40,
+    "n_pages": 600,
+    "n_target_entities": 29,
+    "n_target_domains": 62,
+    "action_claim_balance": {
+      "book": 16,
+      "browse": 16,
+      "contact": 16,
+      "login": 16,
+      "pay": 16
+    },
+    "endpoint_replacement_actions": {
+      "None": 32,
+      "book": 16,
+      "login": 16,
+      "pay": 16
+    },
+    "corroboration_cluster_sizes": {
+      "3": 40,
+      "5": 40
+    },
+    "identity_consistency_levels": {
+      "full": 40,
+      "partial": 40
+    },
+    "page_kinds": {
+      "corroborating": 480,
+      "primary_attack": 120
+    },
+    "snapshots": {
+      "indexed": 200,
+      "live": 200,
+      "static": 200
+    }
+  },
+  "optimisation": {
+    "objective": "minimise HeuristicDefensePanel score",
+    "panel": {
+      "panel_id": "heuristic-surface-panel-v1",
+      "weights": {
+        "name_in_hostname": 1.0,
+        "explicit_official_claim_keywords": 1.0,
+        "identity_field_mismatch": 1.5,
+        "single_source_corroboration": 1.5,
+        "risky_endpoint_path": 1.0,
+        "boilerplate_prose_reuse": 1.0
+      },
+      "status": "PROXY for the Step 4 AegisLink scorer, which does not exist yet",
+      "detectors": {
+        "name_in_hostname": "fraction of entity-name tokens present in the hostname",
+        "explicit_official_claim_keywords": "count of official-claim keyword hits",
+        "identity_field_mismatch": "registry identity fields absent from the page",
+        "single_source_corroboration": "1 - n_corroborating/5 (source-count voter)",
+        "risky_endpoint_path": "fraction of endpoints with a risk-listed path segment",
+        "boilerplate_prose_reuse": "mean pairwise trigram Jaccard across cluster pages"
+      },
+      "rationale": "These are the detectors CONTRACT.md Section 10 baselines 1, 2, 5 and 6 implement. Including evidence-graph reasoning here would pre-empt Step 4's contribution rather than motivate it: the point is that surface heuristics are defeatable, which is why action-aware cross-source verification is needed."
+    },
+    "mean_initial_suspicion": 0.376447,
+    "mean_final_suspicion": 0.340557,
+    "mean_improvement": 0.03589,
+    "templates_improved": 80,
+    "templates_converged": 80,
+    "total_panel_evaluations": 3683,
+    "mean_detector_before": {
+      "name_in_hostname": 0.9375,
+      "explicit_official_claim_keywords": 0.66875,
+      "identity_field_mismatch": 0.166666,
+      "single_source_corroboration": 0.2,
+      "risky_endpoint_path": 0.3,
+      "boilerplate_prose_reuse": 0.17888
+    },
+    "mean_detector_after": {
+      "name_in_hostname": 0.9375,
+      "explicit_official_claim_keywords": 0.5375,
+      "identity_field_mismatch": 0.166666,
+      "single_source_corroboration": 0.2,
+      "risky_endpoint_path": 0.19375,
+      "boilerplate_prose_reuse": 0.165151
+    }
+  },
+  "invariants": {
+    "disjoint_from_static_matrix": true,
+    "n_static_ids_checked": 680,
+    "ground_truth_untouched": {
+      "edges_checked": 400,
+      "templates_checked": 80,
+      "all_targets_unauthorized_for_claimed_action": true,
+      "new_domains_created": 0,
+      "new_authorization_edges_created": 0
+    },
+    "no_label_vocabulary_in_pages": true,
+    "two_phase": {
+      "n_two_phase_slots": 200,
+      "slots_with_identical_phases": 0
+    },
+    "region_membership_rederived_from_factor_levels": true,
+    "n_stratum_a_registered": 40
+  },
+  "safety": {
+    "contract_ref": "CONTRACT.md Section 16 (fail-closed)",
+    "pages_scanned": 600,
+    "violations": 0
+  },
+  "admission_controller_wiring": [
+    {
+      "check": "Stratum A in adaptive_holdout primary run is admitted",
+      "expected_admitted": true,
+      "actual_admitted": true,
+      "pass": true,
+      "violations": []
+    },
+    {
+      "check": "Stratum B in a primary run is REJECTED (outside the declared region)",
+      "expected_admitted": false,
+      "actual_admitted": false,
+      "pass": true,
+      "violations": [
+        {
+          "rule_id": "R5_adaptive_template_gating",
+          "detail": "40 adaptive template(s) sit outside the pre-declared adaptive holdout region and may not support a primary claim: ['AD-0041', 'AD-0042', 'AD-0043', 'AD-0044', 'AD-0045']. Use purpose=secondary_evaluation."
+        }
+      ]
+    },
+    {
+      "check": "Stratum B in a secondary run is admitted",
+      "expected_admitted": true,
+      "actual_admitted": true,
+      "pass": true,
+      "violations": []
+    },
+    {
+      "check": "adaptive templates in the test regime are REJECTED",
+      "expected_admitted": false,
+      "actual_admitted": false,
+      "pass": true,
+      "violations": [
+        {
+          "rule_id": "R5_adaptive_template_gating",
+          "detail": "3 dynamic adaptive template(s) declared in regime 'test'; they are admitted only in ['adaptive_holdout']. Letting them into a core regime would contaminate the split that the unseen-attack-template gate depends on."
+        }
+      ]
+    },
+    {
+      "check": "adaptive templates during threshold selection are REJECTED",
+      "expected_admitted": false,
+      "actual_admitted": false,
+      "pass": true,
+      "violations": [
+        {
+          "rule_id": "R5_adaptive_template_gating",
+          "detail": "3 dynamic adaptive template(s) declared in regime 'train_development'; they are admitted only in ['adaptive_holdout']. Letting them into a core regime would contaminate the split that the unseen-attack-template gate depends on."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1667 @@
+{
+  "metadata": {
+    "contract_ref": "CONTRACT.md Section 3 (RQ2)",
+    "replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+    "n_queries": 1008,
+    "attribution_note": "Outcome-anchored attribution (web_rag/trace_recorder.py). A defense that presents nothing and omits nothing has no failure to attribute, so 'none' rising is the intended direction of improvement."
+  },
+  "per_defense": {
+    "aegislink_full": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 952,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 0,
+        "inferred_action_authorizations": 0,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.944444,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.0,
+        "inferred_action_authorizations": 0.0,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 311,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 148,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 167,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 161,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 165,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_failure": 1008
+      },
+      "traces_presenting_unauthorized_link": 0,
+      "traces_presenting_no_link": 96,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 328,
+        "inferred_action_authorizations": 0,
+        "presented_links": 0
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "ablation_no_action_type": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 566,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 0,
+        "inferred_action_authorizations": 386,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.561508,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.0,
+        "inferred_action_authorizations": 0.382937,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 311,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 83,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 65,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 87,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 80,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 45,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 116,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 40,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 125,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_failure": 606,
+        "presented_unauthorized_link": 402
+      },
+      "traces_presenting_unauthorized_link": 402,
+      "traces_presenting_no_link": 80,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "inferred_action_authorizations",
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 328,
+        "inferred_action_authorizations": 402,
+        "presented_links": 402
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "ablation_no_official_backlinks": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 909,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 43,
+        "inferred_action_authorizations": 0,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.901786,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.042659,
+        "inferred_action_authorizations": 0.0,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 288,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 23,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 129,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 19,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 167,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 161,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 164,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 1,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_authorized_link_presented": 43,
+        "no_failure": 965
+      },
+      "traces_presenting_unauthorized_link": 0,
+      "traces_presenting_no_link": 139,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 843,
+        "inferred_action_authorizations": 556,
+        "presented_links": 43
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "ablation_no_source_clustering": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 952,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 0,
+        "inferred_action_authorizations": 0,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.944444,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.0,
+        "inferred_action_authorizations": 0.0,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 311,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 148,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 167,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 161,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 165,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_failure": 1008
+      },
+      "traces_presenting_unauthorized_link": 0,
+      "traces_presenting_no_link": 96,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 328,
+        "inferred_action_authorizations": 0,
+        "presented_links": 0
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "ablation_no_domain_lifecycle": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 952,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 0,
+        "inferred_action_authorizations": 0,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.944444,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.0,
+        "inferred_action_authorizations": 0.0,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 311,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 148,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 167,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 161,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 165,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_failure": 1008
+      },
+      "traces_presenting_unauthorized_link": 0,
+      "traces_presenting_no_link": 96,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 328,
+        "inferred_action_authorizations": 0,
+        "presented_links": 0
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "ablation_no_contradiction_edges": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 952,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 0,
+        "inferred_action_authorizations": 0,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.944444,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.0,
+        "inferred_action_authorizations": 0.0,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 311,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 148,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 167,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 161,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 165,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_failure": 1008
+      },
+      "traces_presenting_unauthorized_link": 0,
+      "traces_presenting_no_link": 96,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 328,
+        "inferred_action_authorizations": 0,
+        "presented_links": 0
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "ablation_source_count_voting": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 874,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 0,
+        "inferred_action_authorizations": 78,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.867063,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.0,
+        "inferred_action_authorizations": 0.077381,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 292,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 19,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 129,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 19,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 159,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 8,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 153,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 8,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 141,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 24,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_authorized_link_presented": 37,
+        "no_failure": 920,
+        "presented_unauthorized_link": 51
+      },
+      "traces_presenting_unauthorized_link": 51,
+      "traces_presenting_no_link": 86,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "inferred_action_authorizations",
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 328,
+        "inferred_action_authorizations": 590,
+        "presented_links": 88
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "ablation_shared_threshold": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 952,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 0,
+        "inferred_action_authorizations": 0,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.944444,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.0,
+        "inferred_action_authorizations": 0.0,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 311,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 148,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 167,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 161,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 165,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_failure": 1008
+      },
+      "traces_presenting_unauthorized_link": 0,
+      "traces_presenting_no_link": 96,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 328,
+        "inferred_action_authorizations": 0,
+        "presented_links": 0
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "B01_lexical_url_rules": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 54,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 528,
+        "inferred_action_authorizations": 370,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.053571,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.52381,
+        "inferred_action_authorizations": 0.367063,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 21,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 97,
+          "inferred_action_authorizations": 193,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 9,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 84,
+          "inferred_action_authorizations": 55,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 6,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 119,
+          "inferred_action_authorizations": 42,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 11,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 101,
+          "inferred_action_authorizations": 49,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 7,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 127,
+          "inferred_action_authorizations": 31,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_failure": 57,
+        "presented_unauthorized_link": 951
+      },
+      "traces_presenting_unauthorized_link": 951,
+      "traces_presenting_no_link": 3,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 843,
+        "inferred_action_authorizations": 962,
+        "presented_links": 951
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "B02_domain_reputation": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 175,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 537,
+        "inferred_action_authorizations": 240,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.173611,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.532738,
+        "inferred_action_authorizations": 0.238095,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 85,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 97,
+          "inferred_action_authorizations": 129,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 20,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 93,
+          "inferred_action_authorizations": 35,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 43,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 99,
+          "inferred_action_authorizations": 25,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 7,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 119,
+          "inferred_action_authorizations": 35,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 20,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 129,
+          "inferred_action_authorizations": 16,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_authorized_link_presented": 58,
+        "no_failure": 186,
+        "presented_unauthorized_link": 764
+      },
+      "traces_presenting_unauthorized_link": 764,
+      "traces_presenting_no_link": 91,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 843,
+        "inferred_action_authorizations": 963,
+        "presented_links": 822
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "B03_phishing_classifier": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 225,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 485,
+        "inferred_action_authorizations": 242,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.223214,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.481151,
+        "inferred_action_authorizations": 0.240079,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 111,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 63,
+          "inferred_action_authorizations": 137,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 27,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 85,
+          "inferred_action_authorizations": 36,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 55,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 91,
+          "inferred_action_authorizations": 21,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 8,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 118,
+          "inferred_action_authorizations": 35,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 24,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 128,
+          "inferred_action_authorizations": 13,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_authorized_link_presented": 69,
+        "no_failure": 238,
+        "presented_unauthorized_link": 701
+      },
+      "traces_presenting_unauthorized_link": 701,
+      "traces_presenting_no_link": 126,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 843,
+        "inferred_action_authorizations": 933,
+        "presented_links": 770
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "B04_llm_as_judge": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 12,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 476,
+        "inferred_action_authorizations": 464,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.011905,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.472222,
+        "inferred_action_authorizations": 0.460317,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 6,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 60,
+          "inferred_action_authorizations": 245,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 1,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 85,
+          "inferred_action_authorizations": 62,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 3,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 87,
+          "inferred_action_authorizations": 77,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 2,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 116,
+          "inferred_action_authorizations": 43,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 0,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 128,
+          "inferred_action_authorizations": 37,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_failure": 12,
+        "presented_unauthorized_link": 996
+      },
+      "traces_presenting_unauthorized_link": 996,
+      "traces_presenting_no_link": 0,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 843,
+        "inferred_action_authorizations": 997,
+        "presented_links": 996
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "B05_source_count_majority": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 861,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 36,
+        "inferred_action_authorizations": 55,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.854167,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.035714,
+        "inferred_action_authorizations": 0.054563,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 275,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 15,
+          "inferred_action_authorizations": 21,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 121,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 18,
+          "inferred_action_authorizations": 9,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 157,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 2,
+          "inferred_action_authorizations": 8,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 153,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 8,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 155,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 1,
+          "inferred_action_authorizations": 9,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_authorized_link_presented": 38,
+        "no_failure": 903,
+        "presented_unauthorized_link": 67
+      },
+      "traces_presenting_unauthorized_link": 67,
+      "traces_presenting_no_link": 76,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 843,
+        "inferred_action_authorizations": 616,
+        "presented_links": 105
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "B06_provenance_reranker": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 320,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 314,
+        "inferred_action_authorizations": 318,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.31746,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.311508,
+        "inferred_action_authorizations": 0.315476,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 140,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 104,
+          "inferred_action_authorizations": 67,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 12,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 81,
+          "inferred_action_authorizations": 55,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 85,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 57,
+          "inferred_action_authorizations": 25,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 80,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 81,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 3,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 72,
+          "inferred_action_authorizations": 90,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_authorized_link_presented": 467,
+        "no_failure": 343,
+        "presented_unauthorized_link": 198
+      },
+      "traces_presenting_unauthorized_link": 198,
+      "traces_presenting_no_link": 489,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 843,
+        "inferred_action_authorizations": 875,
+        "presented_links": 665
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "B07_graph_anomaly_detector": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 0,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 536,
+        "inferred_action_authorizations": 416,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.0,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.531746,
+        "inferred_action_authorizations": 0.412698,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 0,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 85,
+          "inferred_action_authorizations": 226,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 0,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 84,
+          "inferred_action_authorizations": 64,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 0,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 118,
+          "inferred_action_authorizations": 49,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 0,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 119,
+          "inferred_action_authorizations": 42,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 0,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 130,
+          "inferred_action_authorizations": 35,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "presented_unauthorized_link": 1008
+      },
+      "traces_presenting_unauthorized_link": 1008,
+      "traces_presenting_no_link": 0,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 843,
+        "inferred_action_authorizations": 1008,
+        "presented_links": 1008
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "B08_reject_high_risk": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 216,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 77,
+        "inferred_action_authorizations": 659,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.214286,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.076389,
+        "inferred_action_authorizations": 0.65377,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 107,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 3,
+          "inferred_action_authorizations": 201,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 1,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 147,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 93,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 74,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 8,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 153,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 7,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 74,
+          "inferred_action_authorizations": 84,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_authorized_link_presented": 311,
+        "no_failure": 226,
+        "presented_unauthorized_link": 471
+      },
+      "traces_presenting_unauthorized_link": 471,
+      "traces_presenting_no_link": 336,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 843,
+        "inferred_action_authorizations": 965,
+        "presented_links": 782
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "B09_official_only": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 909,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 43,
+        "inferred_action_authorizations": 0,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.901786,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.042659,
+        "inferred_action_authorizations": 0.0,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 288,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 23,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 129,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 19,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 167,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 161,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 164,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 1,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_authorized_link_presented": 43,
+        "no_failure": 965
+      },
+      "traces_presenting_unauthorized_link": 0,
+      "traces_presenting_no_link": 139,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 843,
+        "inferred_action_authorizations": 556,
+        "presented_links": 43
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    },
+    "B10_ragshield_defense": {
+      "n_traces": 1008,
+      "failure_origin_counts": {
+        "none": 726,
+        "retrieval_candidates": 48,
+        "resolved_entities": 8,
+        "extracted_entity_domain_relations": 226,
+        "inferred_action_authorizations": 0,
+        "presented_links": 0
+      },
+      "failure_origin_fractions": {
+        "none": 0.720238,
+        "retrieval_candidates": 0.047619,
+        "resolved_entities": 0.007937,
+        "extracted_entity_domain_relations": 0.224206,
+        "inferred_action_authorizations": 0.0,
+        "presented_links": 0.0
+      },
+      "failure_origin_by_action": {
+        "browse": {
+          "none": 288,
+          "retrieval_candidates": 20,
+          "resolved_entities": 5,
+          "extracted_entity_domain_relations": 23,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "contact": {
+          "none": 70,
+          "retrieval_candidates": 19,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 78,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "book": {
+          "none": 167,
+          "retrieval_candidates": 0,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "login": {
+          "none": 161,
+          "retrieval_candidates": 7,
+          "resolved_entities": 0,
+          "extracted_entity_domain_relations": 0,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        },
+        "pay": {
+          "none": 40,
+          "retrieval_candidates": 2,
+          "resolved_entities": 1,
+          "extracted_entity_domain_relations": 125,
+          "inferred_action_authorizations": 0,
+          "presented_links": 0
+        }
+      },
+      "attribution_scope_reasons": {
+        "no_authorized_link_presented": 43,
+        "no_failure": 782,
+        "presented_unauthorized_link": 183
+      },
+      "traces_presenting_unauthorized_link": 183,
+      "traces_presenting_no_link": 139,
+      "stage_order": [
+        "retrieval_candidates",
+        "resolved_entities",
+        "extracted_entity_domain_relations",
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "stages_reached_by_this_pipeline": [
+        "extracted_entity_domain_relations",
+        "resolved_entities",
+        "retrieval_candidates"
+      ],
+      "stages_not_reached_by_this_pipeline": [
+        "inferred_action_authorizations",
+        "presented_links"
+      ],
+      "unscoped_disagreement_counts": {
+        "retrieval_candidates": 0,
+        "resolved_entities": 0,
+        "extracted_entity_domain_relations": 843,
+        "inferred_action_authorizations": 232,
+        "presented_links": 226
+      },
+      "unscoped_disagreement_note": "Secondary diagnostic: how often a stage disagreed with ground truth on ANY candidate, not only on the outcome-determining ones. Reported because a reader that misreads most candidate relations is worth knowing about even when the presented link happened to be right. Attribution uses the scoped comparison; see the module docstring for why the unscoped rule is degenerate.",
+      "interpretation_caveat": "These counts characterise the deterministic surrogate pipeline shipped with Step 3, whose purpose is to exercise the attribution machinery. They are not a model measurement and must not be reported as one. A stage listed under stages_not_reached_by_this_pipeline is a property of the surrogate, NOT evidence that the attributor cannot name it -- assert_all_stages_reachable proves it can."
+    }
+  }
+}

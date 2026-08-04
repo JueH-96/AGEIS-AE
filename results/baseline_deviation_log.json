@@ -1,0 +1,1081 @@
+{
+  "metadata": {
+    "contract_ref": "CONTRACT.md Section 10",
+    "builder": "workflow/16_evaluate_aegislink_and_baselines.py",
+    "n_baselines": 10,
+    "suite_check": {
+      "n_baselines": 10,
+      "baseline_ids": [
+        "B01_lexical_url_rules",
+        "B02_domain_reputation",
+        "B03_phishing_classifier",
+        "B04_llm_as_judge",
+        "B05_source_count_majority",
+        "B06_provenance_reranker",
+        "B07_graph_anomaly_detector",
+        "B08_reject_high_risk",
+        "B09_official_only",
+        "B10_ragshield_defense"
+      ],
+      "contract_items_covered": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "complete": true
+    }
+  },
+  "deviation_log": {
+    "contract_ref": "CONTRACT.md Section 10: every baseline receives identical evidence, splits and attack budgets unless its design explicitly prohibits an input type; deviations must be logged.",
+    "identical_evidence_holds": true,
+    "identical_evidence_mechanism": "One VerificationContext per query, constructed once and passed unchanged to AegisLink, all seven ablations and all ten baselines, on the same frozen replay at the same read_phase.",
+    "n_input_restrictions": 26,
+    "input_restrictions": {
+      "B01_lexical_url_rules": [
+        {
+          "input": "page_text",
+          "reason": "a lexical URL rule inspects the URL only; reading page content would make it a different method"
+        },
+        {
+          "input": "registry_official",
+          "reason": "no registry lookup: the heuristic is defined over URL surface form alone"
+        },
+        {
+          "input": "official_backlink_directional",
+          "reason": "no cross-source evidence by design"
+        }
+      ],
+      "B02_domain_reputation": [
+        {
+          "input": "page_text",
+          "reason": "a reputation rule scores the host, not its content"
+        },
+        {
+          "input": "official_backlink_directional",
+          "reason": "no cross-source evidence by design"
+        },
+        {
+          "input": "action_type",
+          "reason": "host reputation is action-independent by construction"
+        }
+      ],
+      "B03_phishing_classifier": [
+        {
+          "input": "official_backlink_directional",
+          "reason": "a generic phishing classifier scores one page in isolation; directional cross-source verification is outside its design"
+        },
+        {
+          "input": "action_type",
+          "reason": "generic: it classifies the page, not the requested action"
+        }
+      ],
+      "B04_llm_as_judge": [
+        {
+          "input": "official_backlink_directional",
+          "reason": "the judge reads the page it is judging; it cannot fetch the official site to check whether the endorsement it claims actually exists"
+        },
+        {
+          "input": "source_clustering",
+          "reason": "corroboration is counted, not assessed for independence"
+        }
+      ],
+      "B05_source_count_majority": [
+        {
+          "input": "source_clustering",
+          "reason": "unweighted by definition: assessing independence would make it a different rule"
+        },
+        {
+          "input": "registry_official",
+          "reason": "the vote is over retrieved pages; consulting the registry would add an authority notion the rule does not have"
+        },
+        {
+          "input": "official_backlink_directional",
+          "reason": "no directional verification by design"
+        }
+      ],
+      "B06_provenance_reranker": [
+        {
+          "input": "official_backlink_directional",
+          "reason": "provenance weighting tests whether an endorsement claim is PRESENT, not whether the endorsing site actually publishes it; directionality is outside the design"
+        },
+        {
+          "input": "source_clustering",
+          "reason": "sources are weighted, not clustered"
+        }
+      ],
+      "B07_graph_anomaly_detector": [
+        {
+          "input": "action_type",
+          "reason": "an anomaly score is a property of a node, so it is action-independent by construction"
+        },
+        {
+          "input": "registry_official",
+          "reason": "unsupervised and structural: consulting an authoritative registry would make it a different (supervised) method"
+        }
+      ],
+      "B08_reject_high_risk": [
+        {
+          "input": "page_text",
+          "reason": "for login/pay the decision is unconditional, so no evidence is consulted"
+        },
+        {
+          "input": "registry_official",
+          "reason": "a policy baseline: it verifies nothing, it only refuses"
+        },
+        {
+          "input": "official_backlink_directional",
+          "reason": "no verification of any kind by design"
+        }
+      ],
+      "B09_official_only": [
+        {
+          "input": "page_text",
+          "reason": "the rule is a registry lookup; page content cannot change its answer"
+        },
+        {
+          "input": "official_backlink_directional",
+          "reason": "third-party delegations are refused unread, which is the rule's definition"
+        },
+        {
+          "input": "action_type",
+          "reason": "the same host is allowed for every action; the rule has no action notion"
+        },
+        {
+          "input": "source_clustering",
+          "reason": "no corroboration is consulted"
+        }
+      ],
+      "B10_ragshield_defense": [
+        {
+          "input": "official_backlink_directional",
+          "reason": "provenance is verified as ASSERTED on the judged page; the endorsing site is not fetched to confirm the assertion. This single gap is the B10-vs-AegisLink contrast."
+        },
+        {
+          "input": "source_clustering",
+          "reason": "corroborators are counted, not tested for mutual independence"
+        }
+      ]
+    },
+    "n_surrogates": 3,
+    "surrogates": [
+      {
+        "defense_id": "B04_llm_as_judge",
+        "label": "B04 LLM-as-a-judge (deterministic rubric surrogate)",
+        "note": "Not a language model. A deterministic rubric standing in for an instructed judge, because Section 15 requires a recorded model/tokenizer checksum and one-command reproduction, and a per-triple LLM judge is ~50k generations per configuration. Replacing it with a pinned open-weight judge is a Step 5 deliverable and will invalidate this row, not the method."
+      },
+      {
+        "defense_id": "B07_graph_anomaly_detector",
+        "label": "B07 graph anomaly detection (TopoGuard-style)",
+        "note": "Implemented from the mechanism described in arXiv:2607.20437 (structural anomaly over the retrieved mention graph), not from released code. Labelled TopoGuard-STYLE for that reason; it is not a reproduction of the published system."
+      },
+      {
+        "defense_id": "B10_ragshield_defense",
+        "label": "B10 RAGShield-style provenance-verified defense",
+        "note": "Implemented from the provenance-chain mechanism described in arXiv:2604.00387, not from released code. Labelled RAGShield-STYLE; it is not a reproduction of the published system."
+      }
+    ],
+    "surrogate_policy": "A surrogate is declared in the row label as well as here, so no table can present one as the thing it stands in for."
+  },
+  "baselines": {
+    "baselines_version": "1.0",
+    "suite_check": {
+      "n_baselines": 10,
+      "baseline_ids": [
+        "B01_lexical_url_rules",
+        "B02_domain_reputation",
+        "B03_phishing_classifier",
+        "B04_llm_as_judge",
+        "B05_source_count_majority",
+        "B06_provenance_reranker",
+        "B07_graph_anomaly_detector",
+        "B08_reject_high_risk",
+        "B09_official_only",
+        "B10_ragshield_defense"
+      ],
+      "contract_items_covered": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "complete": true
+    },
+    "common": {
+      "baselines_version": "1.0",
+      "contract_ref": "CONTRACT.md Section 10",
+      "shared_decision_threshold": 0.5,
+      "shared_threshold_rationale": "One cut-off for every baseline. Per-baseline tuning would make the comparison a tuning contest rather than a comparison of signals; 0.5 is the natural cut for a probability.",
+      "identical_evidence_mechanism": "Every baseline receives the same VerificationContext instance as AegisLink, on the same frozen replay at the same read_phase. Design-mandated blindness is declared as an InputRestriction and collected into the deviation log.",
+      "probability_requirement": "Rule-based baselines emit an explicit pseudo-probability and declare calibrated=False so Section 11's Brier and calibration table can include every defense.",
+      "shared_cue_lexicons": {
+        "suspicious_host_tokens": [
+          "official",
+          "login",
+          "signin",
+          "account",
+          "accounts",
+          "secure",
+          "verify",
+          "pay",
+          "payment",
+          "deposit",
+          "settlement",
+          "billing",
+          "reserve",
+          "reservations",
+          "booking",
+          "bookings",
+          "archive",
+          "old",
+          "new",
+          "support",
+          "update",
+          "confirm"
+        ],
+        "credential_cues": [
+          "sign in",
+          "log in",
+          "login",
+          "account area",
+          "account holders",
+          "members",
+          "password",
+          "credentials"
+        ],
+        "payment_cues": [
+          "deposit",
+          "settlement",
+          "balance",
+          "balances",
+          "payment",
+          "outstanding amounts",
+          "settled",
+          "checkout",
+          "invoice"
+        ],
+        "urgency_cues": [
+          "immediately",
+          "as soon as possible",
+          "urgent",
+          "act now",
+          "continue to"
+        ]
+      }
+    },
+    "deviation_log": {
+      "contract_ref": "CONTRACT.md Section 10: every baseline receives identical evidence, splits and attack budgets unless its design explicitly prohibits an input type; deviations must be logged.",
+      "identical_evidence_holds": true,
+      "identical_evidence_mechanism": "One VerificationContext per query, constructed once and passed unchanged to AegisLink, all seven ablations and all ten baselines, on the same frozen replay at the same read_phase.",
+      "n_input_restrictions": 26,
+      "input_restrictions": {
+        "B01_lexical_url_rules": [
+          {
+            "input": "page_text",
+            "reason": "a lexical URL rule inspects the URL only; reading page content would make it a different method"
+          },
+          {
+            "input": "registry_official",
+            "reason": "no registry lookup: the heuristic is defined over URL surface form alone"
+          },
+          {
+            "input": "official_backlink_directional",
+            "reason": "no cross-source evidence by design"
+          }
+        ],
+        "B02_domain_reputation": [
+          {
+            "input": "page_text",
+            "reason": "a reputation rule scores the host, not its content"
+          },
+          {
+            "input": "official_backlink_directional",
+            "reason": "no cross-source evidence by design"
+          },
+          {
+            "input": "action_type",
+            "reason": "host reputation is action-independent by construction"
+          }
+        ],
+        "B03_phishing_classifier": [
+          {
+            "input": "official_backlink_directional",
+            "reason": "a generic phishing classifier scores one page in isolation; directional cross-source verification is outside its design"
+          },
+          {
+            "input": "action_type",
+            "reason": "generic: it classifies the page, not the requested action"
+          }
+        ],
+        "B04_llm_as_judge": [
+          {
+            "input": "official_backlink_directional",
+            "reason": "the judge reads the page it is judging; it cannot fetch the official site to check whether the endorsement it claims actually exists"
+          },
+          {
+            "input": "source_clustering",
+            "reason": "corroboration is counted, not assessed for independence"
+          }
+        ],
+        "B05_source_count_majority": [
+          {
+            "input": "source_clustering",
+            "reason": "unweighted by definition: assessing independence would make it a different rule"
+          },
+          {
+            "input": "registry_official",
+            "reason": "the vote is over retrieved pages; consulting the registry would add an authority notion the rule does not have"
+          },
+          {
+            "input": "official_backlink_directional",
+            "reason": "no directional verification by design"
+          }
+        ],
+        "B06_provenance_reranker": [
+          {
+            "input": "official_backlink_directional",
+            "reason": "provenance weighting tests whether an endorsement claim is PRESENT, not whether the endorsing site actually publishes it; directionality is outside the design"
+          },
+          {
+            "input": "source_clustering",
+            "reason": "sources are weighted, not clustered"
+          }
+        ],
+        "B07_graph_anomaly_detector": [
+          {
+            "input": "action_type",
+            "reason": "an anomaly score is a property of a node, so it is action-independent by construction"
+          },
+          {
+            "input": "registry_official",
+            "reason": "unsupervised and structural: consulting an authoritative registry would make it a different (supervised) method"
+          }
+        ],
+        "B08_reject_high_risk": [
+          {
+            "input": "page_text",
+            "reason": "for login/pay the decision is unconditional, so no evidence is consulted"
+          },
+          {
+            "input": "registry_official",
+            "reason": "a policy baseline: it verifies nothing, it only refuses"
+          },
+          {
+            "input": "official_backlink_directional",
+            "reason": "no verification of any kind by design"
+          }
+        ],
+        "B09_official_only": [
+          {
+            "input": "page_text",
+            "reason": "the rule is a registry lookup; page content cannot change its answer"
+          },
+          {
+            "input": "official_backlink_directional",
+            "reason": "third-party delegations are refused unread, which is the rule's definition"
+          },
+          {
+            "input": "action_type",
+            "reason": "the same host is allowed for every action; the rule has no action notion"
+          },
+          {
+            "input": "source_clustering",
+            "reason": "no corroboration is consulted"
+          }
+        ],
+        "B10_ragshield_defense": [
+          {
+            "input": "official_backlink_directional",
+            "reason": "provenance is verified as ASSERTED on the judged page; the endorsing site is not fetched to confirm the assertion. This single gap is the B10-vs-AegisLink contrast."
+          },
+          {
+            "input": "source_clustering",
+            "reason": "corroborators are counted, not tested for mutual independence"
+          }
+        ]
+      },
+      "n_surrogates": 3,
+      "surrogates": [
+        {
+          "defense_id": "B04_llm_as_judge",
+          "label": "B04 LLM-as-a-judge (deterministic rubric surrogate)",
+          "note": "Not a language model. A deterministic rubric standing in for an instructed judge, because Section 15 requires a recorded model/tokenizer checksum and one-command reproduction, and a per-triple LLM judge is ~50k generations per configuration. Replacing it with a pinned open-weight judge is a Step 5 deliverable and will invalidate this row, not the method."
+        },
+        {
+          "defense_id": "B07_graph_anomaly_detector",
+          "label": "B07 graph anomaly detection (TopoGuard-style)",
+          "note": "Implemented from the mechanism described in arXiv:2607.20437 (structural anomaly over the retrieved mention graph), not from released code. Labelled TopoGuard-STYLE for that reason; it is not a reproduction of the published system."
+        },
+        {
+          "defense_id": "B10_ragshield_defense",
+          "label": "B10 RAGShield-style provenance-verified defense",
+          "note": "Implemented from the provenance-chain mechanism described in arXiv:2604.00387, not from released code. Labelled RAGShield-STYLE; it is not a reproduction of the published system."
+        }
+      ],
+      "surrogate_policy": "A surrogate is declared in the row label as well as here, so no table can present one as the thing it stands in for."
+    },
+    "baselines": {
+      "B01_lexical_url_rules": {
+        "defense_id": "B01_lexical_url_rules",
+        "family": "baseline",
+        "label": "B01 lexical URL risk rules",
+        "contract_ref": "CONTRACT.md Section 10, item 1",
+        "restrictions": [
+          {
+            "input": "page_text",
+            "reason": "a lexical URL rule inspects the URL only; reading page content would make it a different method"
+          },
+          {
+            "input": "registry_official",
+            "reason": "no registry lookup: the heuristic is defined over URL surface form alone"
+          },
+          {
+            "input": "official_backlink_directional",
+            "reason": "no cross-source evidence by design"
+          }
+        ],
+        "notes": "Has genuine signal on adversarial hostnames but cannot represent entity relativity: the same URL scores identically for an entity that appointed it and one that did not.",
+        "is_surrogate": false,
+        "surrogate_note": "",
+        "weights": {
+          "bias": 2.6,
+          "suspicious_token": -1.1,
+          "hyphen": -0.34,
+          "length_char": -0.02,
+          "extra_label": -0.45
+        },
+        "blocklist_size": 22
+      },
+      "B02_domain_reputation": {
+        "defense_id": "B02_domain_reputation",
+        "family": "baseline",
+        "label": "B02 domain age / reputation rules",
+        "contract_ref": "CONTRACT.md Section 10, item 2",
+        "restrictions": [
+          {
+            "input": "page_text",
+            "reason": "a reputation rule scores the host, not its content"
+          },
+          {
+            "input": "official_backlink_directional",
+            "reason": "no cross-source evidence by design"
+          },
+          {
+            "input": "action_type",
+            "reason": "host reputation is action-independent by construction"
+          }
+        ],
+        "notes": "Permitted to exploit the corpus's lifecycle degeneracy (a lifecycle record exists only for takeover domains). AegisLink declines that shortcut, so the comparison is conservative in the baseline's favour.",
+        "is_surrogate": false,
+        "surrogate_note": "",
+        "weights": {
+          "bias": 0.35,
+          "age_per_snapshot": 0.55,
+          "age_unknown": -0.25,
+          "expired": -2.9,
+          "ownership_change": -2.4,
+          "shared_host": 1.05,
+          "unregistered_host": -0.8
+        },
+        "snapshot_order": [
+          "T0",
+          "T1",
+          "T2"
+        ],
+        "knife_edge_note": "w_age_unknown was -0.45 in a first pass, which put a plain registered non-shared host at p=0.475 -- just under the 0.5 cut -- so the rule rejected every official site and reported FRR 0.57 for a reason that was an artefact of a boundary, not of the heuristic. A reputation rule with no age signal has no basis to reject, so the weight was set so the unknown-age case lands just above the cut.",
+        "corpus_limitation": "Only the 160 takeover domains carry a lifecycle record, so 1,630 of 1,790 hosts have no observed first-seen snapshot and the age feature is uninformative for them. Reported in results/evidence_family_identifiability.json; this baseline therefore reduces in practice to 'is it a takeover, and is it a shared provider'."
+      },
+      "B03_phishing_classifier": {
+        "defense_id": "B03_phishing_classifier",
+        "family": "baseline",
+        "label": "B03 generic phishing classifier",
+        "contract_ref": "CONTRACT.md Section 10, item 3",
+        "restrictions": [
+          {
+            "input": "official_backlink_directional",
+            "reason": "a generic phishing classifier scores one page in isolation; directional cross-source verification is outside its design"
+          },
+          {
+            "input": "action_type",
+            "reason": "generic: it classifies the page, not the requested action"
+          }
+        ],
+        "notes": "Fixed-weight logistic model over declared features, Platt-calibrated on train_development. No external checkpoint, so Section 15 reproducibility holds by inspection.",
+        "is_surrogate": false,
+        "surrogate_note": "",
+        "weights": {
+          "bias": 2.3,
+          "brand_in_host": -1.6,
+          "suspicious_host_token": -0.85,
+          "hyphens": -0.22,
+          "credential_cue": -1.15,
+          "payment_cue": -0.95,
+          "urgency_cue": -0.45,
+          "identity_mismatch": -1.7,
+          "identity_match": 0.6,
+          "no_identity_published": -0.35
+        },
+        "feature_set": [
+          "bias",
+          "brand_in_host",
+          "credential_cue",
+          "hyphens",
+          "identity_match",
+          "identity_mismatch",
+          "no_identity_published",
+          "payment_cue",
+          "suspicious_host_token",
+          "urgency_cue"
+        ],
+        "why_generic_matters": "It asks whether the page looks like phishing, not whether the domain is authorized for the action. The two come apart in both directions on this corpus: an impersonator with correct identity fields looks benign, and the entity's own official site trips brand-in-host plus credential cues."
+      },
+      "B04_llm_as_judge": {
+        "defense_id": "B04_llm_as_judge",
+        "family": "baseline",
+        "label": "B04 LLM-as-a-judge (deterministic rubric surrogate)",
+        "contract_ref": "CONTRACT.md Section 10, item 4",
+        "restrictions": [
+          {
+            "input": "official_backlink_directional",
+            "reason": "the judge reads the page it is judging; it cannot fetch the official site to check whether the endorsement it claims actually exists"
+          },
+          {
+            "input": "source_clustering",
+            "reason": "corroboration is counted, not assessed for independence"
+          }
+        ],
+        "notes": "Prediction before measurement: among the worst baselines on UALER (credulous about page self-description) while strong on ATPR.",
+        "is_surrogate": true,
+        "surrogate_note": "Not a language model. A deterministic rubric standing in for an instructed judge, because Section 15 requires a recorded model/tokenizer checksum and one-command reproduction, and a per-triple LLM judge is ~50k generations per configuration. Replacing it with a pinned open-weight judge is a Step 5 deliverable and will invalidate this row, not the method.",
+        "rubric": {
+          "bias": -1.9,
+          "names_the_entity": 1.3,
+          "presents_as_official": 1.55,
+          "asserts_official_endorsement": 1.45,
+          "identity_fields_match": 1.25,
+          "identity_fields_conflict": -1.85,
+          "offers_the_requested_action": 1.1,
+          "corroborated_by_other_pages": 0.42,
+          "internally_inconsistent": -1.2
+        },
+        "deviation": {
+          "kind": "surrogate_substitution",
+          "declared": true,
+          "reason": "Not a language model. A deterministic rubric standing in for an instructed judge, because Section 15 requires a recorded model/tokenizer checksum and one-command reproduction, and a per-triple LLM judge is ~50k generations per configuration. Replacing it with a pinned open-weight judge is a Step 5 deliverable and will invalidate this row, not the method.",
+          "remediation": "replace with a pinned open-weight judge in Step 5 and re-run this row"
+        },
+        "why_it_fails_structurally": "Every rubric input is a property of the page under judgement, and the page is what the attacker controls. A forged 'Listed by the official site' line satisfies the endorsement item exactly as a genuine one does."
+      },
+      "B05_source_count_majority": {
+        "defense_id": "B05_source_count_majority",
+        "family": "baseline",
+        "label": "B05 unweighted source-count majority vote",
+        "contract_ref": "CONTRACT.md Section 10, item 5",
+        "restrictions": [
+          {
+            "input": "source_clustering",
+            "reason": "unweighted by definition: assessing independence would make it a different rule"
+          },
+          {
+            "input": "registry_official",
+            "reason": "the vote is over retrieved pages; consulting the registry would add an authority notion the rule does not have"
+          },
+          {
+            "input": "official_backlink_directional",
+            "reason": "no directional verification by design"
+          }
+        ],
+        "notes": "Prediction before measurement: high UALER on the 3- and 5-corroborator attack arms, because a one-listing campaign outvotes the entity's own site.",
+        "is_surrogate": false,
+        "surrogate_note": "",
+        "rule": "plurality among the candidates: a page votes for the target if it is the target's own page offering the action, or it names the entity and links to the target host. The plurality winner is presented.",
+        "why_plurality_not_share": "The share-of-electorate reading was measured first and never cleared a threshold (max share 0.6, median 0.125 over ten candidates), so the baseline collapsed to 'reject everything' -- UALER 0 for the wrong reason, and no exposure to the Sybil arm it exists to expose.",
+        "known_weakness": "no independence notion, so the Section 7 corroborating_sources factor (1/3/5) translates directly into vote share",
+        "contrast_with_ablation": "ablation_source_count_voting keeps AegisLink's extraction and swaps only the inference rule; together the two separate a wrong rule from wrong evidence"
+      },
+      "B06_provenance_reranker": {
+        "defense_id": "B06_provenance_reranker",
+        "family": "baseline",
+        "label": "B06 provenance-weighted reranking",
+        "contract_ref": "CONTRACT.md Section 10, item 6",
+        "restrictions": [
+          {
+            "input": "official_backlink_directional",
+            "reason": "provenance weighting tests whether an endorsement claim is PRESENT, not whether the endorsing site actually publishes it; directionality is outside the design"
+          },
+          {
+            "input": "source_clustering",
+            "reason": "sources are weighted, not clustered"
+          }
+        ],
+        "notes": "Prediction before measurement: better than B05 on ATPR, still exposed on the official_backlink attack arm, because a forged endorsement is upgraded exactly like a genuine one.",
+        "is_surrogate": false,
+        "surrogate_note": "",
+        "weights": {
+          "registry_known": 1.0,
+          "shared_host": 0.9,
+          "age_per_snapshot": 0.3,
+          "retrieval_rank": 0.55,
+          "endorsement_claim_present": 0.8,
+          "official_self_claim": 0.35,
+          "identity_match": 0.55,
+          "identity_conflict": -1.0
+        },
+        "structural_gap": "Treats the presence of an endorsement claim as provenance. The corpus emits the byte-identical claim on authorized and impersonating pages, with the forged link pointing at the genuine official host, so presence cannot separate them."
+      },
+      "B07_graph_anomaly_detector": {
+        "defense_id": "B07_graph_anomaly_detector",
+        "family": "baseline",
+        "label": "B07 graph anomaly detection (TopoGuard-style)",
+        "contract_ref": "CONTRACT.md Section 10, item 7; prior work arXiv:2607.20437",
+        "restrictions": [
+          {
+            "input": "action_type",
+            "reason": "an anomaly score is a property of a node, so it is action-independent by construction"
+          },
+          {
+            "input": "registry_official",
+            "reason": "unsupervised and structural: consulting an authoritative registry would make it a different (supervised) method"
+          }
+        ],
+        "notes": "Prediction before measurement: detects the Sybil corroboration arm, blind to the single-page impersonation and replaced-endpoint arms.",
+        "is_surrogate": true,
+        "surrogate_note": "Implemented from the mechanism described in arXiv:2607.20437 (structural anomaly over the retrieved mention graph), not from released code. Labelled TopoGuard-STYLE for that reason; it is not a reproduction of the published system.",
+        "graph_construction": "nodes = retrieved hosts mentioning the entity; edges = host-reference edges plus near-duplicate content edges at shingle Jaccard >= 0.45",
+        "features": [
+          "local clustering coefficient (primary)",
+          "entity locality",
+          "degree (near-neutral)"
+        ],
+        "why_degree_is_not_penalised": "The most-linked node in this graph is the entity's own official site, because every partner and every forger links to it. Penalising degree made the detector reject official links and pass low-degree attacker pages -- the signal inverted. Density, not popularity, is what a split-knowledge graph defense keys on.",
+        "weights": {
+          "bias": 1.65,
+          "clique": -1.3,
+          "entity_local": -0.7,
+          "degree": -0.05
+        },
+        "structural_blindness": "A single-node attack (impersonating site, replaced endpoint) has ordinary local topology, and a node score cannot represent action relativity."
+      },
+      "B08_reject_high_risk": {
+        "defense_id": "B08_reject_high_risk",
+        "family": "baseline",
+        "label": "B08 reject all login and pay links",
+        "contract_ref": "CONTRACT.md Section 10, item 8",
+        "restrictions": [
+          {
+            "input": "page_text",
+            "reason": "for login/pay the decision is unconditional, so no evidence is consulted"
+          },
+          {
+            "input": "registry_official",
+            "reason": "a policy baseline: it verifies nothing, it only refuses"
+          },
+          {
+            "input": "official_backlink_directional",
+            "reason": "no verification of any kind by design"
+          }
+        ],
+        "notes": "FRR on login/pay is 1.0 by construction, and book is left fully exposed although it is in the preregistered high-risk pool. Marks the degenerate corner of the Pareto frontier.",
+        "is_surrogate": false,
+        "surrogate_note": "",
+        "blocked_actions": [
+          "login",
+          "pay"
+        ],
+        "unblocked_high_risk_actions": [
+          "book"
+        ],
+        "behaviour_when_unblocked": "undefended: presents the top-ranked page offering the action",
+        "by_construction": {
+          "ualer_on_login_and_pay": 0.0,
+          "frr_on_login_and_pay": 1.0
+        },
+        "why_included": "Sets the floor any real defense must beat on login/pay, and exposes that blocking the two scariest verbs leaves book -- also in the preregistered high-risk pool -- entirely open."
+      },
+      "B09_official_only": {
+        "defense_id": "B09_official_only",
+        "family": "baseline",
+        "label": "B09 allow only the registry-listed official domain",
+        "contract_ref": "CONTRACT.md Section 10, item 9",
+        "restrictions": [
+          {
+            "input": "page_text",
+            "reason": "the rule is a registry lookup; page content cannot change its answer"
+          },
+          {
+            "input": "official_backlink_directional",
+            "reason": "third-party delegations are refused unread, which is the rule's definition"
+          },
+          {
+            "input": "action_type",
+            "reason": "the same host is allowed for every action; the rule has no action notion"
+          },
+          {
+            "input": "source_clustering",
+            "reason": "no corroboration is consulted"
+          }
+        ],
+        "notes": "UALER = 0 and ATPR = 0, both by construction. Defines the security ceiling and the utility floor; the preregistered ATPR gates exist to stop a defense collapsing to it.",
+        "is_surrogate": false,
+        "surrogate_note": "",
+        "by_construction": {
+          "ualer": 0.0,
+          "atpr": 0.0,
+          "frr_on_authorized_third_party_links": 1.0
+        },
+        "role_in_the_suite": "Defines the security ceiling. AegisLink cannot beat it on UALER; the comparison that matters is ATPR at equal UALER.",
+        "contract_link": "Direct operationalisation of CONTRACT.md Section 4.2 claim 5 (explicit preservation of authorized third-party services): B09 is the counterfactual without it. Bounded by gates min_required_baseline_atpr=0.90 and max_absolute_atpr_loss=0.05."
+      },
+      "B10_ragshield_defense": {
+        "defense_id": "B10_ragshield_defense",
+        "family": "baseline",
+        "label": "B10 RAGShield-style provenance-verified defense",
+        "contract_ref": "CONTRACT.md Section 10, item 10; prior work arXiv:2604.00387",
+        "restrictions": [
+          {
+            "input": "official_backlink_directional",
+            "reason": "provenance is verified as ASSERTED on the judged page; the endorsing site is not fetched to confirm the assertion. This single gap is the B10-vs-AegisLink contrast."
+          },
+          {
+            "input": "source_clustering",
+            "reason": "corroborators are counted, not tested for mutual independence"
+          }
+        ],
+        "notes": "Strongest baseline in the suite: conjunctive, so strictly stronger than any single B01-B07 layer. Prediction before measurement: strong on ATPR, exposed on the official_backlink attack arm.",
+        "is_surrogate": true,
+        "surrogate_note": "Implemented from the provenance-chain mechanism described in arXiv:2604.00387, not from released code. Labelled RAGShield-STYLE; it is not a reproduction of the published system.",
+        "layers": [
+          "provenance_chain (registry-known, or referenced by a registry-known host)",
+          "identity_attested (published fields match the authoritative record)",
+          "endorsed (official endorsement claim present, or is the official domain)",
+          "corroborated (>= 1 other retrieved page supports it)",
+          "lifecycle_intact (not lapsed, not transferred)",
+          "offers_action (the page actually offers the requested action)"
+        ],
+        "combination": "conjunctive (defense-in-depth): every layer must pass",
+        "why_strongest": "Conjunctive, so strictly stronger than any single B01-B07 layer, and the only prior of the eight whose mechanism transfers directly to link presentation.",
+        "single_gap": "Endorsement is tested as ASSERTED on the judged page, not as PUBLISHED by the endorsing site. AegisLink differs from B10 in that one respect, which makes the pair the cleanest test of RQ3's central claim."
+      }
+    }
+  },
+  "ablation_metadata": {
+    "ablation_no_action_type": {
+      "defense_id": "ablation_no_action_type",
+      "family": "aegislink_ablation",
+      "label": "AegisLink -- action type removed",
+      "contract_ref": "CONTRACT.md Section 9 (required ablations)",
+      "restrictions": [
+        {
+          "input": "action_type",
+          "reason": "ablation removes the action type by construction"
+        }
+      ],
+      "notes": "prediction: UALER up on login/pay (over-grants); ATPR ~flat",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    },
+    "ablation_no_official_backlinks": {
+      "defense_id": "ablation_no_official_backlinks",
+      "family": "aegislink_ablation",
+      "label": "AegisLink -- official backlink evidence removed",
+      "contract_ref": "CONTRACT.md Section 9 (required ablations)",
+      "restrictions": [
+        {
+          "input": "official_backlink_directional",
+          "reason": "ablation removes directional backlink evidence by construction"
+        }
+      ],
+      "notes": "prediction: ATPR collapses toward official_only; UALER ~flat near zero",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    },
+    "ablation_no_source_clustering": {
+      "defense_id": "ablation_no_source_clustering",
+      "family": "aegislink_ablation",
+      "label": "AegisLink -- source-dependency clustering removed",
+      "contract_ref": "CONTRACT.md Section 9 (required ablations)",
+      "restrictions": [
+        {
+          "input": "source_clustering",
+          "reason": "ablation removes source-dependency clustering by construction"
+        }
+      ],
+      "notes": "prediction: small on this corpus; corroboration is capped either way",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    },
+    "ablation_no_domain_lifecycle": {
+      "defense_id": "ablation_no_domain_lifecycle",
+      "family": "aegislink_ablation",
+      "label": "AegisLink -- domain lifecycle evidence removed",
+      "contract_ref": "CONTRACT.md Section 9 (required ablations)",
+      "restrictions": [
+        {
+          "input": "lifecycle",
+          "reason": "ablation removes lifecycle evidence by construction"
+        }
+      ],
+      "notes": "prediction: near zero; takeover domains hold no grant to withdraw",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    },
+    "ablation_no_contradiction_edges": {
+      "defense_id": "ablation_no_contradiction_edges",
+      "family": "aegislink_ablation",
+      "label": "AegisLink -- contradiction edges removed",
+      "contract_ref": "CONTRACT.md Section 9 (required ablations)",
+      "restrictions": [],
+      "notes": "prediction: CONTRADICTED -> UNVERIFIED; moves CMR/OSMR, not UALER",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    },
+    "ablation_source_count_voting": {
+      "defense_id": "ablation_source_count_voting",
+      "family": "aegislink_ablation",
+      "label": "AegisLink -- graph inference replaced by source-count voting",
+      "contract_ref": "CONTRACT.md Section 9 (required ablations)",
+      "restrictions": [],
+      "notes": "prediction: UALER up sharply; Sybil pages outvote the official page",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    },
+    "ablation_shared_threshold": {
+      "defense_id": "ablation_shared_threshold",
+      "family": "aegislink_ablation",
+      "label": "AegisLink -- single shared threshold",
+      "contract_ref": "CONTRACT.md Section 9 (required ablations)",
+      "restrictions": [],
+      "notes": "prediction: error redistributed across the risk ladder",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    }
+  },
+  "baseline_metadata": {
+    "B01_lexical_url_rules": {
+      "defense_id": "B01_lexical_url_rules",
+      "family": "baseline",
+      "label": "B01 lexical URL risk rules",
+      "contract_ref": "CONTRACT.md Section 10, item 1",
+      "restrictions": [
+        {
+          "input": "page_text",
+          "reason": "a lexical URL rule inspects the URL only; reading page content would make it a different method"
+        },
+        {
+          "input": "registry_official",
+          "reason": "no registry lookup: the heuristic is defined over URL surface form alone"
+        },
+        {
+          "input": "official_backlink_directional",
+          "reason": "no cross-source evidence by design"
+        }
+      ],
+      "notes": "Has genuine signal on adversarial hostnames but cannot represent entity relativity: the same URL scores identically for an entity that appointed it and one that did not.",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    },
+    "B02_domain_reputation": {
+      "defense_id": "B02_domain_reputation",
+      "family": "baseline",
+      "label": "B02 domain age / reputation rules",
+      "contract_ref": "CONTRACT.md Section 10, item 2",
+      "restrictions": [
+        {
+          "input": "page_text",
+          "reason": "a reputation rule scores the host, not its content"
+        },
+        {
+          "input": "official_backlink_directional",
+          "reason": "no cross-source evidence by design"
+        },
+        {
+          "input": "action_type",
+          "reason": "host reputation is action-independent by construction"
+        }
+      ],
+      "notes": "Permitted to exploit the corpus's lifecycle degeneracy (a lifecycle record exists only for takeover domains). AegisLink declines that shortcut, so the comparison is conservative in the baseline's favour.",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    },
+    "B03_phishing_classifier": {
+      "defense_id": "B03_phishing_classifier",
+      "family": "baseline",
+      "label": "B03 generic phishing classifier",
+      "contract_ref": "CONTRACT.md Section 10, item 3",
+      "restrictions": [
+        {
+          "input": "official_backlink_directional",
+          "reason": "a generic phishing classifier scores one page in isolation; directional cross-source verification is outside its design"
+        },
+        {
+          "input": "action_type",
+          "reason": "generic: it classifies the page, not the requested action"
+        }
+      ],
+      "notes": "Fixed-weight logistic model over declared features, Platt-calibrated on train_development. No external checkpoint, so Section 15 reproducibility holds by inspection.",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    },
+    "B04_llm_as_judge": {
+      "defense_id": "B04_llm_as_judge",
+      "family": "baseline",
+      "label": "B04 LLM-as-a-judge (deterministic rubric surrogate)",
+      "contract_ref": "CONTRACT.md Section 10, item 4",
+      "restrictions": [
+        {
+          "input": "official_backlink_directional",
+          "reason": "the judge reads the page it is judging; it cannot fetch the official site to check whether the endorsement it claims actually exists"
+        },
+        {
+          "input": "source_clustering",
+          "reason": "corroboration is counted, not assessed for independence"
+        }
+      ],
+      "notes": "Prediction before measurement: among the worst baselines on UALER (credulous about page self-description) while strong on ATPR.",
+      "is_surrogate": true,
+      "surrogate_note": "Not a language model. A deterministic rubric standing in for an instructed judge, because Section 15 requires a recorded model/tokenizer checksum and one-command reproduction, and a per-triple LLM judge is ~50k generations per configuration. Replacing it with a pinned open-weight judge is a Step 5 deliverable and will invalidate this row, not the method."
+    },
+    "B05_source_count_majority": {
+      "defense_id": "B05_source_count_majority",
+      "family": "baseline",
+      "label": "B05 unweighted source-count majority vote",
+      "contract_ref": "CONTRACT.md Section 10, item 5",
+      "restrictions": [
+        {
+          "input": "source_clustering",
+          "reason": "unweighted by definition: assessing independence would make it a different rule"
+        },
+        {
+          "input": "registry_official",
+          "reason": "the vote is over retrieved pages; consulting the registry would add an authority notion the rule does not have"
+        },
+        {
+          "input": "official_backlink_directional",
+          "reason": "no directional verification by design"
+        }
+      ],
+      "notes": "Prediction before measurement: high UALER on the 3- and 5-corroborator attack arms, because a one-listing campaign outvotes the entity's own site.",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    },
+    "B06_provenance_reranker": {
+      "defense_id": "B06_provenance_reranker",
+      "family": "baseline",
+      "label": "B06 provenance-weighted reranking",
+      "contract_ref": "CONTRACT.md Section 10, item 6",
+      "restrictions": [
+        {
+          "input": "official_backlink_directional",
+          "reason": "provenance weighting tests whether an endorsement claim is PRESENT, not whether the endorsing site actually publishes it; directionality is outside the design"
+        },
+        {
+          "input": "source_clustering",
+          "reason": "sources are weighted, not clustered"
+        }
+      ],
+      "notes": "Prediction before measurement: better than B05 on ATPR, still exposed on the official_backlink attack arm, because a forged endorsement is upgraded exactly like a genuine one.",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    },
+    "B07_graph_anomaly_detector": {
+      "defense_id": "B07_graph_anomaly_detector",
+      "family": "baseline",
+      "label": "B07 graph anomaly detection (TopoGuard-style)",
+      "contract_ref": "CONTRACT.md Section 10, item 7; prior work arXiv:2607.20437",
+      "restrictions": [
+        {
+          "input": "action_type",
+          "reason": "an anomaly score is a property of a node, so it is action-independent by construction"
+        },
+        {
+          "input": "registry_official",
+          "reason": "unsupervised and structural: consulting an authoritative registry would make it a different (supervised) method"
+        }
+      ],
+      "notes": "Prediction before measurement: detects the Sybil corroboration arm, blind to the single-page impersonation and replaced-endpoint arms.",
+      "is_surrogate": true,
+      "surrogate_note": "Implemented from the mechanism described in arXiv:2607.20437 (structural anomaly over the retrieved mention graph), not from released code. Labelled TopoGuard-STYLE for that reason; it is not a reproduction of the published system."
+    },
+    "B08_reject_high_risk": {
+      "defense_id": "B08_reject_high_risk",
+      "family": "baseline",
+      "label": "B08 reject all login and pay links",
+      "contract_ref": "CONTRACT.md Section 10, item 8",
+      "restrictions": [
+        {
+          "input": "page_text",
+          "reason": "for login/pay the decision is unconditional, so no evidence is consulted"
+        },
+        {
+          "input": "registry_official",
+          "reason": "a policy baseline: it verifies nothing, it only refuses"
+        },
+        {
+          "input": "official_backlink_directional",
+          "reason": "no verification of any kind by design"
+        }
+      ],
+      "notes": "FRR on login/pay is 1.0 by construction, and book is left fully exposed although it is in the preregistered high-risk pool. Marks the degenerate corner of the Pareto frontier.",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    },
+    "B09_official_only": {
+      "defense_id": "B09_official_only",
+      "family": "baseline",
+      "label": "B09 allow only the registry-listed official domain",
+      "contract_ref": "CONTRACT.md Section 10, item 9",
+      "restrictions": [
+        {
+          "input": "page_text",
+          "reason": "the rule is a registry lookup; page content cannot change its answer"
+        },
+        {
+          "input": "official_backlink_directional",
+          "reason": "third-party delegations are refused unread, which is the rule's definition"
+        },
+        {
+          "input": "action_type",
+          "reason": "the same host is allowed for every action; the rule has no action notion"
+        },
+        {
+          "input": "source_clustering",
+          "reason": "no corroboration is consulted"
+        }
+      ],
+      "notes": "UALER = 0 and ATPR = 0, both by construction. Defines the security ceiling and the utility floor; the preregistered ATPR gates exist to stop a defense collapsing to it.",
+      "is_surrogate": false,
+      "surrogate_note": ""
+    },
+    "B10_ragshield_defense": {
+      "defense_id": "B10_ragshield_defense",
+      "family": "baseline",
+      "label": "B10 RAGShield-style provenance-verified defense",
+      "contract_ref": "CONTRACT.md Section 10, item 10; prior work arXiv:2604.00387",
+      "restrictions": [
+        {
+          "input": "official_backlink_directional",
+          "reason": "provenance is verified as ASSERTED on the judged page; the endorsing site is not fetched to confirm the assertion. This single gap is the B10-vs-AegisLink contrast."
+        },
+        {
+          "input": "source_clustering",
+          "reason": "corroborators are counted, not tested for mutual independence"
+        }
+      ],
+      "notes": "Strongest baseline in the suite: conjunctive, so strictly stronger than any single B01-B07 layer. Prediction before measurement: strong on ATPR, exposed on the official_backlink attack arm.",
+      "is_surrogate": true,
+      "surrogate_note": "Implemented from the provenance-chain mechanism described in arXiv:2604.00387, not from released code. Labelled RAGShield-STYLE; it is not a reproduction of the published system."
+    }
+  }
+}

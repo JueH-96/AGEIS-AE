@@ -1,0 +1,1197 @@
+metadata:
+  schema_version: '1.0'
+  generator: registry/entity_generator.py
+  generator_version: '1.0'
+  lexicon_version: '1.0'
+  master_seed: 42
+  contract_ref: CONTRACT.md Section 5.1
+  machine_readable_entity_id_channel: x-aegis-entity-id
+  machine_readable_note: Entity IDs are published to parsers through an HTML <meta> channel and never
+    appear in visible prose (CONTRACT.md Section 8, item 3). The channel carries the target entity ID
+    and an opaque page ID only; page role, attack template and factor levels are held in the side manifest
+    so the channel cannot leak a label.
+  status_enum:
+  - active
+  - fabricated_control
+  counts:
+    entity_templates: 80
+    fabricated_control_templates: 8
+    controlled_entities: 160
+    fabricated_control_entities: 8
+entities:
+- entity_id: E0001
+  canonical_name: Harbour Lantern Bistro
+  category: restaurant
+  address_id: A0001
+  phone_id: P0001
+  coordinates_id: C0001
+  status: active
+- entity_id: E0002
+  canonical_name: Harbour Mere Bistro
+  category: restaurant
+  address_id: A0002
+  phone_id: P0002
+  coordinates_id: C0002
+  status: active
+- entity_id: E0003
+  canonical_name: Cinder Court Kitchen
+  category: restaurant
+  address_id: A0003
+  phone_id: P0003
+  coordinates_id: C0003
+  status: active
+- entity_id: E0004
+  canonical_name: Cinder Hearth Kitchen
+  category: restaurant
+  address_id: A0004
+  phone_id: P0004
+  coordinates_id: C0004
+  status: active
+- entity_id: E0005
+  canonical_name: Solstice Yard Eatery
+  category: restaurant
+  address_id: A0005
+  phone_id: P0005
+  coordinates_id: C0005
+  status: active
+- entity_id: E0006
+  canonical_name: Solstice Mere Eatery
+  category: restaurant
+  address_id: A0006
+  phone_id: P0006
+  coordinates_id: C0006
+  status: active
+- entity_id: E0007
+  canonical_name: Mistral Beacon Supper Room
+  category: restaurant
+  address_id: A0007
+  phone_id: P0007
+  coordinates_id: C0007
+  status: active
+- entity_id: E0008
+  canonical_name: Mistral Row Supper Room
+  category: restaurant
+  address_id: A0008
+  phone_id: P0008
+  coordinates_id: C0008
+  status: active
+- entity_id: E0009
+  canonical_name: Vellum Quay Tavern
+  category: restaurant
+  address_id: A0009
+  phone_id: P0009
+  coordinates_id: C0009
+  status: active
+- entity_id: E0010
+  canonical_name: Vellum Arch Tavern
+  category: restaurant
+  address_id: A0010
+  phone_id: P0010
+  coordinates_id: C0010
+  status: active
+- entity_id: E0011
+  canonical_name: Quillon Wharf Bistro
+  category: restaurant
+  address_id: A0011
+  phone_id: P0011
+  coordinates_id: C0011
+  status: active
+- entity_id: E0012
+  canonical_name: Quillon Bridge Bistro
+  category: restaurant
+  address_id: A0012
+  phone_id: P0012
+  coordinates_id: C0012
+  status: active
+- entity_id: E0013
+  canonical_name: Corvid Quay Kitchen
+  category: restaurant
+  address_id: A0013
+  phone_id: P0013
+  coordinates_id: C0013
+  status: active
+- entity_id: E0014
+  canonical_name: Corvid Yard Kitchen
+  category: restaurant
+  address_id: A0014
+  phone_id: P0014
+  coordinates_id: C0014
+  status: active
+- entity_id: E0015
+  canonical_name: Fernhollow Hearth Eatery
+  category: restaurant
+  address_id: A0015
+  phone_id: P0015
+  coordinates_id: C0015
+  status: active
+- entity_id: E0016
+  canonical_name: Fernhollow Gate Eatery
+  category: restaurant
+  address_id: A0016
+  phone_id: P0016
+  coordinates_id: C0016
+  status: active
+- entity_id: E0017
+  canonical_name: Thistle Lock Supper Room
+  category: restaurant
+  address_id: A0017
+  phone_id: P0017
+  coordinates_id: C0017
+  status: active
+- entity_id: E0018
+  canonical_name: Thistle Lantern Supper Room
+  category: restaurant
+  address_id: A0018
+  phone_id: P0018
+  coordinates_id: C0018
+  status: active
+- entity_id: E0019
+  canonical_name: Marlowe Spire Tavern
+  category: restaurant
+  address_id: A0019
+  phone_id: P0019
+  coordinates_id: C0019
+  status: active
+- entity_id: E0020
+  canonical_name: Marlowe Fold Tavern
+  category: restaurant
+  address_id: A0020
+  phone_id: P0020
+  coordinates_id: C0020
+  status: active
+- entity_id: E0021
+  canonical_name: Wickham Reach Hotel
+  category: hotel
+  address_id: A0021
+  phone_id: P0021
+  coordinates_id: C0021
+  status: active
+- entity_id: E0022
+  canonical_name: Wickham Hollow Hotel
+  category: hotel
+  address_id: A0022
+  phone_id: P0022
+  coordinates_id: C0022
+  status: active
+- entity_id: E0023
+  canonical_name: Orrery Lock Inn
+  category: hotel
+  address_id: A0023
+  phone_id: P0023
+  coordinates_id: C0023
+  status: active
+- entity_id: E0024
+  canonical_name: Orrery Fold Inn
+  category: hotel
+  address_id: A0024
+  phone_id: P0024
+  coordinates_id: C0024
+  status: active
+- entity_id: E0025
+  canonical_name: Verdant Lantern Lodge
+  category: hotel
+  address_id: A0025
+  phone_id: P0025
+  coordinates_id: C0025
+  status: active
+- entity_id: E0026
+  canonical_name: Verdant Court Lodge
+  category: hotel
+  address_id: A0026
+  phone_id: P0026
+  coordinates_id: C0026
+  status: active
+- entity_id: E0027
+  canonical_name: Pellucid Arch Guesthouse
+  category: hotel
+  address_id: A0027
+  phone_id: P0027
+  coordinates_id: C0027
+  status: active
+- entity_id: E0028
+  canonical_name: Pellucid Hollow Guesthouse
+  category: hotel
+  address_id: A0028
+  phone_id: P0028
+  coordinates_id: C0028
+  status: active
+- entity_id: E0029
+  canonical_name: Aldermist Ridge Rooms
+  category: hotel
+  address_id: A0029
+  phone_id: P0029
+  coordinates_id: C0029
+  status: active
+- entity_id: E0030
+  canonical_name: Aldermist Gate Rooms
+  category: hotel
+  address_id: A0030
+  phone_id: P0030
+  coordinates_id: C0030
+  status: active
+- entity_id: E0031
+  canonical_name: Bramble Quay Hotel
+  category: hotel
+  address_id: A0031
+  phone_id: P0031
+  coordinates_id: C0031
+  status: active
+- entity_id: E0032
+  canonical_name: Bramble Croft Hotel
+  category: hotel
+  address_id: A0032
+  phone_id: P0032
+  coordinates_id: C0032
+  status: active
+- entity_id: E0033
+  canonical_name: Cobalt Vale Inn
+  category: hotel
+  address_id: A0033
+  phone_id: P0033
+  coordinates_id: C0033
+  status: active
+- entity_id: E0034
+  canonical_name: Cobalt Fold Inn
+  category: hotel
+  address_id: A0034
+  phone_id: P0034
+  coordinates_id: C0034
+  status: active
+- entity_id: E0035
+  canonical_name: Alabaster Arch Lodge
+  category: hotel
+  address_id: A0035
+  phone_id: P0035
+  coordinates_id: C0035
+  status: active
+- entity_id: E0036
+  canonical_name: Alabaster Lantern Lodge
+  category: hotel
+  address_id: A0036
+  phone_id: P0036
+  coordinates_id: C0036
+  status: active
+- entity_id: E0037
+  canonical_name: Selkie Wharf Guesthouse
+  category: hotel
+  address_id: A0037
+  phone_id: P0037
+  coordinates_id: C0037
+  status: active
+- entity_id: E0038
+  canonical_name: Selkie Court Guesthouse
+  category: hotel
+  address_id: A0038
+  phone_id: P0038
+  coordinates_id: C0038
+  status: active
+- entity_id: E0039
+  canonical_name: Ambergris Lock Rooms
+  category: hotel
+  address_id: A0039
+  phone_id: P0039
+  coordinates_id: C0039
+  status: active
+- entity_id: E0040
+  canonical_name: Ambergris Wharf Rooms
+  category: hotel
+  address_id: A0040
+  phone_id: P0040
+  coordinates_id: C0040
+  status: active
+- entity_id: E0041
+  canonical_name: Zephyr Court Clinic
+  category: clinic
+  address_id: A0041
+  phone_id: P0041
+  coordinates_id: C0041
+  status: active
+- entity_id: E0042
+  canonical_name: Zephyr Quay Clinic
+  category: clinic
+  address_id: A0042
+  phone_id: P0042
+  coordinates_id: C0042
+  status: active
+- entity_id: E0043
+  canonical_name: Kestrel Wharf Health Rooms
+  category: clinic
+  address_id: A0043
+  phone_id: P0043
+  coordinates_id: C0043
+  status: active
+- entity_id: E0044
+  canonical_name: Kestrel Beacon Health Rooms
+  category: clinic
+  address_id: A0044
+  phone_id: P0044
+  coordinates_id: C0044
+  status: active
+- entity_id: E0045
+  canonical_name: Halcyon Gate Practice
+  category: clinic
+  address_id: A0045
+  phone_id: P0045
+  coordinates_id: C0045
+  status: active
+- entity_id: E0046
+  canonical_name: Halcyon Spire Practice
+  category: clinic
+  address_id: A0046
+  phone_id: P0046
+  coordinates_id: C0046
+  status: active
+- entity_id: E0047
+  canonical_name: Juniper Quay Surgery
+  category: clinic
+  address_id: A0047
+  phone_id: P0047
+  coordinates_id: C0047
+  status: active
+- entity_id: E0048
+  canonical_name: Juniper Ridge Surgery
+  category: clinic
+  address_id: A0048
+  phone_id: P0048
+  coordinates_id: C0048
+  status: active
+- entity_id: E0049
+  canonical_name: Harbour Lantern Care Centre
+  category: clinic
+  address_id: A0049
+  phone_id: P0049
+  coordinates_id: C0049
+  status: active
+- entity_id: E0050
+  canonical_name: Harbour Anchor Care Centre
+  category: clinic
+  address_id: A0050
+  phone_id: P0050
+  coordinates_id: C0050
+  status: active
+- entity_id: E0051
+  canonical_name: Cinder Anchor Clinic
+  category: clinic
+  address_id: A0051
+  phone_id: P0051
+  coordinates_id: C0051
+  status: active
+- entity_id: E0052
+  canonical_name: Cinder Hollow Clinic
+  category: clinic
+  address_id: A0052
+  phone_id: P0052
+  coordinates_id: C0052
+  status: active
+- entity_id: E0053
+  canonical_name: Solstice Wharf Health Rooms
+  category: clinic
+  address_id: A0053
+  phone_id: P0053
+  coordinates_id: C0053
+  status: active
+- entity_id: E0054
+  canonical_name: Solstice Bridge Health Rooms
+  category: clinic
+  address_id: A0054
+  phone_id: P0054
+  coordinates_id: C0054
+  status: active
+- entity_id: E0055
+  canonical_name: Mistral Row Practice
+  category: clinic
+  address_id: A0055
+  phone_id: P0055
+  coordinates_id: C0055
+  status: active
+- entity_id: E0056
+  canonical_name: Mistral Wharf Practice
+  category: clinic
+  address_id: A0056
+  phone_id: P0056
+  coordinates_id: C0056
+  status: active
+- entity_id: E0057
+  canonical_name: Vellum Gate Surgery
+  category: clinic
+  address_id: A0057
+  phone_id: P0057
+  coordinates_id: C0057
+  status: active
+- entity_id: E0058
+  canonical_name: Vellum Reach Surgery
+  category: clinic
+  address_id: A0058
+  phone_id: P0058
+  coordinates_id: C0058
+  status: active
+- entity_id: E0059
+  canonical_name: Quillon Reach Care Centre
+  category: clinic
+  address_id: A0059
+  phone_id: P0059
+  coordinates_id: C0059
+  status: active
+- entity_id: E0060
+  canonical_name: Quillon Bridge Care Centre
+  category: clinic
+  address_id: A0060
+  phone_id: P0060
+  coordinates_id: C0060
+  status: active
+- entity_id: E0061
+  canonical_name: Corvid Ridge Repairs
+  category: service_provider
+  address_id: A0061
+  phone_id: P0061
+  coordinates_id: C0061
+  status: active
+- entity_id: E0062
+  canonical_name: Corvid Anchor Repairs
+  category: service_provider
+  address_id: A0062
+  phone_id: P0062
+  coordinates_id: C0062
+  status: active
+- entity_id: E0063
+  canonical_name: Fernhollow Row Services
+  category: service_provider
+  address_id: A0063
+  phone_id: P0063
+  coordinates_id: C0063
+  status: active
+- entity_id: E0064
+  canonical_name: Fernhollow Spire Services
+  category: service_provider
+  address_id: A0064
+  phone_id: P0064
+  coordinates_id: C0064
+  status: active
+- entity_id: E0065
+  canonical_name: Thistle Compass Workshop
+  category: service_provider
+  address_id: A0065
+  phone_id: P0065
+  coordinates_id: C0065
+  status: active
+- entity_id: E0066
+  canonical_name: Thistle Yard Workshop
+  category: service_provider
+  address_id: A0066
+  phone_id: P0066
+  coordinates_id: C0066
+  status: active
+- entity_id: E0067
+  canonical_name: Marlowe Beacon Fitters
+  category: service_provider
+  address_id: A0067
+  phone_id: P0067
+  coordinates_id: C0067
+  status: active
+- entity_id: E0068
+  canonical_name: Marlowe Hearth Fitters
+  category: service_provider
+  address_id: A0068
+  phone_id: P0068
+  coordinates_id: C0068
+  status: active
+- entity_id: E0069
+  canonical_name: Wickham Lantern Maintenance
+  category: service_provider
+  address_id: A0069
+  phone_id: P0069
+  coordinates_id: C0069
+  status: active
+- entity_id: E0070
+  canonical_name: Wickham Reach Maintenance
+  category: service_provider
+  address_id: A0070
+  phone_id: P0070
+  coordinates_id: C0070
+  status: active
+- entity_id: E0071
+  canonical_name: Orrery Mere Repairs
+  category: service_provider
+  address_id: A0071
+  phone_id: P0071
+  coordinates_id: C0071
+  status: active
+- entity_id: E0072
+  canonical_name: Orrery Lock Repairs
+  category: service_provider
+  address_id: A0072
+  phone_id: P0072
+  coordinates_id: C0072
+  status: active
+- entity_id: E0073
+  canonical_name: Verdant Vale Services
+  category: service_provider
+  address_id: A0073
+  phone_id: P0073
+  coordinates_id: C0073
+  status: active
+- entity_id: E0074
+  canonical_name: Verdant Arch Services
+  category: service_provider
+  address_id: A0074
+  phone_id: P0074
+  coordinates_id: C0074
+  status: active
+- entity_id: E0075
+  canonical_name: Pellucid Compass Workshop
+  category: service_provider
+  address_id: A0075
+  phone_id: P0075
+  coordinates_id: C0075
+  status: active
+- entity_id: E0076
+  canonical_name: Pellucid Close Workshop
+  category: service_provider
+  address_id: A0076
+  phone_id: P0076
+  coordinates_id: C0076
+  status: active
+- entity_id: E0077
+  canonical_name: Aldermist Close Fitters
+  category: service_provider
+  address_id: A0077
+  phone_id: P0077
+  coordinates_id: C0077
+  status: active
+- entity_id: E0078
+  canonical_name: Aldermist Yard Fitters
+  category: service_provider
+  address_id: A0078
+  phone_id: P0078
+  coordinates_id: C0078
+  status: active
+- entity_id: E0079
+  canonical_name: Bramble Spire Maintenance
+  category: service_provider
+  address_id: A0079
+  phone_id: P0079
+  coordinates_id: C0079
+  status: active
+- entity_id: E0080
+  canonical_name: Bramble Hearth Maintenance
+  category: service_provider
+  address_id: A0080
+  phone_id: P0080
+  coordinates_id: C0080
+  status: active
+- entity_id: E0081
+  canonical_name: Cobalt Reach Tours
+  category: tour_operator
+  address_id: A0081
+  phone_id: P0081
+  coordinates_id: C0081
+  status: active
+- entity_id: E0082
+  canonical_name: Cobalt Croft Tours
+  category: tour_operator
+  address_id: A0082
+  phone_id: P0082
+  coordinates_id: C0082
+  status: active
+- entity_id: E0083
+  canonical_name: Alabaster Row Excursions
+  category: tour_operator
+  address_id: A0083
+  phone_id: P0083
+  coordinates_id: C0083
+  status: active
+- entity_id: E0084
+  canonical_name: Alabaster Anchor Excursions
+  category: tour_operator
+  address_id: A0084
+  phone_id: P0084
+  coordinates_id: C0084
+  status: active
+- entity_id: E0085
+  canonical_name: Selkie Hearth Voyages
+  category: tour_operator
+  address_id: A0085
+  phone_id: P0085
+  coordinates_id: C0085
+  status: active
+- entity_id: E0086
+  canonical_name: Selkie Bourne Voyages
+  category: tour_operator
+  address_id: A0086
+  phone_id: P0086
+  coordinates_id: C0086
+  status: active
+- entity_id: E0087
+  canonical_name: Ambergris Lock Expeditions
+  category: tour_operator
+  address_id: A0087
+  phone_id: P0087
+  coordinates_id: C0087
+  status: active
+- entity_id: E0088
+  canonical_name: Ambergris Croft Expeditions
+  category: tour_operator
+  address_id: A0088
+  phone_id: P0088
+  coordinates_id: C0088
+  status: active
+- entity_id: E0089
+  canonical_name: Zephyr Ridge Trails
+  category: tour_operator
+  address_id: A0089
+  phone_id: P0089
+  coordinates_id: C0089
+  status: active
+- entity_id: E0090
+  canonical_name: Zephyr Court Trails
+  category: tour_operator
+  address_id: A0090
+  phone_id: P0090
+  coordinates_id: C0090
+  status: active
+- entity_id: E0091
+  canonical_name: Kestrel Gate Tours
+  category: tour_operator
+  address_id: A0091
+  phone_id: P0091
+  coordinates_id: C0091
+  status: active
+- entity_id: E0092
+  canonical_name: Kestrel Mere Tours
+  category: tour_operator
+  address_id: A0092
+  phone_id: P0092
+  coordinates_id: C0092
+  status: active
+- entity_id: E0093
+  canonical_name: Halcyon Row Excursions
+  category: tour_operator
+  address_id: A0093
+  phone_id: P0093
+  coordinates_id: C0093
+  status: active
+- entity_id: E0094
+  canonical_name: Halcyon Anchor Excursions
+  category: tour_operator
+  address_id: A0094
+  phone_id: P0094
+  coordinates_id: C0094
+  status: active
+- entity_id: E0095
+  canonical_name: Juniper Court Voyages
+  category: tour_operator
+  address_id: A0095
+  phone_id: P0095
+  coordinates_id: C0095
+  status: active
+- entity_id: E0096
+  canonical_name: Juniper Wharf Voyages
+  category: tour_operator
+  address_id: A0096
+  phone_id: P0096
+  coordinates_id: C0096
+  status: active
+- entity_id: E0097
+  canonical_name: Harbour Compass Expeditions
+  category: tour_operator
+  address_id: A0097
+  phone_id: P0097
+  coordinates_id: C0097
+  status: active
+- entity_id: E0098
+  canonical_name: Harbour Row Expeditions
+  category: tour_operator
+  address_id: A0098
+  phone_id: P0098
+  coordinates_id: C0098
+  status: active
+- entity_id: E0099
+  canonical_name: Cinder Gate Trails
+  category: tour_operator
+  address_id: A0099
+  phone_id: P0099
+  coordinates_id: C0099
+  status: active
+- entity_id: E0100
+  canonical_name: Cinder Compass Trails
+  category: tour_operator
+  address_id: A0100
+  phone_id: P0100
+  coordinates_id: C0100
+  status: active
+- entity_id: E0101
+  canonical_name: Solstice Beacon Salon
+  category: salon
+  address_id: A0101
+  phone_id: P0101
+  coordinates_id: C0101
+  status: active
+- entity_id: E0102
+  canonical_name: Solstice Hearth Salon
+  category: salon
+  address_id: A0102
+  phone_id: P0102
+  coordinates_id: C0102
+  status: active
+- entity_id: E0103
+  canonical_name: Mistral Vale Grooming Rooms
+  category: salon
+  address_id: A0103
+  phone_id: P0103
+  coordinates_id: C0103
+  status: active
+- entity_id: E0104
+  canonical_name: Mistral Anchor Grooming Rooms
+  category: salon
+  address_id: A0104
+  phone_id: P0104
+  coordinates_id: C0104
+  status: active
+- entity_id: E0105
+  canonical_name: Vellum Wharf Barbers
+  category: salon
+  address_id: A0105
+  phone_id: P0105
+  coordinates_id: C0105
+  status: active
+- entity_id: E0106
+  canonical_name: Vellum Arch Barbers
+  category: salon
+  address_id: A0106
+  phone_id: P0106
+  coordinates_id: C0106
+  status: active
+- entity_id: E0107
+  canonical_name: Quillon Lock Stylists
+  category: salon
+  address_id: A0107
+  phone_id: P0107
+  coordinates_id: C0107
+  status: active
+- entity_id: E0108
+  canonical_name: Quillon Bridge Stylists
+  category: salon
+  address_id: A0108
+  phone_id: P0108
+  coordinates_id: C0108
+  status: active
+- entity_id: E0109
+  canonical_name: Corvid Arch Atelier
+  category: salon
+  address_id: A0109
+  phone_id: P0109
+  coordinates_id: C0109
+  status: active
+- entity_id: E0110
+  canonical_name: Corvid Lantern Atelier
+  category: salon
+  address_id: A0110
+  phone_id: P0110
+  coordinates_id: C0110
+  status: active
+- entity_id: E0111
+  canonical_name: Fernhollow Quay Salon
+  category: salon
+  address_id: A0111
+  phone_id: P0111
+  coordinates_id: C0111
+  status: active
+- entity_id: E0112
+  canonical_name: Fernhollow Wharf Salon
+  category: salon
+  address_id: A0112
+  phone_id: P0112
+  coordinates_id: C0112
+  status: active
+- entity_id: E0113
+  canonical_name: Thistle Quay Grooming Rooms
+  category: salon
+  address_id: A0113
+  phone_id: P0113
+  coordinates_id: C0113
+  status: active
+- entity_id: E0114
+  canonical_name: Thistle Lock Grooming Rooms
+  category: salon
+  address_id: A0114
+  phone_id: P0114
+  coordinates_id: C0114
+  status: active
+- entity_id: E0115
+  canonical_name: Marlowe Ridge Barbers
+  category: salon
+  address_id: A0115
+  phone_id: P0115
+  coordinates_id: C0115
+  status: active
+- entity_id: E0116
+  canonical_name: Marlowe Fold Barbers
+  category: salon
+  address_id: A0116
+  phone_id: P0116
+  coordinates_id: C0116
+  status: active
+- entity_id: E0117
+  canonical_name: Wickham Yard Stylists
+  category: salon
+  address_id: A0117
+  phone_id: P0117
+  coordinates_id: C0117
+  status: active
+- entity_id: E0118
+  canonical_name: Wickham Reach Stylists
+  category: salon
+  address_id: A0118
+  phone_id: P0118
+  coordinates_id: C0118
+  status: active
+- entity_id: E0119
+  canonical_name: Orrery Bourne Atelier
+  category: salon
+  address_id: A0119
+  phone_id: P0119
+  coordinates_id: C0119
+  status: active
+- entity_id: E0120
+  canonical_name: Orrery Spire Atelier
+  category: salon
+  address_id: A0120
+  phone_id: P0120
+  coordinates_id: C0120
+  status: active
+- entity_id: E0121
+  canonical_name: Verdant Anchor Gym
+  category: fitness_studio
+  address_id: A0121
+  phone_id: P0121
+  coordinates_id: C0121
+  status: active
+- entity_id: E0122
+  canonical_name: Verdant Close Gym
+  category: fitness_studio
+  address_id: A0122
+  phone_id: P0122
+  coordinates_id: C0122
+  status: active
+- entity_id: E0123
+  canonical_name: Pellucid Mere Fitness Rooms
+  category: fitness_studio
+  address_id: A0123
+  phone_id: P0123
+  coordinates_id: C0123
+  status: active
+- entity_id: E0124
+  canonical_name: Pellucid Compass Fitness Rooms
+  category: fitness_studio
+  address_id: A0124
+  phone_id: P0124
+  coordinates_id: C0124
+  status: active
+- entity_id: E0125
+  canonical_name: Aldermist Wharf Athletics Club
+  category: fitness_studio
+  address_id: A0125
+  phone_id: P0125
+  coordinates_id: C0125
+  status: active
+- entity_id: E0126
+  canonical_name: Aldermist Lantern Athletics Club
+  category: fitness_studio
+  address_id: A0126
+  phone_id: P0126
+  coordinates_id: C0126
+  status: active
+- entity_id: E0127
+  canonical_name: Bramble Close Training Studio
+  category: fitness_studio
+  address_id: A0127
+  phone_id: P0127
+  coordinates_id: C0127
+  status: active
+- entity_id: E0128
+  canonical_name: Bramble Row Training Studio
+  category: fitness_studio
+  address_id: A0128
+  phone_id: P0128
+  coordinates_id: C0128
+  status: active
+- entity_id: E0129
+  canonical_name: Cobalt Spire Movement Lab
+  category: fitness_studio
+  address_id: A0129
+  phone_id: P0129
+  coordinates_id: C0129
+  status: active
+- entity_id: E0130
+  canonical_name: Cobalt Arch Movement Lab
+  category: fitness_studio
+  address_id: A0130
+  phone_id: P0130
+  coordinates_id: C0130
+  status: active
+- entity_id: E0131
+  canonical_name: Alabaster Yard Gym
+  category: fitness_studio
+  address_id: A0131
+  phone_id: P0131
+  coordinates_id: C0131
+  status: active
+- entity_id: E0132
+  canonical_name: Alabaster Court Gym
+  category: fitness_studio
+  address_id: A0132
+  phone_id: P0132
+  coordinates_id: C0132
+  status: active
+- entity_id: E0133
+  canonical_name: Selkie Wharf Fitness Rooms
+  category: fitness_studio
+  address_id: A0133
+  phone_id: P0133
+  coordinates_id: C0133
+  status: active
+- entity_id: E0134
+  canonical_name: Selkie Fold Fitness Rooms
+  category: fitness_studio
+  address_id: A0134
+  phone_id: P0134
+  coordinates_id: C0134
+  status: active
+- entity_id: E0135
+  canonical_name: Ambergris Lantern Athletics Club
+  category: fitness_studio
+  address_id: A0135
+  phone_id: P0135
+  coordinates_id: C0135
+  status: active
+- entity_id: E0136
+  canonical_name: Ambergris Gate Athletics Club
+  category: fitness_studio
+  address_id: A0136
+  phone_id: P0136
+  coordinates_id: C0136
+  status: active
+- entity_id: E0137
+  canonical_name: Zephyr Wharf Training Studio
+  category: fitness_studio
+  address_id: A0137
+  phone_id: P0137
+  coordinates_id: C0137
+  status: active
+- entity_id: E0138
+  canonical_name: Zephyr Lantern Training Studio
+  category: fitness_studio
+  address_id: A0138
+  phone_id: P0138
+  coordinates_id: C0138
+  status: active
+- entity_id: E0139
+  canonical_name: Kestrel Compass Movement Lab
+  category: fitness_studio
+  address_id: A0139
+  phone_id: P0139
+  coordinates_id: C0139
+  status: active
+- entity_id: E0140
+  canonical_name: Kestrel Anchor Movement Lab
+  category: fitness_studio
+  address_id: A0140
+  phone_id: P0140
+  coordinates_id: C0140
+  status: active
+- entity_id: E0141
+  canonical_name: Halcyon Hollow Books
+  category: bookshop
+  address_id: A0141
+  phone_id: P0141
+  coordinates_id: C0141
+  status: active
+- entity_id: E0142
+  canonical_name: Halcyon Ridge Books
+  category: bookshop
+  address_id: A0142
+  phone_id: P0142
+  coordinates_id: C0142
+  status: active
+- entity_id: E0143
+  canonical_name: Juniper Spire Bookshop
+  category: bookshop
+  address_id: A0143
+  phone_id: P0143
+  coordinates_id: C0143
+  status: active
+- entity_id: E0144
+  canonical_name: Juniper Beacon Bookshop
+  category: bookshop
+  address_id: A0144
+  phone_id: P0144
+  coordinates_id: C0144
+  status: active
+- entity_id: E0145
+  canonical_name: Harbour Yard Reading Rooms
+  category: bookshop
+  address_id: A0145
+  phone_id: P0145
+  coordinates_id: C0145
+  status: active
+- entity_id: E0146
+  canonical_name: Harbour Anchor Reading Rooms
+  category: bookshop
+  address_id: A0146
+  phone_id: P0146
+  coordinates_id: C0146
+  status: active
+- entity_id: E0147
+  canonical_name: Cinder Yard Bindery
+  category: bookshop
+  address_id: A0147
+  phone_id: P0147
+  coordinates_id: C0147
+  status: active
+- entity_id: E0148
+  canonical_name: Cinder Lantern Bindery
+  category: bookshop
+  address_id: A0148
+  phone_id: P0148
+  coordinates_id: C0148
+  status: active
+- entity_id: E0149
+  canonical_name: Solstice Gate Booksellers
+  category: bookshop
+  address_id: A0149
+  phone_id: P0149
+  coordinates_id: C0149
+  status: active
+- entity_id: E0150
+  canonical_name: Solstice Arch Booksellers
+  category: bookshop
+  address_id: A0150
+  phone_id: P0150
+  coordinates_id: C0150
+  status: active
+- entity_id: E0151
+  canonical_name: Mistral Beacon Books
+  category: bookshop
+  address_id: A0151
+  phone_id: P0151
+  coordinates_id: C0151
+  status: active
+- entity_id: E0152
+  canonical_name: Mistral Croft Books
+  category: bookshop
+  address_id: A0152
+  phone_id: P0152
+  coordinates_id: C0152
+  status: active
+- entity_id: E0153
+  canonical_name: Vellum Vale Bookshop
+  category: bookshop
+  address_id: A0153
+  phone_id: P0153
+  coordinates_id: C0153
+  status: active
+- entity_id: E0154
+  canonical_name: Vellum Bridge Bookshop
+  category: bookshop
+  address_id: A0154
+  phone_id: P0154
+  coordinates_id: C0154
+  status: active
+- entity_id: E0155
+  canonical_name: Quillon Vale Reading Rooms
+  category: bookshop
+  address_id: A0155
+  phone_id: P0155
+  coordinates_id: C0155
+  status: active
+- entity_id: E0156
+  canonical_name: Quillon Bridge Reading Rooms
+  category: bookshop
+  address_id: A0156
+  phone_id: P0156
+  coordinates_id: C0156
+  status: active
+- entity_id: E0157
+  canonical_name: Corvid Hearth Bindery
+  category: bookshop
+  address_id: A0157
+  phone_id: P0157
+  coordinates_id: C0157
+  status: active
+- entity_id: E0158
+  canonical_name: Corvid Hollow Bindery
+  category: bookshop
+  address_id: A0158
+  phone_id: P0158
+  coordinates_id: C0158
+  status: active
+- entity_id: E0159
+  canonical_name: Fernhollow Beacon Booksellers
+  category: bookshop
+  address_id: A0159
+  phone_id: P0159
+  coordinates_id: C0159
+  status: active
+- entity_id: E0160
+  canonical_name: Fernhollow Wharf Booksellers
+  category: bookshop
+  address_id: A0160
+  phone_id: P0160
+  coordinates_id: C0160
+  status: active
+- entity_id: E9001
+  canonical_name: Aldermist Court Bistro
+  category: restaurant
+  address_id: A9001
+  phone_id: P9001
+  coordinates_id: C9001
+  status: fabricated_control
+- entity_id: E9002
+  canonical_name: Cinder Vale Inn
+  category: hotel
+  address_id: A9002
+  phone_id: P9002
+  coordinates_id: C9002
+  status: fabricated_control
+- entity_id: E9003
+  canonical_name: Verdant Compass Practice
+  category: clinic
+  address_id: A9003
+  phone_id: P9003
+  coordinates_id: C9003
+  status: fabricated_control
+- entity_id: E9004
+  canonical_name: Juniper Gate Fitters
+  category: service_provider
+  address_id: A9004
+  phone_id: P9004
+  coordinates_id: C9004
+  status: fabricated_control
+- entity_id: E9005
+  canonical_name: Wickham Arch Trails
+  category: tour_operator
+  address_id: A9005
+  phone_id: P9005
+  coordinates_id: C9005
+  status: fabricated_control
+- entity_id: E9006
+  canonical_name: Kestrel Wharf Salon
+  category: salon
+  address_id: A9006
+  phone_id: P9006
+  coordinates_id: C9006
+  status: fabricated_control
+- entity_id: E9007
+  canonical_name: Thistle Reach Fitness Rooms
+  category: fitness_studio
+  address_id: A9007
+  phone_id: P9007
+  coordinates_id: C9007
+  status: fabricated_control
+- entity_id: E9008
+  canonical_name: Ambergris Bourne Reading Rooms
+  category: bookshop
+  address_id: A9008
+  phone_id: P9008
+  coordinates_id: C9008
+  status: fabricated_control

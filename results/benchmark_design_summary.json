@@ -1,0 +1,388 @@
+{
+  "step": "2.4a",
+  "site_templates": 100,
+  "site_templates_per_role": {
+    "authorized_booking_provider": 10,
+    "authorized_information_directory": 10,
+    "benign_confusing_page": 10,
+    "corroborating_blog_directory": 10,
+    "expired_domain_takeover": 10,
+    "impersonating_official_site": 10,
+    "official_site": 10,
+    "unauthorized_booking_provider": 10,
+    "unauthorized_login_portal": 10,
+    "unauthorized_payment_portal": 10
+  },
+  "attack_full_factorial_cells": 1920,
+  "attack_core_templates": 600,
+  "attack_adaptive_holdout_templates": 80,
+  "attack_factors": {
+    "identity_consistency": [
+      "none",
+      "partial",
+      "full"
+    ],
+    "explicit_official_claim": [
+      "False",
+      "True"
+    ],
+    "action_claim": [
+      "browse",
+      "contact",
+      "book",
+      "login",
+      "pay"
+    ],
+    "official_backlink": [
+      "False",
+      "True"
+    ],
+    "corroborating_sources": [
+      "0",
+      "1",
+      "3",
+      "5"
+    ],
+    "lexical_diversity": [
+      "low",
+      "high"
+    ],
+    "prompt_injection": [
+      "False",
+      "True"
+    ],
+    "content_change_after_indexing": [
+      "False",
+      "True"
+    ]
+  },
+  "balance": {
+    "design": "fractional factorial, action_claim fully crossed",
+    "full_factorial_cells": 1920,
+    "core_templates": 600,
+    "templates_per_action": 120,
+    "adaptive_holdout_templates": 80,
+    "adaptive_holdout_region": {
+      "identity_consistency": [
+        "full"
+      ],
+      "official_backlink": [
+        "True"
+      ],
+      "corroborating_sources": [
+        "3",
+        "5"
+      ],
+      "lexical_diversity": [
+        "high"
+      ]
+    },
+    "per_action": {
+      "browse": {
+        "main_effects_exactly_balanced": true,
+        "main_effect_counts": {
+          "identity_consistency": {
+            "none": 40,
+            "partial": 40,
+            "full": 40
+          },
+          "explicit_official_claim": {
+            "False": 60,
+            "True": 60
+          },
+          "official_backlink": {
+            "False": 60,
+            "True": 60
+          },
+          "corroborating_sources": {
+            "0": 30,
+            "1": 30,
+            "3": 30,
+            "5": 30
+          },
+          "lexical_diversity": {
+            "low": 60,
+            "high": 60
+          },
+          "prompt_injection": {
+            "False": 60,
+            "True": 60
+          },
+          "content_change_after_indexing": {
+            "False": 60,
+            "True": 60
+          }
+        },
+        "max_pairwise_cell_deviation": 1.0,
+        "max_pairwise_cell_deviation_at": {
+          "factor_a": "explicit_official_claim",
+          "factor_b": "official_backlink",
+          "cell": [
+            "False",
+            "False"
+          ]
+        },
+        "pairwise_note": "Main effects are exact by construction. Pairwise cell counts are measured, not guaranteed: a mixed-level orthogonal array of strength 2 need not exist for this factor structure once the adaptive-holdout region is excluded, so the achieved deviation is reported and asserted against a declared tolerance instead."
+      },
+      "contact": {
+        "main_effects_exactly_balanced": true,
+        "main_effect_counts": {
+          "identity_consistency": {
+            "none": 40,
+            "partial": 40,
+            "full": 40
+          },
+          "explicit_official_claim": {
+            "False": 60,
+            "True": 60
+          },
+          "official_backlink": {
+            "False": 60,
+            "True": 60
+          },
+          "corroborating_sources": {
+            "0": 30,
+            "1": 30,
+            "3": 30,
+            "5": 30
+          },
+          "lexical_diversity": {
+            "low": 60,
+            "high": 60
+          },
+          "prompt_injection": {
+            "False": 60,
+            "True": 60
+          },
+          "content_change_after_indexing": {
+            "False": 60,
+            "True": 60
+          }
+        },
+        "max_pairwise_cell_deviation": 1.0,
+        "max_pairwise_cell_deviation_at": {
+          "factor_a": "explicit_official_claim",
+          "factor_b": "official_backlink",
+          "cell": [
+            "False",
+            "False"
+          ]
+        },
+        "pairwise_note": "Main effects are exact by construction. Pairwise cell counts are measured, not guaranteed: a mixed-level orthogonal array of strength 2 need not exist for this factor structure once the adaptive-holdout region is excluded, so the achieved deviation is reported and asserted against a declared tolerance instead."
+      },
+      "book": {
+        "main_effects_exactly_balanced": true,
+        "main_effect_counts": {
+          "identity_consistency": {
+            "none": 40,
+            "partial": 40,
+            "full": 40
+          },
+          "explicit_official_claim": {
+            "False": 60,
+            "True": 60
+          },
+          "official_backlink": {
+            "False": 60,
+            "True": 60
+          },
+          "corroborating_sources": {
+            "0": 30,
+            "1": 30,
+            "3": 30,
+            "5": 30
+          },
+          "lexical_diversity": {
+            "low": 60,
+            "high": 60
+          },
+          "prompt_injection": {
+            "False": 60,
+            "True": 60
+          },
+          "content_change_after_indexing": {
+            "False": 60,
+            "True": 60
+          }
+        },
+        "max_pairwise_cell_deviation": 1.0,
+        "max_pairwise_cell_deviation_at": {
+          "factor_a": "explicit_official_claim",
+          "factor_b": "official_backlink",
+          "cell": [
+            "False",
+            "False"
+          ]
+        },
+        "pairwise_note": "Main effects are exact by construction. Pairwise cell counts are measured, not guaranteed: a mixed-level orthogonal array of strength 2 need not exist for this factor structure once the adaptive-holdout region is excluded, so the achieved deviation is reported and asserted against a declared tolerance instead."
+      },
+      "login": {
+        "main_effects_exactly_balanced": true,
+        "main_effect_counts": {
+          "identity_consistency": {
+            "none": 40,
+            "partial": 40,
+            "full": 40
+          },
+          "explicit_official_claim": {
+            "False": 60,
+            "True": 60
+          },
+          "official_backlink": {
+            "False": 60,
+            "True": 60
+          },
+          "corroborating_sources": {
+            "0": 30,
+            "1": 30,
+            "3": 30,
+            "5": 30
+          },
+          "lexical_diversity": {
+            "low": 60,
+            "high": 60
+          },
+          "prompt_injection": {
+            "False": 60,
+            "True": 60
+          },
+          "content_change_after_indexing": {
+            "False": 60,
+            "True": 60
+          }
+        },
+        "max_pairwise_cell_deviation": 1.0,
+        "max_pairwise_cell_deviation_at": {
+          "factor_a": "explicit_official_claim",
+          "factor_b": "official_backlink",
+          "cell": [
+            "False",
+            "False"
+          ]
+        },
+        "pairwise_note": "Main effects are exact by construction. Pairwise cell counts are measured, not guaranteed: a mixed-level orthogonal array of strength 2 need not exist for this factor structure once the adaptive-holdout region is excluded, so the achieved deviation is reported and asserted against a declared tolerance instead."
+      },
+      "pay": {
+        "main_effects_exactly_balanced": true,
+        "main_effect_counts": {
+          "identity_consistency": {
+            "none": 40,
+            "partial": 40,
+            "full": 40
+          },
+          "explicit_official_claim": {
+            "False": 60,
+            "True": 60
+          },
+          "official_backlink": {
+            "False": 60,
+            "True": 60
+          },
+          "corroborating_sources": {
+            "0": 30,
+            "1": 30,
+            "3": 30,
+            "5": 30
+          },
+          "lexical_diversity": {
+            "low": 60,
+            "high": 60
+          },
+          "prompt_injection": {
+            "False": 60,
+            "True": 60
+          },
+          "content_change_after_indexing": {
+            "False": 60,
+            "True": 60
+          }
+        },
+        "max_pairwise_cell_deviation": 1.0,
+        "max_pairwise_cell_deviation_at": {
+          "factor_a": "explicit_official_claim",
+          "factor_b": "official_backlink",
+          "cell": [
+            "False",
+            "False"
+          ]
+        },
+        "pairwise_note": "Main effects are exact by construction. Pairwise cell counts are measured, not guaranteed: a mixed-level orthogonal array of strength 2 need not exist for this factor structure once the adaptive-holdout region is excluded, so the achieved deviation is reported and asserted against a declared tolerance instead."
+      }
+    }
+  },
+  "achieved_core_marginals": {
+    "identity_consistency": {
+      "counts": {
+        "none": 200,
+        "partial": 200,
+        "full": 200
+      },
+      "uniform_expectation": 200.0,
+      "max_deviation_from_uniform": 0.0
+    },
+    "explicit_official_claim": {
+      "counts": {
+        "False": 300,
+        "True": 300
+      },
+      "uniform_expectation": 300.0,
+      "max_deviation_from_uniform": 0.0
+    },
+    "action_claim": {
+      "counts": {
+        "browse": 120,
+        "contact": 120,
+        "book": 120,
+        "login": 120,
+        "pay": 120
+      },
+      "uniform_expectation": 120.0,
+      "max_deviation_from_uniform": 0.0
+    },
+    "official_backlink": {
+      "counts": {
+        "False": 300,
+        "True": 300
+      },
+      "uniform_expectation": 300.0,
+      "max_deviation_from_uniform": 0.0
+    },
+    "corroborating_sources": {
+      "counts": {
+        "0": 150,
+        "1": 150,
+        "3": 150,
+        "5": 150
+      },
+      "uniform_expectation": 150.0,
+      "max_deviation_from_uniform": 0.0
+    },
+    "lexical_diversity": {
+      "counts": {
+        "low": 300,
+        "high": 300
+      },
+      "uniform_expectation": 300.0,
+      "max_deviation_from_uniform": 0.0
+    },
+    "prompt_injection": {
+      "counts": {
+        "False": 300,
+        "True": 300
+      },
+      "uniform_expectation": 300.0,
+      "max_deviation_from_uniform": 0.0
+    },
+    "content_change_after_indexing": {
+      "counts": {
+        "False": 300,
+        "True": 300
+      },
+      "uniform_expectation": 300.0,
+      "max_deviation_from_uniform": 0.0
+    }
+  },
+  "site_templates_sha256": "02a3fcc3318a6f1d6c719de4e0e38c9e11d8ab6d51ed7a840d0b480abd910af8",
+  "attack_matrix_full_sha256": "90f713e49e56511ff07619d23f8e580daa424ee185a16e0c0ee4348319909d98",
+  "attack_templates_sha256": "d10f1d9f8048fd8052535cb6f6da606122fd65fbe0f8f0683ff2bc80e3c851d5"
+}

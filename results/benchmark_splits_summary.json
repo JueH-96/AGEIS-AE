@@ -1,0 +1,88 @@
+{
+  "step": "2.5",
+  "axes": {
+    "entity_template": {
+      "core_pool_size": 60,
+      "split_sizes": {
+        "train_development": 30,
+        "validation": 12,
+        "test": 18
+      },
+      "achieved_fractions": {
+        "train_development": 0.5,
+        "validation": 0.2,
+        "test": 0.3
+      },
+      "holdout_name": "transfer_holdout",
+      "holdout_size": 20
+    },
+    "site_template": {
+      "core_pool_size": 100,
+      "split_sizes": {
+        "train_development": 50,
+        "validation": 20,
+        "test": 30
+      },
+      "achieved_fractions": {
+        "train_development": 0.5,
+        "validation": 0.2,
+        "test": 0.3
+      },
+      "holdout_name": null,
+      "holdout_size": 0
+    },
+    "attack_template": {
+      "core_pool_size": 600,
+      "split_sizes": {
+        "train_development": 300,
+        "validation": 120,
+        "test": 180
+      },
+      "achieved_fractions": {
+        "train_development": 0.5,
+        "validation": 0.2,
+        "test": 0.3
+      },
+      "holdout_name": "adaptive_holdout",
+      "holdout_size": 80
+    }
+  },
+  "transfer_holdout_categories": [
+    "fitness_studio",
+    "bookshop"
+  ],
+  "regime_pool_sizes": {
+    "train_development": {
+      "entity_template": 30,
+      "site_template": 50,
+      "attack_template": 300
+    },
+    "validation": {
+      "entity_template": 12,
+      "site_template": 20,
+      "attack_template": 120
+    },
+    "test": {
+      "entity_template": 18,
+      "site_template": 30,
+      "attack_template": 180
+    },
+    "transfer_holdout": {
+      "entity_template": 20,
+      "site_template": 30,
+      "attack_template": 180
+    },
+    "adaptive_holdout": {
+      "entity_template": 18,
+      "site_template": 30,
+      "attack_template": 80
+    },
+    "fabricated_control": {
+      "entity_template": 8,
+      "site_template": 30,
+      "attack_template": 180
+    }
+  },
+  "splits_sha256": "e7bb931af16fb354e752277b156027430dccbe74b33988da7d81fc426a7b27d4",
+  "leakage_violations": 0
+}

@@ -1,0 +1,529 @@
+literature_matrix_version: '1.0'
+contract_ref: CONTRACT.md Section 13 (workflow), Section 4 (novelty contract)
+checkpoint: project_start
+checkpoint_schedule:
+- project_start
+- post_pilot
+- pre_full_experiments
+- pre_manuscript_freeze
+rubric:
+  file: evaluation/collision_rubric.yaml
+  version: '1.1'
+  score_rule: min(3, count_of_distinct_markers_matched)
+  collision_rule: problem_overlap >= 3 AND method_overlap >= 3
+  near_collision_rule: problem_overlap >= 2 AND method_overlap >= 2 AND NOT direct_collision
+  scored_by: frozen regular-expression markers; no LLM judgement
+verdict: NO_DIRECT_COLLISION
+direct_collision_any: false
+colliding_paper_ids: []
+near_collision_paper_ids: []
+citation_integrity:
+  title_mismatch_paper_ids:
+  - P07
+  title_match_threshold: 0.5
+  interpretation: Each cited arXiv identifier was resolved and its retrieved title compared against the
+    title CONTRACT.md Section 20 cites. Listed identifiers resolve but to a title that does not match
+    the citation. This does not change the collision verdict, which is computed from retrieved abstracts,
+    but the citations MUST be reconciled before manuscript freeze.
+novelty_claim_permitted: true
+novelty_claim_gate: CONTRACT.md Section 4.2 permits the words 'first' or 'novel' in the manuscript only
+  while this verdict reads NO_DIRECT_COLLISION.
+intended_novel_contribution: 'Combination of: action-link misbinding definition and measurement; legitimate
+  entity with unauthorized action endpoint (not fabricated product or rank promotion); entity-domain-action
+  authorization model; action-risk-aware verification over browse/contact/book/login/pay; explicit preservation
+  of authorized third-party services; fully generated auto-labelled benchmark; failure-stage attribution
+  with security-utility evaluation under adaptive attacks (CONTRACT.md Section 4.2).'
+counts:
+  prior_works_declared: 8
+  prior_works_metadata_verified: 8
+  prior_works_metadata_unverified: 0
+  search_concepts_defined: 6
+  search_concepts_executed_ok: 6
+  new_arxiv_candidates_surfaced: 5
+  new_arxiv_candidates_scored: 5
+  new_arxiv_candidates_unscored_over_cap: 0
+  prior_works_with_title_mismatch: 1
+prior_works:
+- paper_id: P01
+  short_name: Greshake
+  arxiv_id: '2302.12173'
+  title: 'Not what you''ve signed up for: Compromising Real-World LLM-Integrated Applications with Indirect
+    Prompt Injection'
+  authors: Kai Greshake, Sahar Abdelnabi, Shailesh Mishra, Christoph Endres, Thorsten Holz, Mario Fritz
+  year: '2023'
+  contract_characterization: Indirect prompt injection
+  contract_cited_title: 'Not What You''ve Signed Up For: Compromising Real-World LLM-Integrated Applications
+    with Indirect Prompt Injection.'
+  metadata_verified: true
+  evidence_tier: tier_1_verified_abstract
+  scored_text_sources:
+  - retrieved_title
+  - retrieved_abstract
+  - contract_characterization
+  title_similarity_to_contract_citation: 1.0
+  title_consistent: true
+  problem_overlap: 1
+  attack_overlap: 1
+  method_overlap: 0
+  evaluation_overlap: 0
+  matched_markers:
+    problem_overlap:
+    - llm_mediated_recommendation
+    attack_overlap:
+    - web_content_pollution
+    method_overlap: []
+    evaluation_overlap: []
+  direct_collision: false
+  near_collision: false
+  required_project_change: Cite as prior work; no project change required.
+- paper_id: P02
+  short_name: Nestaas
+  arxiv_id: '2406.18382'
+  title: Adversarial Search Engine Optimization for Large Language Models
+  authors: Fredrik Nestaas, Edoardo Debenedetti, Florian Tramèr
+  year: '2024'
+  contract_characterization: Preference manipulation / adversarial SEO
+  contract_cited_title: Adversarial Search Engine Optimization for Large Language Models.
+  metadata_verified: true
+  evidence_tier: tier_1_verified_abstract
+  scored_text_sources:
+  - retrieved_title
+  - retrieved_abstract
+  - contract_characterization
+  title_similarity_to_contract_citation: 1.0
+  title_consistent: true
+  problem_overlap: 1
+  attack_overlap: 1
+  method_overlap: 0
+  evaluation_overlap: 0
+  matched_markers:
+    problem_overlap:
+    - llm_mediated_recommendation
+    attack_overlap:
+    - web_content_pollution
+    method_overlap: []
+    evaluation_overlap: []
+  direct_collision: false
+  near_collision: false
+  required_project_change: Cite as prior work; no project change required.
+- paper_id: P03
+  short_name: FORGE
+  arxiv_id: '2606.13610'
+  title: 'One Polluted Page Is Enough: Evaluating Web Content Pollution in Generative Recommenders'
+  authors: Minghao Luo, Liang Chen
+  year: '2026'
+  contract_characterization: Fake-product recommendation under polluted pages (FORGE)
+  contract_cited_title: 'One Polluted Page Is Enough: Evaluating Web Content Pollution in Generative Recommenders.'
+  metadata_verified: true
+  evidence_tier: tier_1_verified_abstract
+  scored_text_sources:
+  - retrieved_title
+  - retrieved_abstract
+  - contract_characterization
+  title_similarity_to_contract_citation: 1.0
+  title_consistent: true
+  problem_overlap: 1
+  attack_overlap: 2
+  method_overlap: 0
+  evaluation_overlap: 1
+  matched_markers:
+    problem_overlap:
+    - llm_mediated_recommendation
+    attack_overlap:
+    - entity_impersonation
+    - web_content_pollution
+    method_overlap: []
+    evaluation_overlap:
+    - generated_benchmark
+  direct_collision: false
+  near_collision: false
+  required_project_change: Reuse only as an attack component or baseline; do not let its framing redefine
+    project scope (Sections 2, 7, 10).
+- paper_id: P04
+  short_name: SIREN
+  arxiv_id: '2607.21951'
+  title: 'SIREN (Luring LLMs onto the Rocks): PAIR-Driven Preference Manipulation in Web-RAG Recommenders'
+  authors: Evan Caville, Siamak Layeghy, Billy Sung, Sara Dolnicar, Marius Portmann
+  year: '2026'
+  contract_characterization: Controlled recommendation rank manipulation (SIREN)
+  contract_cited_title: 'SIREN (Luring LLMs onto the Rocks): PAIR-Driven Preference Manipulation in Web-RAG
+    Recommenders.'
+  metadata_verified: true
+  evidence_tier: tier_1_verified_abstract
+  scored_text_sources:
+  - retrieved_title
+  - retrieved_abstract
+  - contract_characterization
+  title_similarity_to_contract_citation: 1.0
+  title_consistent: true
+  problem_overlap: 1
+  attack_overlap: 1
+  method_overlap: 0
+  evaluation_overlap: 0
+  matched_markers:
+    problem_overlap:
+    - llm_mediated_recommendation
+    attack_overlap:
+    - web_content_pollution
+    method_overlap: []
+    evaluation_overlap: []
+  direct_collision: false
+  near_collision: false
+  required_project_change: Cite as prior work; no project change required.
+- paper_id: P05
+  short_name: Lee
+  arxiv_id: '2607.03739'
+  title: A Failure-Mode Benchmark for Polymorphic Sybil Poisoning in RAG
+  authors: Donghyun Lee, Juntae Kim
+  year: '2026'
+  contract_characterization: Polymorphic Sybil poisoning
+  contract_cited_title: A Failure-Mode Benchmark for Polymorphic Sybil Poisoning in RAG.
+  metadata_verified: true
+  evidence_tier: tier_1_verified_abstract
+  scored_text_sources:
+  - retrieved_title
+  - retrieved_abstract
+  - contract_characterization
+  title_similarity_to_contract_citation: 1.0
+  title_consistent: true
+  problem_overlap: 0
+  attack_overlap: 2
+  method_overlap: 0
+  evaluation_overlap: 0
+  matched_markers:
+    problem_overlap: []
+    attack_overlap:
+    - multi_source_corroboration
+    - web_content_pollution
+    method_overlap: []
+    evaluation_overlap: []
+  direct_collision: false
+  near_collision: false
+  required_project_change: Reuse only as an attack component or baseline; do not let its framing redefine
+    project scope (Sections 2, 7, 10).
+- paper_id: P06
+  short_name: TopoGuard
+  arxiv_id: '2607.20437'
+  title: 'TopoGuard: Graph Theory Based Defenses Against Split-Knowledge Attacks on RAG'
+  authors: Chahana Dahal, Zuobin Xiong
+  year: '2026'
+  contract_characterization: Graph defense against split-knowledge attacks (TopoGuard)
+  contract_cited_title: 'TopoGuard: Graph Theory Based Defenses Against Split-Knowledge Attacks on RAG.'
+  metadata_verified: true
+  evidence_tier: tier_1_verified_abstract
+  scored_text_sources:
+  - retrieved_title
+  - retrieved_abstract
+  - contract_characterization
+  title_similarity_to_contract_citation: 1.0
+  title_consistent: true
+  problem_overlap: 1
+  attack_overlap: 1
+  method_overlap: 0
+  evaluation_overlap: 0
+  matched_markers:
+    problem_overlap:
+    - llm_mediated_recommendation
+    attack_overlap:
+    - multi_source_corroboration
+    method_overlap: []
+    evaluation_overlap: []
+  direct_collision: false
+  near_collision: false
+  required_project_change: Cite as prior work; no project change required.
+- paper_id: P07
+  short_name: RAGShield
+  arxiv_id: '2604.00387'
+  title: 'RAGShield: Detecting Numerical Claim Manipulation in Government RAG Systems'
+  authors: KrishnaSaiReddy Patil
+  year: '2026'
+  contract_characterization: Provenance-based defense-in-depth (RAGShield)
+  contract_cited_title: 'RAGShield: Provenance-Verified Defense-in-Depth Against Knowledge Base Poisoning
+    in Government Retrieval-Augmented Generation Systems.'
+  metadata_verified: true
+  evidence_tier: tier_1_verified_abstract
+  scored_text_sources:
+  - retrieved_title
+  - retrieved_abstract
+  - contract_characterization
+  title_similarity_to_contract_citation: 0.167
+  title_consistent: false
+  problem_overlap: 0
+  attack_overlap: 0
+  method_overlap: 1
+  evaluation_overlap: 0
+  matched_markers:
+    problem_overlap: []
+    attack_overlap: []
+    method_overlap:
+    - cross_source_evidence_graph
+    evaluation_overlap: []
+  direct_collision: false
+  near_collision: false
+  required_project_change: Cite as prior work; no project change required.
+  title_mismatch_caveat: 'The cited title and the title retrieved for arXiv:2604.00387 share only 17%
+    of their content tokens. The identifier resolves, but possibly to a different work or a retitled version
+    than CONTRACT.md Section 20 cites. Overlap scores for this record are computed from the RETRIEVED
+    abstract, so they describe the retrieved paper. The citation MUST be reconciled before manuscript
+    freeze: either correct the identifier, or correct the cited title and the Section 4.1 characterization.'
+- paper_id: P08
+  short_name: Zhang
+  arxiv_id: '2505.18543'
+  title: Benchmarking Poisoning Attacks against Retrieval-Augmented Generation
+  authors: Baolei Zhang, Haoran Xin, Jiatong Li, Dongzhe Zhang, Minghong Fang, Zhuqing Liu, Lihai Nie,
+    Zheli Liu
+  year: '2025'
+  contract_characterization: General RAG poisoning benchmarks
+  contract_cited_title: Benchmarking Poisoning Attacks against Retrieval-Augmented Generation.
+  metadata_verified: true
+  evidence_tier: tier_1_verified_abstract
+  scored_text_sources:
+  - retrieved_title
+  - retrieved_abstract
+  - contract_characterization
+  title_similarity_to_contract_citation: 1.0
+  title_consistent: true
+  problem_overlap: 1
+  attack_overlap: 1
+  method_overlap: 0
+  evaluation_overlap: 0
+  matched_markers:
+    problem_overlap:
+    - llm_mediated_recommendation
+    attack_overlap:
+    - web_content_pollution
+    method_overlap: []
+    evaluation_overlap: []
+  direct_collision: false
+  near_collision: false
+  required_project_change: Cite as prior work; no project change required.
+discovered_candidates:
+- paper_id: D01
+  arxiv_id: '2402.17152'
+  title: 'Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations'
+  authors: Jiaqi Zhai, Lucy Liao, Xing Liu, Yueming Wang, Rui Li, Xuan Cao, Leon Gao, Zhaojie Gong, Fangda
+    Gu, Michael He, Yinghai Lu, Yu Shi
+  year: '2024'
+  metadata_verified: true
+  scored: true
+  evidence_tier: tier_1_verified_abstract
+  problem_overlap: 1
+  attack_overlap: 0
+  method_overlap: 0
+  evaluation_overlap: 0
+  matched_markers:
+    problem_overlap:
+    - llm_mediated_recommendation
+    attack_overlap: []
+    method_overlap: []
+    evaluation_overlap: []
+  direct_collision: false
+  near_collision: false
+  required_project_change: Cite as prior work; no project change required.
+- paper_id: D02
+  arxiv_id: '2604.14807'
+  title: 'The LLM Fallacy: Misattribution in AI-Assisted Cognitive Workflows'
+  authors: Hyunwoo Kim, Harin Yu, Hanau Yi
+  year: '2026'
+  metadata_verified: true
+  scored: true
+  evidence_tier: tier_1_verified_abstract
+  problem_overlap: 2
+  attack_overlap: 0
+  method_overlap: 0
+  evaluation_overlap: 0
+  matched_markers:
+    problem_overlap:
+    - llm_mediated_recommendation
+    - misbinding_framing
+    attack_overlap: []
+    method_overlap: []
+    evaluation_overlap: []
+  direct_collision: false
+  near_collision: false
+  required_project_change: Cite as prior work; no project change required.
+- paper_id: D03
+  arxiv_id: '2307.15043'
+  title: Universal and Transferable Adversarial Attacks on Aligned Language Models
+  authors: Andy Zou, Zifan Wang, Nicholas Carlini, Milad Nasr, J. Zico Kolter, Matt Fredrikson
+  year: '2023'
+  metadata_verified: true
+  scored: true
+  evidence_tier: tier_1_verified_abstract
+  problem_overlap: 1
+  attack_overlap: 0
+  method_overlap: 0
+  evaluation_overlap: 0
+  matched_markers:
+    problem_overlap:
+    - llm_mediated_recommendation
+    attack_overlap: []
+    method_overlap: []
+    evaluation_overlap: []
+  direct_collision: false
+  near_collision: false
+  required_project_change: Cite as prior work; no project change required.
+- paper_id: D04
+  arxiv_id: '2310.04451'
+  title: 'AutoDAN: Generating Stealthy Jailbreak Prompts on Aligned Large Language Models'
+  authors: Xiaogeng Liu, Nan Xu, Muhao Chen, Chaowei Xiao
+  year: '2023'
+  metadata_verified: true
+  scored: true
+  evidence_tier: tier_1_verified_abstract
+  problem_overlap: 1
+  attack_overlap: 0
+  method_overlap: 0
+  evaluation_overlap: 0
+  matched_markers:
+    problem_overlap:
+    - llm_mediated_recommendation
+    attack_overlap: []
+    method_overlap: []
+    evaluation_overlap: []
+  direct_collision: false
+  near_collision: false
+  required_project_change: Cite as prior work; no project change required.
+- paper_id: D05
+  arxiv_id: '2405.01769'
+  title: 'A Survey on Large Language Models for Critical Societal Domains: Finance, Healthcare, and Law'
+  authors: Zhiyu Zoey Chen, Jing Ma, Xinlu Zhang, Nan Hao, An Yan, Armineh Nourbakhsh, Xianjun Yang, Julian
+    McAuley, Linda Petzold, William Yang Wang
+  year: '2024'
+  metadata_verified: true
+  scored: true
+  evidence_tier: tier_1_verified_abstract
+  problem_overlap: 1
+  attack_overlap: 0
+  method_overlap: 0
+  evaluation_overlap: 0
+  matched_markers:
+    problem_overlap:
+    - llm_mediated_recommendation
+    attack_overlap: []
+    method_overlap: []
+    evaluation_overlap: []
+  direct_collision: false
+  near_collision: false
+  required_project_change: Cite as prior work; no project change required.
+discovered_unscored_over_cap: []
+search_log:
+- concept: '"action link misbinding" LLM recommendation'
+  raw_output_file: results/literature_search_raw/concept_01.json
+  status: ok
+  n_results: 5
+  arxiv_ids_found:
+  - '2402.17152'
+  result_titles:
+  - 'Ultimate Guide: Preventing Adversarial Prompt Injections with LLM Guardrails'
+  - Protect Against Prompt Injection - IBM
+  - Improving LLMs for Recommendation with Out-Of- ...
+  - '[2402.17152] Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative
+    Recommendations'
+  - Can LLMs Really Beat Traditional Recommendations? New ...
+- concept: entity domain action authorization LLM
+  raw_output_file: results/literature_search_raw/concept_02.json
+  status: ok
+  n_results: 10
+  arxiv_ids_found: []
+  result_titles:
+  - Authorization Academy - Authorization in LLM Applications
+  - LLM Instructions
+  - LLM-based Open Domain Planning by Leveraging Entity-Attribute-Level Domain Models - ACL Anthology
+  - Enforce least-privilege authorization in multi-agent AI chains using Cedar | AWS Security Blog
+  - AI Agent Authentication and Authorization
+  - Security planning for LLM-based applications | Microsoft Learn
+  - 'LLM Access Control: Securing Models, Agents, and AI Workloads'
+  - 'The Authority Flywheel: How to Win LLM Visibility in 2026 - IDX'
+  - 'Enterprise Guide: Securing LLM Access to Your Databases | DreamFactory'
+  - 'Secure LLM Access: Prevent Unauthorized File Queries Now'
+- concept: unauthorized booking link generative search
+  raw_output_file: results/literature_search_raw/concept_03.json
+  status: ok
+  n_results: 10
+  arxiv_ids_found: []
+  result_titles:
+  - 'Unauthorized Booking Links on Google Business Profiles: What You Need to Know'
+  - 'Ongoing Issue: Unauthorized Booking Links on Our ...'
+  - Booking.com has confirmed that it recently detected a ...
+  - Preventing unauthorized use of your accommodation partner account | Booking.com for Partners
+  - Booking.com - unhappy customers | Hi all. I've use them a lot and recently had some bookings made
+    on my account that are not mine | Facebook
+  - 'Warning: New Scams Use AI to Build Trust – Elements for Berkeley Lab'
+  - security - How should I generate a unique link per booking so my users can see a standalone email?
+    - Stack Overflow
+  - Phony AI-Generated LLM Request Messages | Information Security Office
+  - Warnings over AI imposter scams - YouTube
+  - Block Bookings
+- concept: official website misattribution LLM
+  raw_output_file: results/literature_search_raw/concept_04.json
+  status: ok
+  n_results: 10
+  arxiv_ids_found:
+  - '2604.14807'
+  result_titles:
+  - '(PDF) The LLM Fallacy: Misattribution in AI-Assisted Cognitive Workflows'
+  - 'The LLM Fallacy: Misattribution in AI-Assisted Cognitive ...'
+  - '[2604.14807] The LLM Fallacy: Misattribution in AI-Assisted Cognitive Workflows'
+  - 'The LLM Fallacy: Misattribution in AI-Assisted Cognitive Workflows'
+  - Quantifying Misattribution Unfairness in Authorship Attribution ACL Anthology https://aclanthology.org
+    › 2025.acl-short.80.pdf
+  - Preference suppression caused by misattribution of task ... National Institutes of Health (NIH) |
+    (.gov) https://pubmed.ncbi.nlm.nih.gov › ...
+  - Misattribution - The Art and Popular Culture Encyclopedia Art and Popular Culture https://www.artandpopularculture.com
+    › Misattributed
+  - 'The Misattribution Crisis: How AI Summaries Are Undermining Journalism — ClawBlog'
+  - Misattribution of Arousal Theory | Definition, Effect & ...
+  - MISATTRIBUTION | English meaning - Cambridge Dictionary
+- concept: payment link hijacking LLM recommendation
+  raw_output_file: results/literature_search_raw/concept_05.json
+  status: ok
+  n_results: 10
+  arxiv_ids_found:
+  - '2302.12173'
+  - '2307.15043'
+  - '2310.04451'
+  - '2405.01769'
+  result_titles:
+  - Mitigating Reward Hacking in LLM-based Recommendation
+  - 'LLM Security Guide: Preventing Prompt Injection and Jailbreaking'
+  - What is LLM Jacking?
+  - 'LLM Jacking Explained: How Attackers Hijack Large Language Models - Practical DevSecOps'
+  - 'Prompt-in-Content Attacks: Exploiting Uploaded Inputs to Hijack LLM Behavior This paper has been
+    accepted by NSS 2025: 19th International Conference on Network '
+  - 'When AI Gets Hijacked: Exploiting Hosted Models for Dark Roleplaying'
+  - LLM01:2025 Prompt Injection - OWASP Gen AI Security Project
+  - Recommendations for a Fraud | Salesforce Trailblazer Community
+  - 'Fraud Prevention: Machine Learning in Action - Coda Payments'
+  - Hijacking Discord invite links to install malware | Kaspersky official blog
+- concept: entity-link binding web RAG security
+  raw_output_file: results/literature_search_raw/concept_06.json
+  status: ok
+  n_results: 10
+  arxiv_ids_found: []
+  result_titles:
+  - 'description: Analyze the retrieval augmented generation (RAG) architecture, identify potential security
+    risks, and learn techniques to mitigate those risks. tit'
+  - What Is RAG Security? 7 Risks Hiding in Your ...
+  - RAG Security - OWASP Cheat Sheet Series
+  - 'RAG security: the forgotten attack surface – Christian Schneider'
+  - 'RAG Pipeline Security Best Practices for 2026: Protecting Sensitive Data'
+  - 'RAG Security: Protecting Retrieval-Augmented Generation ...'
+  - 'Securing RAG: A Risk Assessment and Mitigation Framework'
+  - 'MES-RAG: Bringing Multi-modal, Entity-Storage, and Secure Enhancements to RAG'
+  - 'AI Data Poisoning: RAG, LLM & Multi-Agent Security - Princeton IT Services'
+  - 'The Embedded Threat in Your LLM: Poisoning RAG Pipelines via Vector Embeddings'
+limitations:
+- 'Overlap scoring is lexical: it detects concepts present in a title and abstract. A paper whose full
+  text contains an action-level authorization defense that its abstract never mentions would be under-scored.
+  Section 13 therefore requires re-running this check at all four checkpoints, and any near_collision
+  entry is flagged for full-text differentiation.'
+- Web search coverage is not exhaustive. A NO_DIRECT_COLLISION verdict is evidence of no detected collision,
+  not proof that none exists.
+- 0 of 8 cited identifiers did not resolve against the live arXiv API and are scored at evidence tier
+  2 from the contract's own characterization. Their non-collision status is provisional.
+- 1 of 8 cited identifiers resolve to a title that does not match the CONTRACT.md Section 20 citation
+  (P07). Scores for those records describe the retrieved paper, not necessarily the intended one.
+- Scoring text is the union of the retrieved title, the retrieved abstract, and the contract's own characterization
+  of the paper. The union is used because under-detecting a collision would produce a false novelty claim;
+  each record's scored_text_sources field states which components were present.

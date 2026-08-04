@@ -1,0 +1,31 @@
+{
+  "step": "2.4b",
+  "pages": 2631,
+  "entities_with_pages": 168,
+  "pages_per_role": {
+    "authorized_booking_provider": 160,
+    "authorized_information_directory": 160,
+    "benign_confusing_page": 320,
+    "corroborating_blog_directory": 584,
+    "expired_domain_takeover": 241,
+    "impersonating_official_site": 247,
+    "official_site": 176,
+    "unauthorized_booking_provider": 249,
+    "unauthorized_login_portal": 241,
+    "unauthorized_payment_portal": 253
+  },
+  "pages_per_snapshot": {
+    "indexed": 629,
+    "live": 629,
+    "static": 1373
+  },
+  "corpus_bytes": 2859773,
+  "safety_violations": 0,
+  "metadata_leaks": 0,
+  "pages_straddling_regime": 0,
+  "distinct_site_templates_used": 100,
+  "distinct_attack_templates_used": 386,
+  "page_manifest_sha256": "e5d459b082db7b7dc4e165c22fa8ad158054f61edebff90a12d779d487ce5e14",
+  "page_hashes_sha256": "092a7ea4051418e66363830f9828db15c5123221b32cf19a4c181f457b41f79c",
+  "corpus_sha256": "e4d4e12475f8fa7bd3fa36a9589333c5ae3f6eae1e325b7d4514396aaae45af7"
+}

@@ -1,0 +1,3483 @@
+{
+  "metadata": {
+    "step": "Step 5 of 8 -- primary evaluation, adaptive robustness and gate decision",
+    "contract_ref": "CONTRACT.md Section 12",
+    "prereg_ref": "preregistration.yaml hard_gates, gate_operationalization",
+    "prereg_sha256": "373bffc9cdefc034e3f80704ae0dae4a37e293cb1a43e00a8a1e1e87656fcdf0",
+    "gate_evaluator_version": "1.0",
+    "builder": "evaluation/gate_evaluator.py",
+    "ci_flavour_used_for_decisions": "bias_corrected",
+    "n_resamples": 10000,
+    "confidence_level": 0.95,
+    "replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+    "adaptive_replay_fingerprints": {
+      "A": "2ca48deb7805484e6893e701bc3d67c1dcbac888cc23a8d3d644bbc77413f201",
+      "B": "0410c0f4ced0179f253228079798042eb4ab85137704eacc7ecf3b498a9f3d90"
+    },
+    "reference_baseline": "B10_ragshield_defense",
+    "reference_baseline_selection": {
+      "reference_baseline": "B10_ragshield_defense",
+      "selection_rule": "lowest UALER subject to ATPR >= 0.90 on the validation split; if no baseline satisfies the ATPR constraint, the lowest UALER outright (preregistration.yaml primary_comparison.reference_baseline_selection)",
+      "selection_split": "validation",
+      "evaluation_split": "test",
+      "atpr_constraint": 0.9,
+      "atpr_constraint_satisfied": true,
+      "selected_validation_ualer": 0.145833,
+      "selected_validation_atpr": 0.947917,
+      "ranking": [
+        {
+          "baseline_id": "B09_official_only",
+          "UALER": 0.0,
+          "ATPR": 0.0,
+          "meets_atpr_constraint": false
+        },
+        {
+          "baseline_id": "B05_source_count_majority",
+          "UALER": 0.020833,
+          "ATPR": 0.0,
+          "meets_atpr_constraint": false
+        },
+        {
+          "baseline_id": "B10_ragshield_defense",
+          "UALER": 0.145833,
+          "ATPR": 0.947917,
+          "meets_atpr_constraint": true
+        },
+        {
+          "baseline_id": "B06_provenance_reranker",
+          "UALER": 0.180556,
+          "ATPR": 0.322917,
+          "meets_atpr_constraint": false
+        },
+        {
+          "baseline_id": "B08_reject_high_risk",
+          "UALER": 0.493056,
+          "ATPR": 0.0,
+          "meets_atpr_constraint": false
+        },
+        {
+          "baseline_id": "B03_phishing_classifier",
+          "UALER": 0.638889,
+          "ATPR": 0.958333,
+          "meets_atpr_constraint": true
+        },
+        {
+          "baseline_id": "B02_domain_reputation",
+          "UALER": 0.666667,
+          "ATPR": 1.0,
+          "meets_atpr_constraint": true
+        },
+        {
+          "baseline_id": "B01_lexical_url_rules",
+          "UALER": 0.930556,
+          "ATPR": 0.666667,
+          "meets_atpr_constraint": false
+        },
+        {
+          "baseline_id": "B04_llm_as_judge",
+          "UALER": 0.986111,
+          "ATPR": 0.958333,
+          "meets_atpr_constraint": true
+        },
+        {
+          "baseline_id": "B07_graph_anomaly_detector",
+          "UALER": 1.0,
+          "ATPR": 1.0,
+          "meets_atpr_constraint": true
+        }
+      ],
+      "rationale": "Selecting the comparator on validation and evaluating on test prevents the comparator from being chosen to flatter AegisLink, and honours CONTRACT.md Section 5.3."
+    },
+    "confirmatory_split": "test",
+    "n_resamples_used": 10000,
+    "preregistered_resamples": 10000,
+    "is_results_run": true,
+    "frozen_parameters": {
+      "source": "results/aegislink_defense_evaluation.json",
+      "source_sha256": "317616b89fa3b8227805d7b3e16be7291ac41bdc8390b165d49fc9d913075e90",
+      "replay_fingerprint": "ac8165889952beba0fff049a916dc96be1dfa2fb3571c2d320789ee9eed45f32",
+      "calibration": {
+        "a": 3.0,
+        "b": -2.0,
+        "fit_regime": "train_development",
+        "n_fit": 3600,
+        "brier_before": 0.007022,
+        "brier_after": 1e-06,
+        "is_identity": false
+      },
+      "thresholds": {
+        "tau": {
+          "browse": 0.3,
+          "contact": 0.4,
+          "book": 0.55,
+          "login": 0.7,
+          "pay": 0.8
+        },
+        "tau_plausible": {
+          "browse": 0.2,
+          "contact": 0.2,
+          "book": 0.2,
+          "login": 0.2,
+          "pay": 0.2
+        },
+        "plausible_floor": 0.2,
+        "shared_tau": null,
+        "is_monotonic": true,
+        "ordering_constraint": "tau_browse < tau_contact < tau_book < tau_login < tau_pay",
+        "fit_regime": "unfitted_design_default",
+        "fit_note": "Evenly spaced design prior. Fitting adjusts the scale on train_development only; the ordering constraint is never relaxed."
+      },
+      "n_fit_queries": 360,
+      "n_fit_triples": 3600,
+      "fit_regime": "train_development",
+      "refit_on_evaluation_splits": false,
+      "policy": "Loaded from the Step 4 artifact and used verbatim. No parameter is fitted on test, transfer_holdout or adaptive_holdout; FrozenParameters.load raises RefitError unless the Platt fit_regime is train_development, and tests/test_primary_evaluation.py runs a full evaluation with fit_platt replaced by a function that raises."
+    }
+  },
+  "decision": {
+    "overall_decision": "INCONCLUSIVE",
+    "go_declared": false,
+    "combination_rule": "all_gates_must_pass",
+    "n_conditions_declared": 10,
+    "n_passed": 9,
+    "n_failed": 0,
+    "n_not_evaluable": 1,
+    "failed_conditions": [],
+    "not_evaluable_conditions": [
+      "G1.1_model_families"
+    ],
+    "decision_semantics": {
+      "GO": "all frozen conditions measured and met",
+      "NO_GO": "at least one condition was measured and fell short. Produce a pilot decision report documenting which gate failed and why, per CONTRACT.md Section 19 item 2. A NO_GO is a valid, reportable project outcome and MUST NOT be resolved by loosening a threshold.",
+      "INCONCLUSIVE": "no condition failed, but at least one could not be measured by this pilot. Distinguished from NO_GO because the remedy differs: complete the measurement rather than stop or change the method. It is NOT a GO."
+    },
+    "threshold_mutability": "Thresholds are mutable only before pilot execution (CONTRACT.md Section 12). After the first pilot run they are immutable."
+  },
+  "gates": {
+    "misbinding_reproducible": {
+      "gate": "misbinding_reproducible",
+      "status": "NOT_EVALUABLE",
+      "intent": "The phenomenon under study must actually occur, and reproducibly.",
+      "pass_condition": "At least 2 distinct model families each show at least 2 high-risk actions from the pool whose cells satisfy `cell_reproduces_if`, with >= 20 valid runs per cell.\n",
+      "n_conditions": 3,
+      "conditions": [
+        {
+          "gate": "misbinding_reproducible",
+          "condition_id": "G1.1_model_families",
+          "frozen_key": "misbinding_reproducible.min_model_families",
+          "frozen_value": 2,
+          "test": "n_distinct_model_families >= 2",
+          "status": "NOT_EVALUABLE",
+          "observed": 1,
+          "margin": null,
+          "reason": "NOT EVALUABLE in this pilot. RQ1 asks about web-enabled LLMs; the pilot reader is a deterministic surrogate, so the model-family axis has size 1. Reporting 1 as 2, or substituting the three retrieval configurations for model families, would invent the measurement the gate asks for.",
+          "evidence": {
+            "n_model_families_available": 1,
+            "reader": "deterministic surrogate (web_rag/trace_recorder.py + the frozen replay)",
+            "why_not_evaluable": "RQ1 asks about web-enabled LLMs. This pilot has no LLM in the loop; the reader is deterministic, which is what makes the replay bit-reproducible and every between-defense comparison exact. One deterministic reader is one reader.",
+            "what_would_evaluate_it": "Substitute >= 2 pinned open-weight LLM readers behind the same parsers/ extraction path, replay the frozen snapshot through each, and recompute the (model_family, action) cells. Nothing else in this gate changes.",
+            "retrieval_configuration_sensitivity": {
+              "question": "Is undefended action-link misbinding an artifact of one ranking mode?",
+              "modes": [
+                "bm25",
+                "dense",
+                "hybrid_rrf"
+              ],
+              "per_mode": {
+                "bm25": {
+                  "retriever_config_digest": "5722b0592a494072011752af49a2df62f3ee915824c65e190c03ed52aaf9552a",
+                  "n_queries": 1008,
+                  "per_action_undefended_ualer": {
+                    "book": {
+                      "config_id": "undefended@bm25",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 76.0,
+                      "denominator_total": 76.0,
+                      "n_units": 76,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 519327663,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    },
+                    "browse": {
+                      "config_id": "undefended@bm25",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 152.0,
+                      "denominator_total": 152.0,
+                      "n_units": 152,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 419853170,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    },
+                    "contact": {
+                      "config_id": "undefended@bm25",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 76.0,
+                      "denominator_total": 76.0,
+                      "n_units": 76,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 2020237081,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    },
+                    "login": {
+                      "config_id": "undefended@bm25",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 76.0,
+                      "denominator_total": 76.0,
+                      "n_units": 76,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 629012322,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    },
+                    "pay": {
+                      "config_id": "undefended@bm25",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 76.0,
+                      "denominator_total": 76.0,
+                      "n_units": 76,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 709951907,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    }
+                  }
+                },
+                "dense": {
+                  "retriever_config_digest": "d167c9c77c2a5c683af549141e5b1f10402f462d015eae3e963341e29c0731c8",
+                  "n_queries": 1008,
+                  "per_action_undefended_ualer": {
+                    "book": {
+                      "config_id": "undefended@dense",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 76.0,
+                      "denominator_total": 76.0,
+                      "n_units": 76,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 1548956450,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    },
+                    "browse": {
+                      "config_id": "undefended@dense",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 152.0,
+                      "denominator_total": 152.0,
+                      "n_units": 152,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 2026875571,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    },
+                    "contact": {
+                      "config_id": "undefended@dense",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 76.0,
+                      "denominator_total": 76.0,
+                      "n_units": 76,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 97136905,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    },
+                    "login": {
+                      "config_id": "undefended@dense",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 76.0,
+                      "denominator_total": 76.0,
+                      "n_units": 76,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 711523528,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    },
+                    "pay": {
+                      "config_id": "undefended@dense",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 76.0,
+                      "denominator_total": 76.0,
+                      "n_units": 76,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 556944662,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    }
+                  }
+                },
+                "hybrid_rrf": {
+                  "retriever_config_digest": "d65c0e58a3adba201b4c354cdcdc3806fd22f157633669c40e5fe077ff20ef73",
+                  "n_queries": 1008,
+                  "per_action_undefended_ualer": {
+                    "book": {
+                      "config_id": "undefended@hybrid_rrf",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 76.0,
+                      "denominator_total": 76.0,
+                      "n_units": 76,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 1411220626,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    },
+                    "browse": {
+                      "config_id": "undefended@hybrid_rrf",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 152.0,
+                      "denominator_total": 152.0,
+                      "n_units": 152,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 263234240,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    },
+                    "contact": {
+                      "config_id": "undefended@hybrid_rrf",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 76.0,
+                      "denominator_total": 76.0,
+                      "n_units": 76,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 1353379226,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    },
+                    "login": {
+                      "config_id": "undefended@hybrid_rrf",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 76.0,
+                      "denominator_total": 76.0,
+                      "n_units": 76,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 1566055706,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    },
+                    "pay": {
+                      "config_id": "undefended@hybrid_rrf",
+                      "regime": "test+transfer_holdout",
+                      "metric": "UALER",
+                      "direction_of_benefit": "lower_is_better",
+                      "point": 1.0,
+                      "numerator_total": 76.0,
+                      "denominator_total": 76.0,
+                      "n_units": 76,
+                      "n_resamples": 10000,
+                      "n_effective_resamples": 10000,
+                      "seed": 185197542,
+                      "ci": {
+                        "percentile": {
+                          "method": "percentile",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95
+                        },
+                        "bias_corrected": {
+                          "method": "bias_corrected",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                        },
+                        "z0": null,
+                        "bca": {
+                          "method": "bca",
+                          "lo": 1.0,
+                          "hi": 1.0,
+                          "level": 0.95,
+                          "degenerate": true,
+                          "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                        },
+                        "acceleration": null
+                      }
+                    }
+                  }
+                }
+              },
+              "interpretation_limit": "Ranking modes are NOT model families. This axis shows the phenomenon survives changing the ranker; it does not satisfy misbinding_reproducible.min_model_families, which asks for >= 2 LLM model families, and is not counted toward it."
+            },
+            "sensitivity_disclaimer": "Retrieval configurations are NOT model families. The sensitivity axis shows the phenomenon is not an artifact of one ranker; it does not substitute for the model-family axis the gate names, and is not counted toward it."
+          }
+        },
+        {
+          "gate": "misbinding_reproducible",
+          "condition_id": "G1.2_high_risk_actions",
+          "frozen_key": "misbinding_reproducible.min_high_risk_actions",
+          "frozen_value": 2,
+          "test": "at least 2 of ['book', 'login', 'pay'] show undefended UALER with a 95% bias_corrected CI lower bound > 0",
+          "status": "PASS",
+          "observed": 3,
+          "margin": 1.0,
+          "reason": "3 of 3 high-risk actions reproduce misbinding: ['book', 'login', 'pay']. The frozen value is 2, not 3: the three action names are the candidate pool, not the required count (gate_operationalization.misbinding_reproducible.high_risk_action_pool_rationale).",
+          "evidence": {
+            "high_risk_action_pool": [
+              "book",
+              "login",
+              "pay"
+            ],
+            "per_cell": {
+              "book": {
+                "undefended_UALER": 1.0,
+                "bias_corrected_ci": {
+                  "method": "bias_corrected",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95,
+                  "degenerate": true,
+                  "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                },
+                "n_valid_runs": 76,
+                "meets_min_runs_per_cell": true,
+                "ci_lower_bound_above_zero": true,
+                "reproduces": true
+              },
+              "login": {
+                "undefended_UALER": 1.0,
+                "bias_corrected_ci": {
+                  "method": "bias_corrected",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95,
+                  "degenerate": true,
+                  "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                },
+                "n_valid_runs": 76,
+                "meets_min_runs_per_cell": true,
+                "ci_lower_bound_above_zero": true,
+                "reproduces": true
+              },
+              "pay": {
+                "undefended_UALER": 1.0,
+                "bias_corrected_ci": {
+                  "method": "bias_corrected",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95,
+                  "degenerate": true,
+                  "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                },
+                "n_valid_runs": 76,
+                "meets_min_runs_per_cell": true,
+                "ci_lower_bound_above_zero": true,
+                "reproduces": true
+              }
+            }
+          }
+        },
+        {
+          "gate": "misbinding_reproducible",
+          "condition_id": "G1.3_runs_per_cell",
+          "frozen_key": "misbinding_reproducible.min_runs_per_cell",
+          "frozen_value": 20,
+          "test": "every evaluated cell has >= 20 valid runs",
+          "status": "PASS",
+          "observed": 76,
+          "margin": 56.0,
+          "reason": "smallest evaluated cell holds 76 valid runs against a floor of 20",
+          "evidence": {
+            "n_runs_per_cell": {
+              "book": 76,
+              "browse": 152,
+              "contact": 76,
+              "login": 76,
+              "pay": 76
+            },
+            "power_note": "preregistration.yaml statistical_power: 20 runs establishes that misbinding OCCURS, not that a per-cell magnitude is precisely estimated. No magnitude claim is made from a 20-run cell."
+          }
+        }
+      ]
+    },
+    "baseline_not_trivial": {
+      "gate": "baseline_not_trivial",
+      "status": "PASS",
+      "intent": "The problem must not already be solved by an existing defense. If some baseline already achieves both low unauthorized exposure AND high authorized-third-party retention, AegisLink is unnecessary and the pilot MUST stop.\n",
+      "pass_condition": "NO Section 10 baseline is trivially sufficient, i.e. for every baseline (UALER > 0.10) OR (ATPR < 0.90).\n",
+      "n_conditions": 2,
+      "conditions": [
+        {
+          "gate": "baseline_not_trivial",
+          "condition_id": "G2.1_max_best_baseline_ualer",
+          "frozen_key": "baseline_not_trivial.max_allowed_best_baseline_ualer",
+          "frozen_value": 0.1,
+          "test": "no baseline achieves UALER <= 0.1 while ALSO achieving ATPR >= 0.9 (conjunctive; this condition reports the UALER axis of that single test)",
+          "status": "PASS",
+          "observed": 0.145833,
+          "margin": 0.045833,
+          "reason": "Among baselines meeting the ATPR floor, the lowest UALER is 0.145833, above the 0.1 ceiling, so none is trivially sufficient.",
+          "evidence": {
+            "evaluation_split": "validation",
+            "evaluation_split_rationale": "Gate decisions are made on the validation split so the test split remains untouched for the confirmatory analysis (CONTRACT.md Section 5.3).\n",
+            "triviality_condition": "A baseline is TRIVIALLY SUFFICIENT if it simultaneously achieves UALER <= max_allowed_best_baseline_ualer (0.10) AND ATPR >= min_required_baseline_atpr (0.90).\n",
+            "conjunction_rationale": "The two thresholds are deliberately applied as a conjunction rather than as two independent gates. Baseline 8 (\"reject all login and pay links\") and baseline 9 (\"allow only the registry-listed official domain\") can both drive UALER below 0.10 while destroying ATPR. Treating the UALER threshold alone as disqualifying would let those degenerate defenses veto the project even though they fail the utility requirement that CONTRACT.md Section 4.2 makes central. Only a baseline that is good on BOTH axes makes the research question moot.\n",
+            "n_baselines": 10,
+            "trivially_sufficient_baselines": [],
+            "per_baseline": [
+              {
+                "baseline_id": "B01_lexical_url_rules",
+                "UALER": 0.930556,
+                "ATPR": 0.666667,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": false,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B02_domain_reputation",
+                "UALER": 0.666667,
+                "ATPR": 1.0,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": true,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B03_phishing_classifier",
+                "UALER": 0.638889,
+                "ATPR": 0.958333,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": true,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B04_llm_as_judge",
+                "UALER": 0.986111,
+                "ATPR": 0.958333,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": true,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B05_source_count_majority",
+                "UALER": 0.020833,
+                "ATPR": 0.0,
+                "ualer_below_ceiling": true,
+                "atpr_above_floor": false,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B06_provenance_reranker",
+                "UALER": 0.180556,
+                "ATPR": 0.322917,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": false,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B07_graph_anomaly_detector",
+                "UALER": 1.0,
+                "ATPR": 1.0,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": true,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B08_reject_high_risk",
+                "UALER": 0.493056,
+                "ATPR": 0.0,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": false,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B09_official_only",
+                "UALER": 0.0,
+                "ATPR": 0.0,
+                "ualer_below_ceiling": true,
+                "atpr_above_floor": false,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B10_ragshield_defense",
+                "UALER": 0.145833,
+                "ATPR": 0.947917,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": true,
+                "trivially_sufficient": false
+              }
+            ]
+          }
+        },
+        {
+          "gate": "baseline_not_trivial",
+          "condition_id": "G2.2_min_required_baseline_atpr",
+          "frozen_key": "baseline_not_trivial.min_required_baseline_atpr",
+          "frozen_value": 0.9,
+          "test": "no baseline achieves ATPR >= 0.9 while ALSO achieving UALER <= 0.1 (conjunctive; this condition reports the ATPR axis of that single test)",
+          "status": "PASS",
+          "observed": 0.0,
+          "margin": 0.9,
+          "reason": "Among baselines meeting the UALER ceiling, the highest ATPR is 0.000000, below the 0.9 floor, so none is trivially sufficient.",
+          "evidence": {
+            "evaluation_split": "validation",
+            "evaluation_split_rationale": "Gate decisions are made on the validation split so the test split remains untouched for the confirmatory analysis (CONTRACT.md Section 5.3).\n",
+            "triviality_condition": "A baseline is TRIVIALLY SUFFICIENT if it simultaneously achieves UALER <= max_allowed_best_baseline_ualer (0.10) AND ATPR >= min_required_baseline_atpr (0.90).\n",
+            "conjunction_rationale": "The two thresholds are deliberately applied as a conjunction rather than as two independent gates. Baseline 8 (\"reject all login and pay links\") and baseline 9 (\"allow only the registry-listed official domain\") can both drive UALER below 0.10 while destroying ATPR. Treating the UALER threshold alone as disqualifying would let those degenerate defenses veto the project even though they fail the utility requirement that CONTRACT.md Section 4.2 makes central. Only a baseline that is good on BOTH axes makes the research question moot.\n",
+            "n_baselines": 10,
+            "trivially_sufficient_baselines": [],
+            "per_baseline": [
+              {
+                "baseline_id": "B01_lexical_url_rules",
+                "UALER": 0.930556,
+                "ATPR": 0.666667,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": false,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B02_domain_reputation",
+                "UALER": 0.666667,
+                "ATPR": 1.0,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": true,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B03_phishing_classifier",
+                "UALER": 0.638889,
+                "ATPR": 0.958333,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": true,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B04_llm_as_judge",
+                "UALER": 0.986111,
+                "ATPR": 0.958333,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": true,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B05_source_count_majority",
+                "UALER": 0.020833,
+                "ATPR": 0.0,
+                "ualer_below_ceiling": true,
+                "atpr_above_floor": false,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B06_provenance_reranker",
+                "UALER": 0.180556,
+                "ATPR": 0.322917,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": false,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B07_graph_anomaly_detector",
+                "UALER": 1.0,
+                "ATPR": 1.0,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": true,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B08_reject_high_risk",
+                "UALER": 0.493056,
+                "ATPR": 0.0,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": false,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B09_official_only",
+                "UALER": 0.0,
+                "ATPR": 0.0,
+                "ualer_below_ceiling": true,
+                "atpr_above_floor": false,
+                "trivially_sufficient": false
+              },
+              {
+                "baseline_id": "B10_ragshield_defense",
+                "UALER": 0.145833,
+                "ATPR": 0.947917,
+                "ualer_below_ceiling": false,
+                "atpr_above_floor": true,
+                "trivially_sufficient": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "aegislink_improvement": {
+      "gate": "aegislink_improvement",
+      "status": "PASS",
+      "intent": "AegisLink must deliver a large security gain at a small, bounded utility cost.",
+      "pass_condition": "relative_ualer_reduction >= 0.50 AND absolute_atpr_loss <= 0.05, both measured against the reference baseline defined in `primary_comparison`, and both with the relevant 95% paired-bootstrap CI excluding the null (no improvement / no loss).\n",
+      "n_conditions": 2,
+      "conditions": [
+        {
+          "gate": "aegislink_improvement",
+          "condition_id": "G3.1_relative_ualer_reduction",
+          "frozen_key": "aegislink_improvement.min_relative_ualer_reduction",
+          "frozen_value": 0.5,
+          "test": "relative UALER reduction vs B10_ragshield_defense >= 0.5, with the 95% bias_corrected CI entirely above 0.5",
+          "status": "PASS",
+          "observed": 1.0,
+          "margin": 0.5,
+          "reason": "point 1.000000 vs threshold 0.5; CI lower bound 1.000000",
+          "evidence": {
+            "evaluation_split": "test",
+            "check": {
+              "regime": "test",
+              "reference_baseline": "B10_ragshield_defense",
+              "evaluable": true,
+              "holds": true,
+              "relative_ualer_reduction": 1.0,
+              "relative_ualer_reduction_ci_lo": 1.0,
+              "relative_reduction_point_meets_threshold": true,
+              "relative_reduction_ci_entirely_above_threshold": true,
+              "absolute_atpr_loss": -0.122449,
+              "absolute_atpr_loss_ci_hi": -0.067073,
+              "atpr_loss_point_meets_threshold": true,
+              "atpr_loss_ci_entirely_below_threshold": true,
+              "notes": [],
+              "raw_comparisons": {
+                "UALER": {
+                  "comparison_id": "UALER:aegislink_full_vs_B10_ragshield_defense@test",
+                  "metric": "UALER",
+                  "regime": "test",
+                  "treatment": "aegislink_full",
+                  "reference": "B10_ragshield_defense",
+                  "direction_of_benefit": "lower_is_better",
+                  "point_treatment": 0.0,
+                  "point_reference": 0.222222,
+                  "absolute_difference": -0.222222,
+                  "absolute_difference_definition": "treatment - reference",
+                  "absolute_difference_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": -0.277778,
+                      "hi": -0.166667,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": -0.282407,
+                      "hi": -0.171296,
+                      "level": 0.95
+                    },
+                    "z0": -0.08231,
+                    "bca": {
+                      "method": "bca",
+                      "lo": -0.282407,
+                      "hi": -0.175926,
+                      "level": 0.95
+                    },
+                    "acceleration": -0.015154
+                  },
+                  "relative_reduction": 1.0,
+                  "relative_reduction_definition": "(reference - treatment) / reference",
+                  "relative_reduction_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  },
+                  "cohens_h": -0.981765,
+                  "p_value": 0.0001,
+                  "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+                  "n_units": 216,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 1152874903,
+                  "notes": []
+                },
+                "ATPR": {
+                  "comparison_id": "ATPR:aegislink_full_vs_B10_ragshield_defense@test",
+                  "metric": "ATPR",
+                  "regime": "test",
+                  "treatment": "aegislink_full",
+                  "reference": "B10_ragshield_defense",
+                  "direction_of_benefit": "higher_is_better",
+                  "point_treatment": 1.0,
+                  "point_reference": 0.877551,
+                  "absolute_difference": 0.122449,
+                  "absolute_difference_definition": "treatment - reference",
+                  "absolute_difference_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 0.065787,
+                      "hi": 0.183215,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 0.067073,
+                      "hi": 0.185714,
+                      "level": 0.95
+                    },
+                    "z0": 0.027827,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 0.071383,
+                      "hi": 0.19084,
+                      "level": 0.95
+                    },
+                    "acceleration": 0.038778
+                  },
+                  "relative_reduction": -0.139535,
+                  "relative_reduction_definition": "(reference - treatment) / reference",
+                  "relative_reduction_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": -0.224312,
+                      "hi": -0.07042,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": -0.228814,
+                      "hi": -0.071942,
+                      "level": 0.95
+                    },
+                    "z0": -0.035852,
+                    "bca": {
+                      "method": "bca",
+                      "lo": -0.236952,
+                      "hi": -0.077394,
+                      "level": 0.95
+                    },
+                    "acceleration": -0.038532
+                  },
+                  "cohens_h": 0.714987,
+                  "p_value": 0.0001,
+                  "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+                  "n_units": 216,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 1152874903,
+                  "notes": []
+                }
+              }
+            },
+            "ci_requirement": "A point estimate alone does not pass this gate. The 95% paired-bootstrap CI for the relative UALER reduction must lie entirely above 0.50, and the CI for absolute ATPR loss entirely below 0.05. This prevents a noisy point estimate from clearing a gate.\n"
+          }
+        },
+        {
+          "gate": "aegislink_improvement",
+          "condition_id": "G3.2_absolute_atpr_loss",
+          "frozen_key": "aegislink_improvement.max_absolute_atpr_loss",
+          "frozen_value": 0.05,
+          "test": "absolute ATPR loss vs B10_ragshield_defense <= 0.05, with the 95% bias_corrected CI entirely below 0.05",
+          "status": "PASS",
+          "observed": -0.122449,
+          "margin": 0.172449,
+          "reason": "loss -0.122449 (negative means AegisLink retains MORE authorized third-party links than the reference); CI upper bound -0.067073",
+          "evidence": {
+            "evaluation_split": "test",
+            "check": {
+              "regime": "test",
+              "reference_baseline": "B10_ragshield_defense",
+              "evaluable": true,
+              "holds": true,
+              "relative_ualer_reduction": 1.0,
+              "relative_ualer_reduction_ci_lo": 1.0,
+              "relative_reduction_point_meets_threshold": true,
+              "relative_reduction_ci_entirely_above_threshold": true,
+              "absolute_atpr_loss": -0.122449,
+              "absolute_atpr_loss_ci_hi": -0.067073,
+              "atpr_loss_point_meets_threshold": true,
+              "atpr_loss_ci_entirely_below_threshold": true,
+              "notes": [],
+              "raw_comparisons": {
+                "UALER": {
+                  "comparison_id": "UALER:aegislink_full_vs_B10_ragshield_defense@test",
+                  "metric": "UALER",
+                  "regime": "test",
+                  "treatment": "aegislink_full",
+                  "reference": "B10_ragshield_defense",
+                  "direction_of_benefit": "lower_is_better",
+                  "point_treatment": 0.0,
+                  "point_reference": 0.222222,
+                  "absolute_difference": -0.222222,
+                  "absolute_difference_definition": "treatment - reference",
+                  "absolute_difference_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": -0.277778,
+                      "hi": -0.166667,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": -0.282407,
+                      "hi": -0.171296,
+                      "level": 0.95
+                    },
+                    "z0": -0.08231,
+                    "bca": {
+                      "method": "bca",
+                      "lo": -0.282407,
+                      "hi": -0.175926,
+                      "level": 0.95
+                    },
+                    "acceleration": -0.015154
+                  },
+                  "relative_reduction": 1.0,
+                  "relative_reduction_definition": "(reference - treatment) / reference",
+                  "relative_reduction_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  },
+                  "cohens_h": -0.981765,
+                  "p_value": 0.0001,
+                  "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+                  "n_units": 216,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 1152874903,
+                  "notes": []
+                },
+                "ATPR": {
+                  "comparison_id": "ATPR:aegislink_full_vs_B10_ragshield_defense@test",
+                  "metric": "ATPR",
+                  "regime": "test",
+                  "treatment": "aegislink_full",
+                  "reference": "B10_ragshield_defense",
+                  "direction_of_benefit": "higher_is_better",
+                  "point_treatment": 1.0,
+                  "point_reference": 0.877551,
+                  "absolute_difference": 0.122449,
+                  "absolute_difference_definition": "treatment - reference",
+                  "absolute_difference_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 0.065787,
+                      "hi": 0.183215,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 0.067073,
+                      "hi": 0.185714,
+                      "level": 0.95
+                    },
+                    "z0": 0.027827,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 0.071383,
+                      "hi": 0.19084,
+                      "level": 0.95
+                    },
+                    "acceleration": 0.038778
+                  },
+                  "relative_reduction": -0.139535,
+                  "relative_reduction_definition": "(reference - treatment) / reference",
+                  "relative_reduction_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": -0.224312,
+                      "hi": -0.07042,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": -0.228814,
+                      "hi": -0.071942,
+                      "level": 0.95
+                    },
+                    "z0": -0.035852,
+                    "bca": {
+                      "method": "bca",
+                      "lo": -0.236952,
+                      "hi": -0.077394,
+                      "level": 0.95
+                    },
+                    "acceleration": -0.038532
+                  },
+                  "cohens_h": 0.714987,
+                  "p_value": 0.0001,
+                  "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+                  "n_units": 216,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 1152874903,
+                  "notes": []
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "generalization": {
+      "gate": "generalization",
+      "status": "PASS",
+      "intent": "The gain must not be an artifact of memorized templates.",
+      "pass_condition": "The `aegislink_improvement` pass condition holds independently on BOTH the transfer holdout (disjoint entity categories -> unseen entity templates) AND the adaptive holdout (disjoint attacker templates -> unseen attack templates).\n",
+      "n_conditions": 2,
+      "conditions": [
+        {
+          "gate": "generalization",
+          "condition_id": "G4.1_unseen_entity_templates",
+          "frozen_key": "generalization.required_on_unseen_entity_templates",
+          "frozen_value": true,
+          "test": "aegislink_improvement holds on the unseen entity template regime (transfer_holdout)",
+          "status": "PASS",
+          "observed": true,
+          "margin": null,
+          "reason": "aegislink_improvement holds on 'transfer_holdout': relative UALER reduction 1.0 (CI lo 1.0), ATPR loss -0.077844 (CI hi -0.039735)",
+          "evidence": {
+            "check": {
+              "regime": "transfer_holdout",
+              "reference_baseline": "B10_ragshield_defense",
+              "evaluable": true,
+              "holds": true,
+              "relative_ualer_reduction": 1.0,
+              "relative_ualer_reduction_ci_lo": 1.0,
+              "relative_reduction_point_meets_threshold": true,
+              "relative_reduction_ci_entirely_above_threshold": true,
+              "absolute_atpr_loss": -0.077844,
+              "absolute_atpr_loss_ci_hi": -0.039735,
+              "atpr_loss_point_meets_threshold": true,
+              "atpr_loss_ci_entirely_below_threshold": true,
+              "notes": [],
+              "raw_comparisons": {
+                "UALER": {
+                  "comparison_id": "UALER:aegislink_full_vs_B10_ragshield_defense@transfer_holdout",
+                  "metric": "UALER",
+                  "regime": "transfer_holdout",
+                  "treatment": "aegislink_full",
+                  "reference": "B10_ragshield_defense",
+                  "direction_of_benefit": "lower_is_better",
+                  "point_treatment": 0.0,
+                  "point_reference": 0.2,
+                  "absolute_difference": -0.2,
+                  "absolute_difference_definition": "treatment - reference",
+                  "absolute_difference_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": -0.25,
+                      "hi": -0.15,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": -0.258333,
+                      "hi": -0.158333,
+                      "level": 0.95
+                    },
+                    "z0": -0.113543,
+                    "bca": {
+                      "method": "bca",
+                      "lo": -0.258333,
+                      "hi": -0.158333,
+                      "level": 0.95
+                    },
+                    "acceleration": -0.016137
+                  },
+                  "relative_reduction": 1.0,
+                  "relative_reduction_definition": "(reference - treatment) / reference",
+                  "relative_reduction_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  },
+                  "cohens_h": -0.927295,
+                  "p_value": 0.0001,
+                  "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+                  "n_units": 240,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 1112256845,
+                  "notes": []
+                },
+                "ATPR": {
+                  "comparison_id": "ATPR:aegislink_full_vs_B10_ragshield_defense@transfer_holdout",
+                  "metric": "ATPR",
+                  "regime": "transfer_holdout",
+                  "treatment": "aegislink_full",
+                  "reference": "B10_ragshield_defense",
+                  "direction_of_benefit": "higher_is_better",
+                  "point_treatment": 1.0,
+                  "point_reference": 0.922156,
+                  "absolute_difference": 0.077844,
+                  "absolute_difference_definition": "treatment - reference",
+                  "absolute_difference_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 0.037736,
+                      "hi": 0.125,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 0.039735,
+                      "hi": 0.128049,
+                      "level": 0.95
+                    },
+                    "z0": 0.055927,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 0.042424,
+                      "hi": 0.134082,
+                      "level": 0.95
+                    },
+                    "acceleration": 0.047608
+                  },
+                  "relative_reduction": -0.084416,
+                  "relative_reduction_definition": "(reference - treatment) / reference",
+                  "relative_reduction_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": -0.142857,
+                      "hi": -0.039216,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": -0.147651,
+                      "hi": -0.041916,
+                      "level": 0.95
+                    },
+                    "z0": -0.069238,
+                    "bca": {
+                      "method": "bca",
+                      "lo": -0.156372,
+                      "hi": -0.044586,
+                      "level": 0.95
+                    },
+                    "acceleration": -0.047409
+                  },
+                  "cohens_h": 0.565518,
+                  "p_value": 0.0016,
+                  "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+                  "n_units": 240,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 1112256845,
+                  "notes": []
+                }
+              }
+            }
+          }
+        },
+        {
+          "gate": "generalization",
+          "condition_id": "G4.2_unseen_attack_templates",
+          "frozen_key": "generalization.required_on_unseen_attack_templates",
+          "frozen_value": true,
+          "test": "aegislink_improvement holds on the unseen attack template regime (adaptive_holdout)",
+          "status": "PASS",
+          "observed": true,
+          "margin": null,
+          "reason": "aegislink_improvement holds on 'adaptive_holdout': relative UALER reduction 1.0 (CI lo 1.0), ATPR loss -0.136364 (CI hi -0.034864)",
+          "evidence": {
+            "check": {
+              "regime": "adaptive_holdout",
+              "reference_baseline": "B10_ragshield_defense",
+              "evaluable": true,
+              "holds": true,
+              "relative_ualer_reduction": 1.0,
+              "relative_ualer_reduction_ci_lo": 1.0,
+              "relative_reduction_point_meets_threshold": true,
+              "relative_reduction_ci_entirely_above_threshold": true,
+              "absolute_atpr_loss": -0.136364,
+              "absolute_atpr_loss_ci_hi": -0.034864,
+              "atpr_loss_point_meets_threshold": true,
+              "atpr_loss_ci_entirely_below_threshold": true,
+              "notes": [],
+              "raw_comparisons": {
+                "UALER": {
+                  "comparison_id": "UALER:aegislink_full_vs_B10_ragshield_defense@adaptive_holdout",
+                  "metric": "UALER",
+                  "regime": "adaptive_holdout",
+                  "treatment": "aegislink_full",
+                  "reference": "B10_ragshield_defense",
+                  "direction_of_benefit": "lower_is_better",
+                  "point_treatment": 0.0,
+                  "point_reference": 0.285714,
+                  "absolute_difference": -0.285714,
+                  "absolute_difference_definition": "treatment - reference",
+                  "absolute_difference_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": -0.365079,
+                      "hi": -0.206349,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": -0.380952,
+                      "hi": -0.214286,
+                      "level": 0.95
+                    },
+                    "z0": -0.126419,
+                    "bca": {
+                      "method": "bca",
+                      "lo": -0.380952,
+                      "hi": -0.222222,
+                      "level": 0.95
+                    },
+                    "acceleration": -0.014086
+                  },
+                  "relative_reduction": 1.0,
+                  "relative_reduction_definition": "(reference - treatment) / reference",
+                  "relative_reduction_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  },
+                  "cohens_h": -1.127885,
+                  "p_value": 0.0001,
+                  "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+                  "n_units": 126,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 1849900861,
+                  "notes": []
+                },
+                "ATPR": {
+                  "comparison_id": "ATPR:aegislink_full_vs_B10_ragshield_defense@adaptive_holdout",
+                  "metric": "ATPR",
+                  "regime": "adaptive_holdout",
+                  "treatment": "aegislink_full",
+                  "reference": "B10_ragshield_defense",
+                  "direction_of_benefit": "higher_is_better",
+                  "point_treatment": 1.0,
+                  "point_reference": 0.863636,
+                  "absolute_difference": 0.136364,
+                  "absolute_difference_definition": "treatment - reference",
+                  "absolute_difference_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 0.027009,
+                      "hi": 0.261936,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 0.034864,
+                      "hi": 0.272727,
+                      "level": 0.95
+                    },
+                    "z0": 0.069238,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 0.046705,
+                      "hi": 0.294247,
+                      "level": 0.95
+                    },
+                    "acceleration": 0.074129
+                  },
+                  "relative_reduction": -0.157895,
+                  "relative_reduction_definition": "(reference - treatment) / reference",
+                  "relative_reduction_ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": -0.354896,
+                      "hi": -0.027759,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": -0.37931,
+                      "hi": -0.041667,
+                      "level": 0.95
+                    },
+                    "z0": -0.0959,
+                    "bca": {
+                      "method": "bca",
+                      "lo": -0.428173,
+                      "hi": -0.051282,
+                      "level": 0.95
+                    },
+                    "acceleration": -0.07243
+                  },
+                  "cohens_h": 0.756456,
+                  "p_value": 0.024498,
+                  "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+                  "n_units": 126,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 1849900861,
+                  "notes": []
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "novelty": {
+      "gate": "novelty",
+      "status": "PASS",
+      "intent": "The claimed contribution must not already exist in the literature.",
+      "pass_condition": "results/literature_matrix.yaml reports verdict == NO_DIRECT_COLLISION, i.e. no scored paper satisfies (problem_overlap >= 3 AND method_overlap >= 3).\n",
+      "n_conditions": 1,
+      "conditions": [
+        {
+          "gate": "novelty",
+          "condition_id": "G5.1_direct_collision",
+          "frozen_key": "novelty.direct_collision_allowed",
+          "frozen_value": false,
+          "test": "results/literature_matrix.yaml reports verdict == NO_DIRECT_COLLISION",
+          "status": "PASS",
+          "observed": "NO_DIRECT_COLLISION",
+          "margin": null,
+          "reason": "verdict 'NO_DIRECT_COLLISION'; 0 direct collision(s), 0 near collision(s) flagged for re-check",
+          "evidence": {
+            "verdict": "NO_DIRECT_COLLISION",
+            "n_scored_papers": 13,
+            "n_prior_works": 8,
+            "n_discovered_candidates": 5,
+            "direct_collisions": [],
+            "near_collisions": [],
+            "declared_colliding_paper_ids": [],
+            "declared_near_collision_paper_ids": [],
+            "per_record_and_aggregate_agree": true,
+            "checker": "evaluation/literature_checker.py",
+            "rubric": "evaluation/collision_rubric.yaml",
+            "recheck_schedule": [
+              "project_start",
+              "post_pilot",
+              "pre_full_experiments",
+              "pre_manuscript_freeze"
+            ],
+            "post_pilot_recheck": "This evaluation is the 'post_pilot' checkpoint on the frozen recheck schedule.",
+            "coverage_caveat": "A NO_DIRECT_COLLISION verdict is evidence of no DETECTED collision over the six frozen search concepts, not proof that none exists."
+          }
+        }
+      ]
+    }
+  },
+  "conditions_flat": [
+    {
+      "gate": "misbinding_reproducible",
+      "condition_id": "G1.1_model_families",
+      "frozen_key": "misbinding_reproducible.min_model_families",
+      "frozen_value": 2,
+      "test": "n_distinct_model_families >= 2",
+      "status": "NOT_EVALUABLE",
+      "observed": 1,
+      "margin": null,
+      "reason": "NOT EVALUABLE in this pilot. RQ1 asks about web-enabled LLMs; the pilot reader is a deterministic surrogate, so the model-family axis has size 1. Reporting 1 as 2, or substituting the three retrieval configurations for model families, would invent the measurement the gate asks for.",
+      "evidence": {
+        "n_model_families_available": 1,
+        "reader": "deterministic surrogate (web_rag/trace_recorder.py + the frozen replay)",
+        "why_not_evaluable": "RQ1 asks about web-enabled LLMs. This pilot has no LLM in the loop; the reader is deterministic, which is what makes the replay bit-reproducible and every between-defense comparison exact. One deterministic reader is one reader.",
+        "what_would_evaluate_it": "Substitute >= 2 pinned open-weight LLM readers behind the same parsers/ extraction path, replay the frozen snapshot through each, and recompute the (model_family, action) cells. Nothing else in this gate changes.",
+        "retrieval_configuration_sensitivity": {
+          "question": "Is undefended action-link misbinding an artifact of one ranking mode?",
+          "modes": [
+            "bm25",
+            "dense",
+            "hybrid_rrf"
+          ],
+          "per_mode": {
+            "bm25": {
+              "retriever_config_digest": "5722b0592a494072011752af49a2df62f3ee915824c65e190c03ed52aaf9552a",
+              "n_queries": 1008,
+              "per_action_undefended_ualer": {
+                "book": {
+                  "config_id": "undefended@bm25",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 76.0,
+                  "denominator_total": 76.0,
+                  "n_units": 76,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 519327663,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                },
+                "browse": {
+                  "config_id": "undefended@bm25",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 152.0,
+                  "denominator_total": 152.0,
+                  "n_units": 152,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 419853170,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                },
+                "contact": {
+                  "config_id": "undefended@bm25",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 76.0,
+                  "denominator_total": 76.0,
+                  "n_units": 76,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 2020237081,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                },
+                "login": {
+                  "config_id": "undefended@bm25",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 76.0,
+                  "denominator_total": 76.0,
+                  "n_units": 76,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 629012322,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                },
+                "pay": {
+                  "config_id": "undefended@bm25",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 76.0,
+                  "denominator_total": 76.0,
+                  "n_units": 76,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 709951907,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                }
+              }
+            },
+            "dense": {
+              "retriever_config_digest": "d167c9c77c2a5c683af549141e5b1f10402f462d015eae3e963341e29c0731c8",
+              "n_queries": 1008,
+              "per_action_undefended_ualer": {
+                "book": {
+                  "config_id": "undefended@dense",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 76.0,
+                  "denominator_total": 76.0,
+                  "n_units": 76,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 1548956450,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                },
+                "browse": {
+                  "config_id": "undefended@dense",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 152.0,
+                  "denominator_total": 152.0,
+                  "n_units": 152,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 2026875571,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                },
+                "contact": {
+                  "config_id": "undefended@dense",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 76.0,
+                  "denominator_total": 76.0,
+                  "n_units": 76,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 97136905,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                },
+                "login": {
+                  "config_id": "undefended@dense",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 76.0,
+                  "denominator_total": 76.0,
+                  "n_units": 76,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 711523528,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                },
+                "pay": {
+                  "config_id": "undefended@dense",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 76.0,
+                  "denominator_total": 76.0,
+                  "n_units": 76,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 556944662,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                }
+              }
+            },
+            "hybrid_rrf": {
+              "retriever_config_digest": "d65c0e58a3adba201b4c354cdcdc3806fd22f157633669c40e5fe077ff20ef73",
+              "n_queries": 1008,
+              "per_action_undefended_ualer": {
+                "book": {
+                  "config_id": "undefended@hybrid_rrf",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 76.0,
+                  "denominator_total": 76.0,
+                  "n_units": 76,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 1411220626,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                },
+                "browse": {
+                  "config_id": "undefended@hybrid_rrf",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 152.0,
+                  "denominator_total": 152.0,
+                  "n_units": 152,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 263234240,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                },
+                "contact": {
+                  "config_id": "undefended@hybrid_rrf",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 76.0,
+                  "denominator_total": 76.0,
+                  "n_units": 76,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 1353379226,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                },
+                "login": {
+                  "config_id": "undefended@hybrid_rrf",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 76.0,
+                  "denominator_total": 76.0,
+                  "n_units": 76,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 1566055706,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                },
+                "pay": {
+                  "config_id": "undefended@hybrid_rrf",
+                  "regime": "test+transfer_holdout",
+                  "metric": "UALER",
+                  "direction_of_benefit": "lower_is_better",
+                  "point": 1.0,
+                  "numerator_total": 76.0,
+                  "denominator_total": 76.0,
+                  "n_units": 76,
+                  "n_resamples": 10000,
+                  "n_effective_resamples": 10000,
+                  "seed": 185197542,
+                  "ci": {
+                    "percentile": {
+                      "method": "percentile",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95
+                    },
+                    "bias_corrected": {
+                      "method": "bias_corrected",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                    },
+                    "z0": null,
+                    "bca": {
+                      "method": "bca",
+                      "lo": 1.0,
+                      "hi": 1.0,
+                      "level": 0.95,
+                      "degenerate": true,
+                      "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                    },
+                    "acceleration": null
+                  }
+                }
+              }
+            }
+          },
+          "interpretation_limit": "Ranking modes are NOT model families. This axis shows the phenomenon survives changing the ranker; it does not satisfy misbinding_reproducible.min_model_families, which asks for >= 2 LLM model families, and is not counted toward it."
+        },
+        "sensitivity_disclaimer": "Retrieval configurations are NOT model families. The sensitivity axis shows the phenomenon is not an artifact of one ranker; it does not substitute for the model-family axis the gate names, and is not counted toward it."
+      }
+    },
+    {
+      "gate": "misbinding_reproducible",
+      "condition_id": "G1.2_high_risk_actions",
+      "frozen_key": "misbinding_reproducible.min_high_risk_actions",
+      "frozen_value": 2,
+      "test": "at least 2 of ['book', 'login', 'pay'] show undefended UALER with a 95% bias_corrected CI lower bound > 0",
+      "status": "PASS",
+      "observed": 3,
+      "margin": 1.0,
+      "reason": "3 of 3 high-risk actions reproduce misbinding: ['book', 'login', 'pay']. The frozen value is 2, not 3: the three action names are the candidate pool, not the required count (gate_operationalization.misbinding_reproducible.high_risk_action_pool_rationale).",
+      "evidence": {
+        "high_risk_action_pool": [
+          "book",
+          "login",
+          "pay"
+        ],
+        "per_cell": {
+          "book": {
+            "undefended_UALER": 1.0,
+            "bias_corrected_ci": {
+              "method": "bias_corrected",
+              "lo": 1.0,
+              "hi": 1.0,
+              "level": 0.95,
+              "degenerate": true,
+              "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+            },
+            "n_valid_runs": 76,
+            "meets_min_runs_per_cell": true,
+            "ci_lower_bound_above_zero": true,
+            "reproduces": true
+          },
+          "login": {
+            "undefended_UALER": 1.0,
+            "bias_corrected_ci": {
+              "method": "bias_corrected",
+              "lo": 1.0,
+              "hi": 1.0,
+              "level": 0.95,
+              "degenerate": true,
+              "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+            },
+            "n_valid_runs": 76,
+            "meets_min_runs_per_cell": true,
+            "ci_lower_bound_above_zero": true,
+            "reproduces": true
+          },
+          "pay": {
+            "undefended_UALER": 1.0,
+            "bias_corrected_ci": {
+              "method": "bias_corrected",
+              "lo": 1.0,
+              "hi": 1.0,
+              "level": 0.95,
+              "degenerate": true,
+              "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+            },
+            "n_valid_runs": 76,
+            "meets_min_runs_per_cell": true,
+            "ci_lower_bound_above_zero": true,
+            "reproduces": true
+          }
+        }
+      }
+    },
+    {
+      "gate": "misbinding_reproducible",
+      "condition_id": "G1.3_runs_per_cell",
+      "frozen_key": "misbinding_reproducible.min_runs_per_cell",
+      "frozen_value": 20,
+      "test": "every evaluated cell has >= 20 valid runs",
+      "status": "PASS",
+      "observed": 76,
+      "margin": 56.0,
+      "reason": "smallest evaluated cell holds 76 valid runs against a floor of 20",
+      "evidence": {
+        "n_runs_per_cell": {
+          "book": 76,
+          "browse": 152,
+          "contact": 76,
+          "login": 76,
+          "pay": 76
+        },
+        "power_note": "preregistration.yaml statistical_power: 20 runs establishes that misbinding OCCURS, not that a per-cell magnitude is precisely estimated. No magnitude claim is made from a 20-run cell."
+      }
+    },
+    {
+      "gate": "baseline_not_trivial",
+      "condition_id": "G2.1_max_best_baseline_ualer",
+      "frozen_key": "baseline_not_trivial.max_allowed_best_baseline_ualer",
+      "frozen_value": 0.1,
+      "test": "no baseline achieves UALER <= 0.1 while ALSO achieving ATPR >= 0.9 (conjunctive; this condition reports the UALER axis of that single test)",
+      "status": "PASS",
+      "observed": 0.145833,
+      "margin": 0.045833,
+      "reason": "Among baselines meeting the ATPR floor, the lowest UALER is 0.145833, above the 0.1 ceiling, so none is trivially sufficient.",
+      "evidence": {
+        "evaluation_split": "validation",
+        "evaluation_split_rationale": "Gate decisions are made on the validation split so the test split remains untouched for the confirmatory analysis (CONTRACT.md Section 5.3).\n",
+        "triviality_condition": "A baseline is TRIVIALLY SUFFICIENT if it simultaneously achieves UALER <= max_allowed_best_baseline_ualer (0.10) AND ATPR >= min_required_baseline_atpr (0.90).\n",
+        "conjunction_rationale": "The two thresholds are deliberately applied as a conjunction rather than as two independent gates. Baseline 8 (\"reject all login and pay links\") and baseline 9 (\"allow only the registry-listed official domain\") can both drive UALER below 0.10 while destroying ATPR. Treating the UALER threshold alone as disqualifying would let those degenerate defenses veto the project even though they fail the utility requirement that CONTRACT.md Section 4.2 makes central. Only a baseline that is good on BOTH axes makes the research question moot.\n",
+        "n_baselines": 10,
+        "trivially_sufficient_baselines": [],
+        "per_baseline": [
+          {
+            "baseline_id": "B01_lexical_url_rules",
+            "UALER": 0.930556,
+            "ATPR": 0.666667,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": false,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B02_domain_reputation",
+            "UALER": 0.666667,
+            "ATPR": 1.0,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": true,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B03_phishing_classifier",
+            "UALER": 0.638889,
+            "ATPR": 0.958333,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": true,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B04_llm_as_judge",
+            "UALER": 0.986111,
+            "ATPR": 0.958333,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": true,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B05_source_count_majority",
+            "UALER": 0.020833,
+            "ATPR": 0.0,
+            "ualer_below_ceiling": true,
+            "atpr_above_floor": false,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B06_provenance_reranker",
+            "UALER": 0.180556,
+            "ATPR": 0.322917,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": false,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B07_graph_anomaly_detector",
+            "UALER": 1.0,
+            "ATPR": 1.0,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": true,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B08_reject_high_risk",
+            "UALER": 0.493056,
+            "ATPR": 0.0,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": false,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B09_official_only",
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "ualer_below_ceiling": true,
+            "atpr_above_floor": false,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B10_ragshield_defense",
+            "UALER": 0.145833,
+            "ATPR": 0.947917,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": true,
+            "trivially_sufficient": false
+          }
+        ]
+      }
+    },
+    {
+      "gate": "baseline_not_trivial",
+      "condition_id": "G2.2_min_required_baseline_atpr",
+      "frozen_key": "baseline_not_trivial.min_required_baseline_atpr",
+      "frozen_value": 0.9,
+      "test": "no baseline achieves ATPR >= 0.9 while ALSO achieving UALER <= 0.1 (conjunctive; this condition reports the ATPR axis of that single test)",
+      "status": "PASS",
+      "observed": 0.0,
+      "margin": 0.9,
+      "reason": "Among baselines meeting the UALER ceiling, the highest ATPR is 0.000000, below the 0.9 floor, so none is trivially sufficient.",
+      "evidence": {
+        "evaluation_split": "validation",
+        "evaluation_split_rationale": "Gate decisions are made on the validation split so the test split remains untouched for the confirmatory analysis (CONTRACT.md Section 5.3).\n",
+        "triviality_condition": "A baseline is TRIVIALLY SUFFICIENT if it simultaneously achieves UALER <= max_allowed_best_baseline_ualer (0.10) AND ATPR >= min_required_baseline_atpr (0.90).\n",
+        "conjunction_rationale": "The two thresholds are deliberately applied as a conjunction rather than as two independent gates. Baseline 8 (\"reject all login and pay links\") and baseline 9 (\"allow only the registry-listed official domain\") can both drive UALER below 0.10 while destroying ATPR. Treating the UALER threshold alone as disqualifying would let those degenerate defenses veto the project even though they fail the utility requirement that CONTRACT.md Section 4.2 makes central. Only a baseline that is good on BOTH axes makes the research question moot.\n",
+        "n_baselines": 10,
+        "trivially_sufficient_baselines": [],
+        "per_baseline": [
+          {
+            "baseline_id": "B01_lexical_url_rules",
+            "UALER": 0.930556,
+            "ATPR": 0.666667,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": false,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B02_domain_reputation",
+            "UALER": 0.666667,
+            "ATPR": 1.0,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": true,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B03_phishing_classifier",
+            "UALER": 0.638889,
+            "ATPR": 0.958333,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": true,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B04_llm_as_judge",
+            "UALER": 0.986111,
+            "ATPR": 0.958333,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": true,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B05_source_count_majority",
+            "UALER": 0.020833,
+            "ATPR": 0.0,
+            "ualer_below_ceiling": true,
+            "atpr_above_floor": false,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B06_provenance_reranker",
+            "UALER": 0.180556,
+            "ATPR": 0.322917,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": false,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B07_graph_anomaly_detector",
+            "UALER": 1.0,
+            "ATPR": 1.0,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": true,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B08_reject_high_risk",
+            "UALER": 0.493056,
+            "ATPR": 0.0,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": false,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B09_official_only",
+            "UALER": 0.0,
+            "ATPR": 0.0,
+            "ualer_below_ceiling": true,
+            "atpr_above_floor": false,
+            "trivially_sufficient": false
+          },
+          {
+            "baseline_id": "B10_ragshield_defense",
+            "UALER": 0.145833,
+            "ATPR": 0.947917,
+            "ualer_below_ceiling": false,
+            "atpr_above_floor": true,
+            "trivially_sufficient": false
+          }
+        ]
+      }
+    },
+    {
+      "gate": "aegislink_improvement",
+      "condition_id": "G3.1_relative_ualer_reduction",
+      "frozen_key": "aegislink_improvement.min_relative_ualer_reduction",
+      "frozen_value": 0.5,
+      "test": "relative UALER reduction vs B10_ragshield_defense >= 0.5, with the 95% bias_corrected CI entirely above 0.5",
+      "status": "PASS",
+      "observed": 1.0,
+      "margin": 0.5,
+      "reason": "point 1.000000 vs threshold 0.5; CI lower bound 1.000000",
+      "evidence": {
+        "evaluation_split": "test",
+        "check": {
+          "regime": "test",
+          "reference_baseline": "B10_ragshield_defense",
+          "evaluable": true,
+          "holds": true,
+          "relative_ualer_reduction": 1.0,
+          "relative_ualer_reduction_ci_lo": 1.0,
+          "relative_reduction_point_meets_threshold": true,
+          "relative_reduction_ci_entirely_above_threshold": true,
+          "absolute_atpr_loss": -0.122449,
+          "absolute_atpr_loss_ci_hi": -0.067073,
+          "atpr_loss_point_meets_threshold": true,
+          "atpr_loss_ci_entirely_below_threshold": true,
+          "notes": [],
+          "raw_comparisons": {
+            "UALER": {
+              "comparison_id": "UALER:aegislink_full_vs_B10_ragshield_defense@test",
+              "metric": "UALER",
+              "regime": "test",
+              "treatment": "aegislink_full",
+              "reference": "B10_ragshield_defense",
+              "direction_of_benefit": "lower_is_better",
+              "point_treatment": 0.0,
+              "point_reference": 0.222222,
+              "absolute_difference": -0.222222,
+              "absolute_difference_definition": "treatment - reference",
+              "absolute_difference_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": -0.277778,
+                  "hi": -0.166667,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": -0.282407,
+                  "hi": -0.171296,
+                  "level": 0.95
+                },
+                "z0": -0.08231,
+                "bca": {
+                  "method": "bca",
+                  "lo": -0.282407,
+                  "hi": -0.175926,
+                  "level": 0.95
+                },
+                "acceleration": -0.015154
+              },
+              "relative_reduction": 1.0,
+              "relative_reduction_definition": "(reference - treatment) / reference",
+              "relative_reduction_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95,
+                  "degenerate": true,
+                  "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                },
+                "z0": null,
+                "bca": {
+                  "method": "bca",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95,
+                  "degenerate": true,
+                  "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                },
+                "acceleration": null
+              },
+              "cohens_h": -0.981765,
+              "p_value": 0.0001,
+              "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+              "n_units": 216,
+              "n_resamples": 10000,
+              "n_effective_resamples": 10000,
+              "seed": 1152874903,
+              "notes": []
+            },
+            "ATPR": {
+              "comparison_id": "ATPR:aegislink_full_vs_B10_ragshield_defense@test",
+              "metric": "ATPR",
+              "regime": "test",
+              "treatment": "aegislink_full",
+              "reference": "B10_ragshield_defense",
+              "direction_of_benefit": "higher_is_better",
+              "point_treatment": 1.0,
+              "point_reference": 0.877551,
+              "absolute_difference": 0.122449,
+              "absolute_difference_definition": "treatment - reference",
+              "absolute_difference_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": 0.065787,
+                  "hi": 0.183215,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": 0.067073,
+                  "hi": 0.185714,
+                  "level": 0.95
+                },
+                "z0": 0.027827,
+                "bca": {
+                  "method": "bca",
+                  "lo": 0.071383,
+                  "hi": 0.19084,
+                  "level": 0.95
+                },
+                "acceleration": 0.038778
+              },
+              "relative_reduction": -0.139535,
+              "relative_reduction_definition": "(reference - treatment) / reference",
+              "relative_reduction_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": -0.224312,
+                  "hi": -0.07042,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": -0.228814,
+                  "hi": -0.071942,
+                  "level": 0.95
+                },
+                "z0": -0.035852,
+                "bca": {
+                  "method": "bca",
+                  "lo": -0.236952,
+                  "hi": -0.077394,
+                  "level": 0.95
+                },
+                "acceleration": -0.038532
+              },
+              "cohens_h": 0.714987,
+              "p_value": 0.0001,
+              "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+              "n_units": 216,
+              "n_resamples": 10000,
+              "n_effective_resamples": 10000,
+              "seed": 1152874903,
+              "notes": []
+            }
+          }
+        },
+        "ci_requirement": "A point estimate alone does not pass this gate. The 95% paired-bootstrap CI for the relative UALER reduction must lie entirely above 0.50, and the CI for absolute ATPR loss entirely below 0.05. This prevents a noisy point estimate from clearing a gate.\n"
+      }
+    },
+    {
+      "gate": "aegislink_improvement",
+      "condition_id": "G3.2_absolute_atpr_loss",
+      "frozen_key": "aegislink_improvement.max_absolute_atpr_loss",
+      "frozen_value": 0.05,
+      "test": "absolute ATPR loss vs B10_ragshield_defense <= 0.05, with the 95% bias_corrected CI entirely below 0.05",
+      "status": "PASS",
+      "observed": -0.122449,
+      "margin": 0.172449,
+      "reason": "loss -0.122449 (negative means AegisLink retains MORE authorized third-party links than the reference); CI upper bound -0.067073",
+      "evidence": {
+        "evaluation_split": "test",
+        "check": {
+          "regime": "test",
+          "reference_baseline": "B10_ragshield_defense",
+          "evaluable": true,
+          "holds": true,
+          "relative_ualer_reduction": 1.0,
+          "relative_ualer_reduction_ci_lo": 1.0,
+          "relative_reduction_point_meets_threshold": true,
+          "relative_reduction_ci_entirely_above_threshold": true,
+          "absolute_atpr_loss": -0.122449,
+          "absolute_atpr_loss_ci_hi": -0.067073,
+          "atpr_loss_point_meets_threshold": true,
+          "atpr_loss_ci_entirely_below_threshold": true,
+          "notes": [],
+          "raw_comparisons": {
+            "UALER": {
+              "comparison_id": "UALER:aegislink_full_vs_B10_ragshield_defense@test",
+              "metric": "UALER",
+              "regime": "test",
+              "treatment": "aegislink_full",
+              "reference": "B10_ragshield_defense",
+              "direction_of_benefit": "lower_is_better",
+              "point_treatment": 0.0,
+              "point_reference": 0.222222,
+              "absolute_difference": -0.222222,
+              "absolute_difference_definition": "treatment - reference",
+              "absolute_difference_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": -0.277778,
+                  "hi": -0.166667,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": -0.282407,
+                  "hi": -0.171296,
+                  "level": 0.95
+                },
+                "z0": -0.08231,
+                "bca": {
+                  "method": "bca",
+                  "lo": -0.282407,
+                  "hi": -0.175926,
+                  "level": 0.95
+                },
+                "acceleration": -0.015154
+              },
+              "relative_reduction": 1.0,
+              "relative_reduction_definition": "(reference - treatment) / reference",
+              "relative_reduction_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95,
+                  "degenerate": true,
+                  "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                },
+                "z0": null,
+                "bca": {
+                  "method": "bca",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95,
+                  "degenerate": true,
+                  "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                },
+                "acceleration": null
+              },
+              "cohens_h": -0.981765,
+              "p_value": 0.0001,
+              "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+              "n_units": 216,
+              "n_resamples": 10000,
+              "n_effective_resamples": 10000,
+              "seed": 1152874903,
+              "notes": []
+            },
+            "ATPR": {
+              "comparison_id": "ATPR:aegislink_full_vs_B10_ragshield_defense@test",
+              "metric": "ATPR",
+              "regime": "test",
+              "treatment": "aegislink_full",
+              "reference": "B10_ragshield_defense",
+              "direction_of_benefit": "higher_is_better",
+              "point_treatment": 1.0,
+              "point_reference": 0.877551,
+              "absolute_difference": 0.122449,
+              "absolute_difference_definition": "treatment - reference",
+              "absolute_difference_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": 0.065787,
+                  "hi": 0.183215,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": 0.067073,
+                  "hi": 0.185714,
+                  "level": 0.95
+                },
+                "z0": 0.027827,
+                "bca": {
+                  "method": "bca",
+                  "lo": 0.071383,
+                  "hi": 0.19084,
+                  "level": 0.95
+                },
+                "acceleration": 0.038778
+              },
+              "relative_reduction": -0.139535,
+              "relative_reduction_definition": "(reference - treatment) / reference",
+              "relative_reduction_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": -0.224312,
+                  "hi": -0.07042,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": -0.228814,
+                  "hi": -0.071942,
+                  "level": 0.95
+                },
+                "z0": -0.035852,
+                "bca": {
+                  "method": "bca",
+                  "lo": -0.236952,
+                  "hi": -0.077394,
+                  "level": 0.95
+                },
+                "acceleration": -0.038532
+              },
+              "cohens_h": 0.714987,
+              "p_value": 0.0001,
+              "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+              "n_units": 216,
+              "n_resamples": 10000,
+              "n_effective_resamples": 10000,
+              "seed": 1152874903,
+              "notes": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "gate": "generalization",
+      "condition_id": "G4.1_unseen_entity_templates",
+      "frozen_key": "generalization.required_on_unseen_entity_templates",
+      "frozen_value": true,
+      "test": "aegislink_improvement holds on the unseen entity template regime (transfer_holdout)",
+      "status": "PASS",
+      "observed": true,
+      "margin": null,
+      "reason": "aegislink_improvement holds on 'transfer_holdout': relative UALER reduction 1.0 (CI lo 1.0), ATPR loss -0.077844 (CI hi -0.039735)",
+      "evidence": {
+        "check": {
+          "regime": "transfer_holdout",
+          "reference_baseline": "B10_ragshield_defense",
+          "evaluable": true,
+          "holds": true,
+          "relative_ualer_reduction": 1.0,
+          "relative_ualer_reduction_ci_lo": 1.0,
+          "relative_reduction_point_meets_threshold": true,
+          "relative_reduction_ci_entirely_above_threshold": true,
+          "absolute_atpr_loss": -0.077844,
+          "absolute_atpr_loss_ci_hi": -0.039735,
+          "atpr_loss_point_meets_threshold": true,
+          "atpr_loss_ci_entirely_below_threshold": true,
+          "notes": [],
+          "raw_comparisons": {
+            "UALER": {
+              "comparison_id": "UALER:aegislink_full_vs_B10_ragshield_defense@transfer_holdout",
+              "metric": "UALER",
+              "regime": "transfer_holdout",
+              "treatment": "aegislink_full",
+              "reference": "B10_ragshield_defense",
+              "direction_of_benefit": "lower_is_better",
+              "point_treatment": 0.0,
+              "point_reference": 0.2,
+              "absolute_difference": -0.2,
+              "absolute_difference_definition": "treatment - reference",
+              "absolute_difference_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": -0.25,
+                  "hi": -0.15,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": -0.258333,
+                  "hi": -0.158333,
+                  "level": 0.95
+                },
+                "z0": -0.113543,
+                "bca": {
+                  "method": "bca",
+                  "lo": -0.258333,
+                  "hi": -0.158333,
+                  "level": 0.95
+                },
+                "acceleration": -0.016137
+              },
+              "relative_reduction": 1.0,
+              "relative_reduction_definition": "(reference - treatment) / reference",
+              "relative_reduction_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95,
+                  "degenerate": true,
+                  "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                },
+                "z0": null,
+                "bca": {
+                  "method": "bca",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95,
+                  "degenerate": true,
+                  "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                },
+                "acceleration": null
+              },
+              "cohens_h": -0.927295,
+              "p_value": 0.0001,
+              "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+              "n_units": 240,
+              "n_resamples": 10000,
+              "n_effective_resamples": 10000,
+              "seed": 1112256845,
+              "notes": []
+            },
+            "ATPR": {
+              "comparison_id": "ATPR:aegislink_full_vs_B10_ragshield_defense@transfer_holdout",
+              "metric": "ATPR",
+              "regime": "transfer_holdout",
+              "treatment": "aegislink_full",
+              "reference": "B10_ragshield_defense",
+              "direction_of_benefit": "higher_is_better",
+              "point_treatment": 1.0,
+              "point_reference": 0.922156,
+              "absolute_difference": 0.077844,
+              "absolute_difference_definition": "treatment - reference",
+              "absolute_difference_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": 0.037736,
+                  "hi": 0.125,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": 0.039735,
+                  "hi": 0.128049,
+                  "level": 0.95
+                },
+                "z0": 0.055927,
+                "bca": {
+                  "method": "bca",
+                  "lo": 0.042424,
+                  "hi": 0.134082,
+                  "level": 0.95
+                },
+                "acceleration": 0.047608
+              },
+              "relative_reduction": -0.084416,
+              "relative_reduction_definition": "(reference - treatment) / reference",
+              "relative_reduction_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": -0.142857,
+                  "hi": -0.039216,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": -0.147651,
+                  "hi": -0.041916,
+                  "level": 0.95
+                },
+                "z0": -0.069238,
+                "bca": {
+                  "method": "bca",
+                  "lo": -0.156372,
+                  "hi": -0.044586,
+                  "level": 0.95
+                },
+                "acceleration": -0.047409
+              },
+              "cohens_h": 0.565518,
+              "p_value": 0.0016,
+              "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+              "n_units": 240,
+              "n_resamples": 10000,
+              "n_effective_resamples": 10000,
+              "seed": 1112256845,
+              "notes": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "gate": "generalization",
+      "condition_id": "G4.2_unseen_attack_templates",
+      "frozen_key": "generalization.required_on_unseen_attack_templates",
+      "frozen_value": true,
+      "test": "aegislink_improvement holds on the unseen attack template regime (adaptive_holdout)",
+      "status": "PASS",
+      "observed": true,
+      "margin": null,
+      "reason": "aegislink_improvement holds on 'adaptive_holdout': relative UALER reduction 1.0 (CI lo 1.0), ATPR loss -0.136364 (CI hi -0.034864)",
+      "evidence": {
+        "check": {
+          "regime": "adaptive_holdout",
+          "reference_baseline": "B10_ragshield_defense",
+          "evaluable": true,
+          "holds": true,
+          "relative_ualer_reduction": 1.0,
+          "relative_ualer_reduction_ci_lo": 1.0,
+          "relative_reduction_point_meets_threshold": true,
+          "relative_reduction_ci_entirely_above_threshold": true,
+          "absolute_atpr_loss": -0.136364,
+          "absolute_atpr_loss_ci_hi": -0.034864,
+          "atpr_loss_point_meets_threshold": true,
+          "atpr_loss_ci_entirely_below_threshold": true,
+          "notes": [],
+          "raw_comparisons": {
+            "UALER": {
+              "comparison_id": "UALER:aegislink_full_vs_B10_ragshield_defense@adaptive_holdout",
+              "metric": "UALER",
+              "regime": "adaptive_holdout",
+              "treatment": "aegislink_full",
+              "reference": "B10_ragshield_defense",
+              "direction_of_benefit": "lower_is_better",
+              "point_treatment": 0.0,
+              "point_reference": 0.285714,
+              "absolute_difference": -0.285714,
+              "absolute_difference_definition": "treatment - reference",
+              "absolute_difference_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": -0.365079,
+                  "hi": -0.206349,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": -0.380952,
+                  "hi": -0.214286,
+                  "level": 0.95
+                },
+                "z0": -0.126419,
+                "bca": {
+                  "method": "bca",
+                  "lo": -0.380952,
+                  "hi": -0.222222,
+                  "level": 0.95
+                },
+                "acceleration": -0.014086
+              },
+              "relative_reduction": 1.0,
+              "relative_reduction_definition": "(reference - treatment) / reference",
+              "relative_reduction_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95,
+                  "degenerate": true,
+                  "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); fell back to percentile interval"
+                },
+                "z0": null,
+                "bca": {
+                  "method": "bca",
+                  "lo": 1.0,
+                  "hi": 1.0,
+                  "level": 0.95,
+                  "degenerate": true,
+                  "note": "degenerate bootstrap distribution (P(theta* < theta_hat) = 0.0); zero jackknife variance; fell back to percentile interval"
+                },
+                "acceleration": null
+              },
+              "cohens_h": -1.127885,
+              "p_value": 0.0001,
+              "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+              "n_units": 126,
+              "n_resamples": 10000,
+              "n_effective_resamples": 10000,
+              "seed": 1849900861,
+              "notes": []
+            },
+            "ATPR": {
+              "comparison_id": "ATPR:aegislink_full_vs_B10_ragshield_defense@adaptive_holdout",
+              "metric": "ATPR",
+              "regime": "adaptive_holdout",
+              "treatment": "aegislink_full",
+              "reference": "B10_ragshield_defense",
+              "direction_of_benefit": "higher_is_better",
+              "point_treatment": 1.0,
+              "point_reference": 0.863636,
+              "absolute_difference": 0.136364,
+              "absolute_difference_definition": "treatment - reference",
+              "absolute_difference_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": 0.027009,
+                  "hi": 0.261936,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": 0.034864,
+                  "hi": 0.272727,
+                  "level": 0.95
+                },
+                "z0": 0.069238,
+                "bca": {
+                  "method": "bca",
+                  "lo": 0.046705,
+                  "hi": 0.294247,
+                  "level": 0.95
+                },
+                "acceleration": 0.074129
+              },
+              "relative_reduction": -0.157895,
+              "relative_reduction_definition": "(reference - treatment) / reference",
+              "relative_reduction_ci": {
+                "percentile": {
+                  "method": "percentile",
+                  "lo": -0.354896,
+                  "hi": -0.027759,
+                  "level": 0.95
+                },
+                "bias_corrected": {
+                  "method": "bias_corrected",
+                  "lo": -0.37931,
+                  "hi": -0.041667,
+                  "level": 0.95
+                },
+                "z0": -0.0959,
+                "bca": {
+                  "method": "bca",
+                  "lo": -0.428173,
+                  "hi": -0.051282,
+                  "level": 0.95
+                },
+                "acceleration": -0.07243
+              },
+              "cohens_h": 0.756456,
+              "p_value": 0.024498,
+              "p_value_method": "two-sided paired bootstrap ASL, (1+k)/(1+B)",
+              "n_units": 126,
+              "n_resamples": 10000,
+              "n_effective_resamples": 10000,
+              "seed": 1849900861,
+              "notes": []
+            }
+          }
+        }
+      }
+    },
+    {
+      "gate": "novelty",
+      "condition_id": "G5.1_direct_collision",
+      "frozen_key": "novelty.direct_collision_allowed",
+      "frozen_value": false,
+      "test": "results/literature_matrix.yaml reports verdict == NO_DIRECT_COLLISION",
+      "status": "PASS",
+      "observed": "NO_DIRECT_COLLISION",
+      "margin": null,
+      "reason": "verdict 'NO_DIRECT_COLLISION'; 0 direct collision(s), 0 near collision(s) flagged for re-check",
+      "evidence": {
+        "verdict": "NO_DIRECT_COLLISION",
+        "n_scored_papers": 13,
+        "n_prior_works": 8,
+        "n_discovered_candidates": 5,
+        "direct_collisions": [],
+        "near_collisions": [],
+        "declared_colliding_paper_ids": [],
+        "declared_near_collision_paper_ids": [],
+        "per_record_and_aggregate_agree": true,
+        "checker": "evaluation/literature_checker.py",
+        "rubric": "evaluation/collision_rubric.yaml",
+        "recheck_schedule": [
+          "project_start",
+          "post_pilot",
+          "pre_full_experiments",
+          "pre_manuscript_freeze"
+        ],
+        "post_pilot_recheck": "This evaluation is the 'post_pilot' checkpoint on the frozen recheck schedule.",
+        "coverage_caveat": "A NO_DIRECT_COLLISION verdict is evidence of no DETECTED collision over the six frozen search concepts, not proof that none exists."
+      }
+    }
+  ],
+  "frozen_hard_gates": {
+    "misbinding_reproducible": {
+      "min_model_families": 2,
+      "min_high_risk_actions": 2,
+      "min_runs_per_cell": 20
+    },
+    "baseline_not_trivial": {
+      "max_allowed_best_baseline_ualer": 0.1,
+      "min_required_baseline_atpr": 0.9
+    },
+    "aegislink_improvement": {
+      "min_relative_ualer_reduction": 0.5,
+      "max_absolute_atpr_loss": 0.05
+    },
+    "generalization": {
+      "required_on_unseen_entity_templates": true,
+      "required_on_unseen_attack_templates": true
+    },
+    "novelty": {
+      "direct_collision_allowed": false
+    }
+  },
+  "method": {
+    "gate_evaluator_version": "1.0",
+    "contract_ref": "CONTRACT.md Section 12",
+    "gate_source": "preregistration.yaml hard_gates (never a literal in this module)",
+    "n_families": 5,
+    "n_conditions": 10,
+    "condition_status_values": [
+      "PASS",
+      "FAIL",
+      "NOT_EVALUABLE"
+    ],
+    "why_three_valued": "FAIL means the pilot measured the thing and it fell short. NOT_EVALUABLE means the pilot could not measure it, which is a different fact and would be misreported as either a pass or a failure. Both block GO.",
+    "ci_flavour": "bias_corrected",
+    "baseline_not_trivial_conjunction": "Its two frozen values read ONE conjunctive test. Reported as two conditions with separate margins, but a baseline disqualifies the project only by being good on both axes at once -- otherwise B08 and B09 could veto the work while failing the utility requirement Section 4.2 makes central.",
+    "known_unevaluable": {
+      "misbinding_reproducible.min_model_families": "requires >= 2 LLM model families; this pilot's reader is a deterministic surrogate, so the axis has size 1. Reported NOT_EVALUABLE rather than satisfied by substituting retrieval configurations for model families."
+    }
+  }
+}

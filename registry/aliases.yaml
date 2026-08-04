@@ -1,0 +1,1029 @@
+metadata:
+  schema_version: '1.0'
+  generator: registry/entity_generator.py
+  generator_version: '1.0'
+  lexicon_version: '1.0'
+  master_seed: 42
+  contract_ref: CONTRACT.md Section 5.1
+  machine_readable_entity_id_channel: x-aegis-entity-id
+  machine_readable_note: Entity IDs are published to parsers through an HTML <meta> channel and never
+    appear in visible prose (CONTRACT.md Section 8, item 3). The channel carries the target entity ID
+    and an opaque page ID only; page role, attack template and factor levels are held in the side manifest
+    so the channel cannot leak a label.
+  status_enum:
+  - active
+  - fabricated_control
+  counts:
+    entity_templates: 80
+    fabricated_control_templates: 8
+    controlled_entities: 160
+    fabricated_control_entities: 8
+aliases:
+  E0001:
+  - Harbour Lantern Bistro
+  - Harbour Lantern
+  - The Harbour Lantern Bistro
+  - Harbour Lantern Bistro, Orrery Hill
+  - Harbour Lantern Orrery Hill
+  E0002:
+  - Harbour Mere Bistro
+  - Harbour Mere
+  - The Harbour Mere Bistro
+  - Harbour Mere Bistro, Halcyon Reach
+  - Harbour Mere Halcyon Reach
+  E0003:
+  - Cinder Court Kitchen
+  - Cinder Court
+  - The Cinder Court Kitchen
+  - Cinder Court Kitchen, Halcyon Reach
+  - Cinder Court Halcyon Reach
+  E0004:
+  - Cinder Hearth Kitchen
+  - Cinder Hearth
+  - The Cinder Hearth Kitchen
+  - Cinder Hearth Kitchen, Cinderwharf
+  - Cinder Hearth Cinderwharf
+  E0005:
+  - Solstice Yard Eatery
+  - Solstice Yard
+  - The Solstice Yard Eatery
+  - Solstice Yard Eatery, Cinderwharf
+  - Solstice Yard Cinderwharf
+  E0006:
+  - Solstice Mere Eatery
+  - Solstice Mere
+  - The Solstice Mere Eatery
+  - Solstice Mere Eatery, Aldermist
+  - Solstice Mere Aldermist
+  E0007:
+  - Mistral Beacon Supper Room
+  - Mistral Beacon
+  - The Mistral Beacon Supper Room
+  - Mistral Beacon Supper Room, Halcyon Reach
+  - Mistral Beacon Halcyon Reach
+  E0008:
+  - Mistral Row Supper Room
+  - Mistral Row
+  - The Mistral Row Supper Room
+  - Mistral Row Supper Room, Vellumgate
+  - Mistral Row Vellumgate
+  E0009:
+  - Vellum Quay Tavern
+  - Vellum Quay
+  - The Vellum Quay Tavern
+  - Vellum Quay Tavern, Selkie Point
+  - Vellum Quay Selkie Point
+  E0010:
+  - Vellum Arch Tavern
+  - Vellum Arch
+  - The Vellum Arch Tavern
+  - Vellum Arch Tavern, Fernhollow
+  - Vellum Arch Fernhollow
+  E0011:
+  - Quillon Wharf Bistro
+  - Quillon Wharf
+  - The Quillon Wharf Bistro
+  - Quillon Wharf Bistro, Thistledown
+  - Quillon Wharf Thistledown
+  E0012:
+  - Quillon Bridge Bistro
+  - Quillon Bridge
+  - The Quillon Bridge Bistro
+  - Quillon Bridge Bistro, Aldermist
+  - Quillon Bridge Aldermist
+  E0013:
+  - Corvid Quay Kitchen
+  - Corvid Quay
+  - The Corvid Quay Kitchen
+  - Corvid Quay Kitchen, Aldermist
+  - Corvid Quay Aldermist
+  E0014:
+  - Corvid Yard Kitchen
+  - Corvid Yard
+  - The Corvid Yard Kitchen
+  - Corvid Yard Kitchen, Halcyon Reach
+  - Corvid Yard Halcyon Reach
+  E0015:
+  - Fernhollow Hearth Eatery
+  - Fernhollow Hearth
+  - The Fernhollow Hearth Eatery
+  - Fernhollow Hearth Eatery, Bramblemoor
+  - Fernhollow Hearth Bramblemoor
+  E0016:
+  - Fernhollow Gate Eatery
+  - Fernhollow Gate
+  - The Fernhollow Gate Eatery
+  - Fernhollow Gate Eatery, Kestrelby
+  - Fernhollow Gate Kestrelby
+  E0017:
+  - Thistle Lock Supper Room
+  - Thistle Lock
+  - The Thistle Lock Supper Room
+  - Thistle Lock Supper Room, Orrery Hill
+  - Thistle Lock Orrery Hill
+  E0018:
+  - Thistle Lantern Supper Room
+  - Thistle Lantern
+  - The Thistle Lantern Supper Room
+  - Thistle Lantern Supper Room, Kestrelby
+  - Thistle Lantern Kestrelby
+  E0019:
+  - Marlowe Spire Tavern
+  - Marlowe Spire
+  - The Marlowe Spire Tavern
+  - Marlowe Spire Tavern, Halcyon Reach
+  - Marlowe Spire Halcyon Reach
+  E0020:
+  - Marlowe Fold Tavern
+  - Marlowe Fold
+  - The Marlowe Fold Tavern
+  - Marlowe Fold Tavern, Thistledown
+  - Marlowe Fold Thistledown
+  E0021:
+  - Wickham Reach Hotel
+  - Wickham Reach
+  - The Wickham Reach Hotel
+  - Wickham Reach Hotel, Thistledown
+  - Wickham Reach Thistledown
+  E0022:
+  - Wickham Hollow Hotel
+  - Wickham Hollow
+  - The Wickham Hollow Hotel
+  - Wickham Hollow Hotel, Aldermist
+  - Wickham Hollow Aldermist
+  E0023:
+  - Orrery Lock Inn
+  - Orrery Lock
+  - The Orrery Lock Inn
+  - Orrery Lock Inn, Bramblemoor
+  - Orrery Lock Bramblemoor
+  E0024:
+  - Orrery Fold Inn
+  - Orrery Fold
+  - The Orrery Fold Inn
+  - Orrery Fold Inn, Fernhollow
+  - Orrery Fold Fernhollow
+  E0025:
+  - Verdant Lantern Lodge
+  - Verdant Lantern
+  - The Verdant Lantern Lodge
+  - Verdant Lantern Lodge, Fernhollow
+  - Verdant Lantern Fernhollow
+  E0026:
+  - Verdant Court Lodge
+  - Verdant Court
+  - The Verdant Court Lodge
+  - Verdant Court Lodge, Aldermist
+  - Verdant Court Aldermist
+  E0027:
+  - Pellucid Arch Guesthouse
+  - Pellucid Arch
+  - The Pellucid Arch Guesthouse
+  - Pellucid Arch Guesthouse, Thistledown
+  - Pellucid Arch Thistledown
+  E0028:
+  - Pellucid Hollow Guesthouse
+  - Pellucid Hollow
+  - The Pellucid Hollow Guesthouse
+  - Pellucid Hollow Guesthouse, Fernhollow
+  - Pellucid Hollow Fernhollow
+  E0029:
+  - Aldermist Ridge Rooms
+  - Aldermist Ridge
+  - The Aldermist Ridge Rooms
+  - Aldermist Ridge Rooms, Halcyon Reach
+  - Aldermist Ridge Halcyon Reach
+  E0030:
+  - Aldermist Gate Rooms
+  - Aldermist Gate
+  - The Aldermist Gate Rooms
+  - Aldermist Gate Rooms, Thistledown
+  - Aldermist Gate Thistledown
+  E0031:
+  - Bramble Quay Hotel
+  - Bramble Quay
+  - The Bramble Quay Hotel
+  - Bramble Quay Hotel, Aldermist
+  - Bramble Quay Aldermist
+  E0032:
+  - Bramble Croft Hotel
+  - Bramble Croft
+  - The Bramble Croft Hotel
+  - Bramble Croft Hotel, Fernhollow
+  - Bramble Croft Fernhollow
+  E0033:
+  - Cobalt Vale Inn
+  - Cobalt Vale
+  - The Cobalt Vale Inn
+  - Cobalt Vale Inn, Thistledown
+  - Cobalt Vale Thistledown
+  E0034:
+  - Cobalt Fold Inn
+  - Cobalt Fold
+  - The Cobalt Fold Inn
+  - Cobalt Fold Inn, Kestrelby
+  - Cobalt Fold Kestrelby
+  E0035:
+  - Alabaster Arch Lodge
+  - Alabaster Arch
+  - The Alabaster Arch Lodge
+  - Alabaster Arch Lodge, Selkie Point
+  - Alabaster Arch Selkie Point
+  E0036:
+  - Alabaster Lantern Lodge
+  - Alabaster Lantern
+  - The Alabaster Lantern Lodge
+  - Alabaster Lantern Lodge, Thistledown
+  - Alabaster Lantern Thistledown
+  E0037:
+  - Selkie Wharf Guesthouse
+  - Selkie Wharf
+  - The Selkie Wharf Guesthouse
+  - Selkie Wharf Guesthouse, Cinderwharf
+  - Selkie Wharf Cinderwharf
+  E0038:
+  - Selkie Court Guesthouse
+  - Selkie Court
+  - The Selkie Court Guesthouse
+  - Selkie Court Guesthouse, Vellumgate
+  - Selkie Court Vellumgate
+  E0039:
+  - Ambergris Lock Rooms
+  - Ambergris Lock
+  - The Ambergris Lock Rooms
+  - Ambergris Lock Rooms, Halcyon Reach
+  - Ambergris Lock Halcyon Reach
+  E0040:
+  - Ambergris Wharf Rooms
+  - Ambergris Wharf
+  - The Ambergris Wharf Rooms
+  - Ambergris Wharf Rooms, Bramblemoor
+  - Ambergris Wharf Bramblemoor
+  E0041:
+  - Zephyr Court Clinic
+  - Zephyr Court
+  - The Zephyr Court Clinic
+  - Zephyr Court Clinic, Thistledown
+  - Zephyr Court Thistledown
+  E0042:
+  - Zephyr Quay Clinic
+  - Zephyr Quay
+  - The Zephyr Quay Clinic
+  - Zephyr Quay Clinic, Cinderwharf
+  - Zephyr Quay Cinderwharf
+  E0043:
+  - Kestrel Wharf Health Rooms
+  - Kestrel Wharf
+  - The Kestrel Wharf Health Rooms
+  - Kestrel Wharf Health Rooms, Orrery Hill
+  - Kestrel Wharf Orrery Hill
+  E0044:
+  - Kestrel Beacon Health Rooms
+  - Kestrel Beacon
+  - The Kestrel Beacon Health Rooms
+  - Kestrel Beacon Health Rooms, Kestrelby
+  - Kestrel Beacon Kestrelby
+  E0045:
+  - Halcyon Gate Practice
+  - Halcyon Gate
+  - The Halcyon Gate Practice
+  - Halcyon Gate Practice, Thistledown
+  - Halcyon Gate Thistledown
+  E0046:
+  - Halcyon Spire Practice
+  - Halcyon Spire
+  - The Halcyon Spire Practice
+  - Halcyon Spire Practice, Halcyon Reach
+  - Halcyon Spire Halcyon Reach
+  E0047:
+  - Juniper Quay Surgery
+  - Juniper Quay
+  - The Juniper Quay Surgery
+  - Juniper Quay Surgery, Kestrelby
+  - Juniper Quay Kestrelby
+  E0048:
+  - Juniper Ridge Surgery
+  - Juniper Ridge
+  - The Juniper Ridge Surgery
+  - Juniper Ridge Surgery, Aldermist
+  - Juniper Ridge Aldermist
+  E0049:
+  - Harbour Lantern Care Centre
+  - Harbour Lantern
+  - The Harbour Lantern Care Centre
+  - Harbour Lantern Care Centre, Cinderwharf
+  - Harbour Lantern Cinderwharf
+  E0050:
+  - Harbour Anchor Care Centre
+  - Harbour Anchor
+  - The Harbour Anchor Care Centre
+  - Harbour Anchor Care Centre, Halcyon Reach
+  - Harbour Anchor Halcyon Reach
+  E0051:
+  - Cinder Anchor Clinic
+  - Cinder Anchor
+  - The Cinder Anchor Clinic
+  - Cinder Anchor Clinic, Bramblemoor
+  - Cinder Anchor Bramblemoor
+  E0052:
+  - Cinder Hollow Clinic
+  - Cinder Hollow
+  - The Cinder Hollow Clinic
+  - Cinder Hollow Clinic, Orrery Hill
+  - Cinder Hollow Orrery Hill
+  E0053:
+  - Solstice Wharf Health Rooms
+  - Solstice Wharf
+  - The Solstice Wharf Health Rooms
+  - Solstice Wharf Health Rooms, Aldermist
+  - Solstice Wharf Aldermist
+  E0054:
+  - Solstice Bridge Health Rooms
+  - Solstice Bridge
+  - The Solstice Bridge Health Rooms
+  - Solstice Bridge Health Rooms, Thistledown
+  - Solstice Bridge Thistledown
+  E0055:
+  - Mistral Row Practice
+  - Mistral Row
+  - The Mistral Row Practice
+  - Mistral Row Practice, Vellumgate
+  - Mistral Row Vellumgate
+  E0056:
+  - Mistral Wharf Practice
+  - Mistral Wharf
+  - The Mistral Wharf Practice
+  - Mistral Wharf Practice, Kestrelby
+  - Mistral Wharf Kestrelby
+  E0057:
+  - Vellum Gate Surgery
+  - Vellum Gate
+  - The Vellum Gate Surgery
+  - Vellum Gate Surgery, Cinderwharf
+  - Vellum Gate Cinderwharf
+  E0058:
+  - Vellum Reach Surgery
+  - Vellum Reach
+  - The Vellum Reach Surgery
+  - Vellum Reach Surgery, Cinderwharf
+  - Vellum Reach Cinderwharf
+  E0059:
+  - Quillon Reach Care Centre
+  - Quillon Reach
+  - The Quillon Reach Care Centre
+  - Quillon Reach Care Centre, Selkie Point
+  - Quillon Reach Selkie Point
+  E0060:
+  - Quillon Bridge Care Centre
+  - Quillon Bridge
+  - The Quillon Bridge Care Centre
+  - Quillon Bridge Care Centre, Halcyon Reach
+  - Quillon Bridge Halcyon Reach
+  E0061:
+  - Corvid Ridge Repairs
+  - Corvid Ridge
+  - The Corvid Ridge Repairs
+  - Corvid Ridge Repairs, Halcyon Reach
+  - Corvid Ridge Halcyon Reach
+  E0062:
+  - Corvid Anchor Repairs
+  - Corvid Anchor
+  - The Corvid Anchor Repairs
+  - Corvid Anchor Repairs, Selkie Point
+  - Corvid Anchor Selkie Point
+  E0063:
+  - Fernhollow Row Services
+  - Fernhollow Row
+  - The Fernhollow Row Services
+  - Fernhollow Row Services, Bramblemoor
+  - Fernhollow Row Bramblemoor
+  E0064:
+  - Fernhollow Spire Services
+  - Fernhollow Spire
+  - The Fernhollow Spire Services
+  - Fernhollow Spire Services, Vellumgate
+  - Fernhollow Spire Vellumgate
+  E0065:
+  - Thistle Compass Workshop
+  - Thistle Compass
+  - The Thistle Compass Workshop
+  - Thistle Compass Workshop, Aldermist
+  - Thistle Compass Aldermist
+  E0066:
+  - Thistle Yard Workshop
+  - Thistle Yard
+  - The Thistle Yard Workshop
+  - Thistle Yard Workshop, Halcyon Reach
+  - Thistle Yard Halcyon Reach
+  E0067:
+  - Marlowe Beacon Fitters
+  - Marlowe Beacon
+  - The Marlowe Beacon Fitters
+  - Marlowe Beacon Fitters, Thistledown
+  - Marlowe Beacon Thistledown
+  E0068:
+  - Marlowe Hearth Fitters
+  - Marlowe Hearth
+  - The Marlowe Hearth Fitters
+  - Marlowe Hearth Fitters, Bramblemoor
+  - Marlowe Hearth Bramblemoor
+  E0069:
+  - Wickham Lantern Maintenance
+  - Wickham Lantern
+  - The Wickham Lantern Maintenance
+  - Wickham Lantern Maintenance, Kestrelby
+  - Wickham Lantern Kestrelby
+  E0070:
+  - Wickham Reach Maintenance
+  - Wickham Reach
+  - The Wickham Reach Maintenance
+  - Wickham Reach Maintenance, Vellumgate
+  - Wickham Reach Vellumgate
+  E0071:
+  - Orrery Mere Repairs
+  - Orrery Mere
+  - The Orrery Mere Repairs
+  - Orrery Mere Repairs, Kestrelby
+  - Orrery Mere Kestrelby
+  E0072:
+  - Orrery Lock Repairs
+  - Orrery Lock
+  - The Orrery Lock Repairs
+  - Orrery Lock Repairs, Aldermist
+  - Orrery Lock Aldermist
+  E0073:
+  - Verdant Vale Services
+  - Verdant Vale
+  - The Verdant Vale Services
+  - Verdant Vale Services, Selkie Point
+  - Verdant Vale Selkie Point
+  E0074:
+  - Verdant Arch Services
+  - Verdant Arch
+  - The Verdant Arch Services
+  - Verdant Arch Services, Fernhollow
+  - Verdant Arch Fernhollow
+  E0075:
+  - Pellucid Compass Workshop
+  - Pellucid Compass
+  - The Pellucid Compass Workshop
+  - Pellucid Compass Workshop, Aldermist
+  - Pellucid Compass Aldermist
+  E0076:
+  - Pellucid Close Workshop
+  - Pellucid Close
+  - The Pellucid Close Workshop
+  - Pellucid Close Workshop, Orrery Hill
+  - Pellucid Close Orrery Hill
+  E0077:
+  - Aldermist Close Fitters
+  - Aldermist Close
+  - The Aldermist Close Fitters
+  - Aldermist Close Fitters, Thistledown
+  - Aldermist Close Thistledown
+  E0078:
+  - Aldermist Yard Fitters
+  - Aldermist Yard
+  - The Aldermist Yard Fitters
+  - Aldermist Yard Fitters, Aldermist
+  - Aldermist Yard Aldermist
+  E0079:
+  - Bramble Spire Maintenance
+  - Bramble Spire
+  - The Bramble Spire Maintenance
+  - Bramble Spire Maintenance, Aldermist
+  - Bramble Spire Aldermist
+  E0080:
+  - Bramble Hearth Maintenance
+  - Bramble Hearth
+  - The Bramble Hearth Maintenance
+  - Bramble Hearth Maintenance, Thistledown
+  - Bramble Hearth Thistledown
+  E0081:
+  - Cobalt Reach Tours
+  - Cobalt Reach
+  - The Cobalt Reach Tours
+  - Cobalt Reach Tours, Bramblemoor
+  - Cobalt Reach Bramblemoor
+  E0082:
+  - Cobalt Croft Tours
+  - Cobalt Croft
+  - The Cobalt Croft Tours
+  - Cobalt Croft Tours, Aldermist
+  - Cobalt Croft Aldermist
+  E0083:
+  - Alabaster Row Excursions
+  - Alabaster Row
+  - The Alabaster Row Excursions
+  - Alabaster Row Excursions, Aldermist
+  - Alabaster Row Aldermist
+  E0084:
+  - Alabaster Anchor Excursions
+  - Alabaster Anchor
+  - The Alabaster Anchor Excursions
+  - Alabaster Anchor Excursions, Kestrelby
+  - Alabaster Anchor Kestrelby
+  E0085:
+  - Selkie Hearth Voyages
+  - Selkie Hearth
+  - The Selkie Hearth Voyages
+  - Selkie Hearth Voyages, Cinderwharf
+  - Selkie Hearth Cinderwharf
+  E0086:
+  - Selkie Bourne Voyages
+  - Selkie Bourne
+  - The Selkie Bourne Voyages
+  - Selkie Bourne Voyages, Fernhollow
+  - Selkie Bourne Fernhollow
+  E0087:
+  - Ambergris Lock Expeditions
+  - Ambergris Lock
+  - The Ambergris Lock Expeditions
+  - Ambergris Lock Expeditions, Halcyon Reach
+  - Ambergris Lock Halcyon Reach
+  E0088:
+  - Ambergris Croft Expeditions
+  - Ambergris Croft
+  - The Ambergris Croft Expeditions
+  - Ambergris Croft Expeditions, Bramblemoor
+  - Ambergris Croft Bramblemoor
+  E0089:
+  - Zephyr Ridge Trails
+  - Zephyr Ridge
+  - The Zephyr Ridge Trails
+  - Zephyr Ridge Trails, Vellumgate
+  - Zephyr Ridge Vellumgate
+  E0090:
+  - Zephyr Court Trails
+  - Zephyr Court
+  - The Zephyr Court Trails
+  - Zephyr Court Trails, Cinderwharf
+  - Zephyr Court Cinderwharf
+  E0091:
+  - Kestrel Gate Tours
+  - Kestrel Gate
+  - The Kestrel Gate Tours
+  - Kestrel Gate Tours, Selkie Point
+  - Kestrel Gate Selkie Point
+  E0092:
+  - Kestrel Mere Tours
+  - Kestrel Mere
+  - The Kestrel Mere Tours
+  - Kestrel Mere Tours, Bramblemoor
+  - Kestrel Mere Bramblemoor
+  E0093:
+  - Halcyon Row Excursions
+  - Halcyon Row
+  - The Halcyon Row Excursions
+  - Halcyon Row Excursions, Orrery Hill
+  - Halcyon Row Orrery Hill
+  E0094:
+  - Halcyon Anchor Excursions
+  - Halcyon Anchor
+  - The Halcyon Anchor Excursions
+  - Halcyon Anchor Excursions, Kestrelby
+  - Halcyon Anchor Kestrelby
+  E0095:
+  - Juniper Court Voyages
+  - Juniper Court
+  - The Juniper Court Voyages
+  - Juniper Court Voyages, Thistledown
+  - Juniper Court Thistledown
+  E0096:
+  - Juniper Wharf Voyages
+  - Juniper Wharf
+  - The Juniper Wharf Voyages
+  - Juniper Wharf Voyages, Selkie Point
+  - Juniper Wharf Selkie Point
+  E0097:
+  - Harbour Compass Expeditions
+  - Harbour Compass
+  - The Harbour Compass Expeditions
+  - Harbour Compass Expeditions, Cinderwharf
+  - Harbour Compass Cinderwharf
+  E0098:
+  - Harbour Row Expeditions
+  - Harbour Row
+  - The Harbour Row Expeditions
+  - Harbour Row Expeditions, Kestrelby
+  - Harbour Row Kestrelby
+  E0099:
+  - Cinder Gate Trails
+  - Cinder Gate
+  - The Cinder Gate Trails
+  - Cinder Gate Trails, Selkie Point
+  - Cinder Gate Selkie Point
+  E0100:
+  - Cinder Compass Trails
+  - Cinder Compass
+  - The Cinder Compass Trails
+  - Cinder Compass Trails, Kestrelby
+  - Cinder Compass Kestrelby
+  E0101:
+  - Solstice Beacon Salon
+  - Solstice Beacon
+  - The Solstice Beacon Salon
+  - Solstice Beacon Salon, Thistledown
+  - Solstice Beacon Thistledown
+  E0102:
+  - Solstice Hearth Salon
+  - Solstice Hearth
+  - The Solstice Hearth Salon
+  - Solstice Hearth Salon, Orrery Hill
+  - Solstice Hearth Orrery Hill
+  E0103:
+  - Mistral Vale Grooming Rooms
+  - Mistral Vale
+  - The Mistral Vale Grooming Rooms
+  - Mistral Vale Grooming Rooms, Kestrelby
+  - Mistral Vale Kestrelby
+  E0104:
+  - Mistral Anchor Grooming Rooms
+  - Mistral Anchor
+  - The Mistral Anchor Grooming Rooms
+  - Mistral Anchor Grooming Rooms, Halcyon Reach
+  - Mistral Anchor Halcyon Reach
+  E0105:
+  - Vellum Wharf Barbers
+  - Vellum Wharf
+  - The Vellum Wharf Barbers
+  - Vellum Wharf Barbers, Aldermist
+  - Vellum Wharf Aldermist
+  E0106:
+  - Vellum Arch Barbers
+  - Vellum Arch
+  - The Vellum Arch Barbers
+  - Vellum Arch Barbers, Cinderwharf
+  - Vellum Arch Cinderwharf
+  E0107:
+  - Quillon Lock Stylists
+  - Quillon Lock
+  - The Quillon Lock Stylists
+  - Quillon Lock Stylists, Thistledown
+  - Quillon Lock Thistledown
+  E0108:
+  - Quillon Bridge Stylists
+  - Quillon Bridge
+  - The Quillon Bridge Stylists
+  - Quillon Bridge Stylists, Fernhollow
+  - Quillon Bridge Fernhollow
+  E0109:
+  - Corvid Arch Atelier
+  - Corvid Arch
+  - The Corvid Arch Atelier
+  - Corvid Arch Atelier, Orrery Hill
+  - Corvid Arch Orrery Hill
+  E0110:
+  - Corvid Lantern Atelier
+  - Corvid Lantern
+  - The Corvid Lantern Atelier
+  - Corvid Lantern Atelier, Selkie Point
+  - Corvid Lantern Selkie Point
+  E0111:
+  - Fernhollow Quay Salon
+  - Fernhollow Quay
+  - The Fernhollow Quay Salon
+  - Fernhollow Quay Salon, Halcyon Reach
+  - Fernhollow Quay Halcyon Reach
+  E0112:
+  - Fernhollow Wharf Salon
+  - Fernhollow Wharf
+  - The Fernhollow Wharf Salon
+  - Fernhollow Wharf Salon, Orrery Hill
+  - Fernhollow Wharf Orrery Hill
+  E0113:
+  - Thistle Quay Grooming Rooms
+  - Thistle Quay
+  - The Thistle Quay Grooming Rooms
+  - Thistle Quay Grooming Rooms, Orrery Hill
+  - Thistle Quay Orrery Hill
+  E0114:
+  - Thistle Lock Grooming Rooms
+  - Thistle Lock
+  - The Thistle Lock Grooming Rooms
+  - Thistle Lock Grooming Rooms, Selkie Point
+  - Thistle Lock Selkie Point
+  E0115:
+  - Marlowe Ridge Barbers
+  - Marlowe Ridge
+  - The Marlowe Ridge Barbers
+  - Marlowe Ridge Barbers, Kestrelby
+  - Marlowe Ridge Kestrelby
+  E0116:
+  - Marlowe Fold Barbers
+  - Marlowe Fold
+  - The Marlowe Fold Barbers
+  - Marlowe Fold Barbers, Orrery Hill
+  - Marlowe Fold Orrery Hill
+  E0117:
+  - Wickham Yard Stylists
+  - Wickham Yard
+  - The Wickham Yard Stylists
+  - Wickham Yard Stylists, Orrery Hill
+  - Wickham Yard Orrery Hill
+  E0118:
+  - Wickham Reach Stylists
+  - Wickham Reach
+  - The Wickham Reach Stylists
+  - Wickham Reach Stylists, Bramblemoor
+  - Wickham Reach Bramblemoor
+  E0119:
+  - Orrery Bourne Atelier
+  - Orrery Bourne
+  - The Orrery Bourne Atelier
+  - Orrery Bourne Atelier, Aldermist
+  - Orrery Bourne Aldermist
+  E0120:
+  - Orrery Spire Atelier
+  - Orrery Spire
+  - The Orrery Spire Atelier
+  - Orrery Spire Atelier, Kestrelby
+  - Orrery Spire Kestrelby
+  E0121:
+  - Verdant Anchor Gym
+  - Verdant Anchor
+  - The Verdant Anchor Gym
+  - Verdant Anchor Gym, Thistledown
+  - Verdant Anchor Thistledown
+  E0122:
+  - Verdant Close Gym
+  - Verdant Close
+  - The Verdant Close Gym
+  - Verdant Close Gym, Bramblemoor
+  - Verdant Close Bramblemoor
+  E0123:
+  - Pellucid Mere Fitness Rooms
+  - Pellucid Mere
+  - The Pellucid Mere Fitness Rooms
+  - Pellucid Mere Fitness Rooms, Aldermist
+  - Pellucid Mere Aldermist
+  E0124:
+  - Pellucid Compass Fitness Rooms
+  - Pellucid Compass
+  - The Pellucid Compass Fitness Rooms
+  - Pellucid Compass Fitness Rooms, Cinderwharf
+  - Pellucid Compass Cinderwharf
+  E0125:
+  - Aldermist Wharf Athletics Club
+  - Aldermist Wharf
+  - The Aldermist Wharf Athletics Club
+  - Aldermist Wharf Athletics Club, Halcyon Reach
+  - Aldermist Wharf Halcyon Reach
+  E0126:
+  - Aldermist Lantern Athletics Club
+  - Aldermist Lantern
+  - The Aldermist Lantern Athletics Club
+  - Aldermist Lantern Athletics Club, Selkie Point
+  - Aldermist Lantern Selkie Point
+  E0127:
+  - Bramble Close Training Studio
+  - Bramble Close
+  - The Bramble Close Training Studio
+  - Bramble Close Training Studio, Thistledown
+  - Bramble Close Thistledown
+  E0128:
+  - Bramble Row Training Studio
+  - Bramble Row
+  - The Bramble Row Training Studio
+  - Bramble Row Training Studio, Vellumgate
+  - Bramble Row Vellumgate
+  E0129:
+  - Cobalt Spire Movement Lab
+  - Cobalt Spire
+  - The Cobalt Spire Movement Lab
+  - Cobalt Spire Movement Lab, Vellumgate
+  - Cobalt Spire Vellumgate
+  E0130:
+  - Cobalt Arch Movement Lab
+  - Cobalt Arch
+  - The Cobalt Arch Movement Lab
+  - Cobalt Arch Movement Lab, Thistledown
+  - Cobalt Arch Thistledown
+  E0131:
+  - Alabaster Yard Gym
+  - Alabaster Yard
+  - The Alabaster Yard Gym
+  - Alabaster Yard Gym, Bramblemoor
+  - Alabaster Yard Bramblemoor
+  E0132:
+  - Alabaster Court Gym
+  - Alabaster Court
+  - The Alabaster Court Gym
+  - Alabaster Court Gym, Thistledown
+  - Alabaster Court Thistledown
+  E0133:
+  - Selkie Wharf Fitness Rooms
+  - Selkie Wharf
+  - The Selkie Wharf Fitness Rooms
+  - Selkie Wharf Fitness Rooms, Kestrelby
+  - Selkie Wharf Kestrelby
+  E0134:
+  - Selkie Fold Fitness Rooms
+  - Selkie Fold
+  - The Selkie Fold Fitness Rooms
+  - Selkie Fold Fitness Rooms, Cinderwharf
+  - Selkie Fold Cinderwharf
+  E0135:
+  - Ambergris Lantern Athletics Club
+  - Ambergris Lantern
+  - The Ambergris Lantern Athletics Club
+  - Ambergris Lantern Athletics Club, Orrery Hill
+  - Ambergris Lantern Orrery Hill
+  E0136:
+  - Ambergris Gate Athletics Club
+  - Ambergris Gate
+  - The Ambergris Gate Athletics Club
+  - Ambergris Gate Athletics Club, Selkie Point
+  - Ambergris Gate Selkie Point
+  E0137:
+  - Zephyr Wharf Training Studio
+  - Zephyr Wharf
+  - The Zephyr Wharf Training Studio
+  - Zephyr Wharf Training Studio, Bramblemoor
+  - Zephyr Wharf Bramblemoor
+  E0138:
+  - Zephyr Lantern Training Studio
+  - Zephyr Lantern
+  - The Zephyr Lantern Training Studio
+  - Zephyr Lantern Training Studio, Orrery Hill
+  - Zephyr Lantern Orrery Hill
+  E0139:
+  - Kestrel Compass Movement Lab
+  - Kestrel Compass
+  - The Kestrel Compass Movement Lab
+  - Kestrel Compass Movement Lab, Cinderwharf
+  - Kestrel Compass Cinderwharf
+  E0140:
+  - Kestrel Anchor Movement Lab
+  - Kestrel Anchor
+  - The Kestrel Anchor Movement Lab
+  - Kestrel Anchor Movement Lab, Aldermist
+  - Kestrel Anchor Aldermist
+  E0141:
+  - Halcyon Hollow Books
+  - Halcyon Hollow
+  - The Halcyon Hollow Books
+  - Halcyon Hollow Books, Selkie Point
+  - Halcyon Hollow Selkie Point
+  E0142:
+  - Halcyon Ridge Books
+  - Halcyon Ridge
+  - The Halcyon Ridge Books
+  - Halcyon Ridge Books, Orrery Hill
+  - Halcyon Ridge Orrery Hill
+  E0143:
+  - Juniper Spire Bookshop
+  - Juniper Spire
+  - The Juniper Spire Bookshop
+  - Juniper Spire Bookshop, Halcyon Reach
+  - Juniper Spire Halcyon Reach
+  E0144:
+  - Juniper Beacon Bookshop
+  - Juniper Beacon
+  - The Juniper Beacon Bookshop
+  - Juniper Beacon Bookshop, Aldermist
+  - Juniper Beacon Aldermist
+  E0145:
+  - Harbour Yard Reading Rooms
+  - Harbour Yard
+  - The Harbour Yard Reading Rooms
+  - Harbour Yard Reading Rooms, Bramblemoor
+  - Harbour Yard Bramblemoor
+  E0146:
+  - Harbour Anchor Reading Rooms
+  - Harbour Anchor
+  - The Harbour Anchor Reading Rooms
+  - Harbour Anchor Reading Rooms, Thistledown
+  - Harbour Anchor Thistledown
+  E0147:
+  - Cinder Yard Bindery
+  - Cinder Yard
+  - The Cinder Yard Bindery
+  - Cinder Yard Bindery, Fernhollow
+  - Cinder Yard Fernhollow
+  E0148:
+  - Cinder Lantern Bindery
+  - Cinder Lantern
+  - The Cinder Lantern Bindery
+  - Cinder Lantern Bindery, Cinderwharf
+  - Cinder Lantern Cinderwharf
+  E0149:
+  - Solstice Gate Booksellers
+  - Solstice Gate
+  - The Solstice Gate Booksellers
+  - Solstice Gate Booksellers, Bramblemoor
+  - Solstice Gate Bramblemoor
+  E0150:
+  - Solstice Arch Booksellers
+  - Solstice Arch
+  - The Solstice Arch Booksellers
+  - Solstice Arch Booksellers, Bramblemoor
+  - Solstice Arch Bramblemoor
+  E0151:
+  - Mistral Beacon Books
+  - Mistral Beacon
+  - The Mistral Beacon Books
+  - Mistral Beacon Books, Selkie Point
+  - Mistral Beacon Selkie Point
+  E0152:
+  - Mistral Croft Books
+  - Mistral Croft
+  - The Mistral Croft Books
+  - Mistral Croft Books, Kestrelby
+  - Mistral Croft Kestrelby
+  E0153:
+  - Vellum Vale Bookshop
+  - Vellum Vale
+  - The Vellum Vale Bookshop
+  - Vellum Vale Bookshop, Orrery Hill
+  - Vellum Vale Orrery Hill
+  E0154:
+  - Vellum Bridge Bookshop
+  - Vellum Bridge
+  - The Vellum Bridge Bookshop
+  - Vellum Bridge Bookshop, Halcyon Reach
+  - Vellum Bridge Halcyon Reach
+  E0155:
+  - Quillon Vale Reading Rooms
+  - Quillon Vale
+  - The Quillon Vale Reading Rooms
+  - Quillon Vale Reading Rooms, Halcyon Reach
+  - Quillon Vale Halcyon Reach
+  E0156:
+  - Quillon Bridge Reading Rooms
+  - Quillon Bridge
+  - The Quillon Bridge Reading Rooms
+  - Quillon Bridge Reading Rooms, Orrery Hill
+  - Quillon Bridge Orrery Hill
+  E0157:
+  - Corvid Hearth Bindery
+  - Corvid Hearth
+  - The Corvid Hearth Bindery
+  - Corvid Hearth Bindery, Orrery Hill
+  - Corvid Hearth Orrery Hill
+  E0158:
+  - Corvid Hollow Bindery
+  - Corvid Hollow
+  - The Corvid Hollow Bindery
+  - Corvid Hollow Bindery, Aldermist
+  - Corvid Hollow Aldermist
+  E0159:
+  - Fernhollow Beacon Booksellers
+  - Fernhollow Beacon
+  - The Fernhollow Beacon Booksellers
+  - Fernhollow Beacon Booksellers, Halcyon Reach
+  - Fernhollow Beacon Halcyon Reach
+  E0160:
+  - Fernhollow Wharf Booksellers
+  - Fernhollow Wharf
+  - The Fernhollow Wharf Booksellers
+  - Fernhollow Wharf Booksellers, Cinderwharf
+  - Fernhollow Wharf Cinderwharf
+  E9001:
+  - Aldermist Court Bistro
+  - Aldermist Court
+  - The Aldermist Court Bistro
+  - Aldermist Court Bistro, Orrery Hill
+  - Aldermist Court Orrery Hill
+  E9002:
+  - Cinder Vale Inn
+  - Cinder Vale
+  - The Cinder Vale Inn
+  - Cinder Vale Inn, Kestrelby
+  - Cinder Vale Kestrelby
+  E9003:
+  - Verdant Compass Practice
+  - Verdant Compass
+  - The Verdant Compass Practice
+  - Verdant Compass Practice, Orrery Hill
+  - Verdant Compass Orrery Hill
+  E9004:
+  - Juniper Gate Fitters
+  - Juniper Gate
+  - The Juniper Gate Fitters
+  - Juniper Gate Fitters, Bramblemoor
+  - Juniper Gate Bramblemoor
+  E9005:
+  - Wickham Arch Trails
+  - Wickham Arch
+  - The Wickham Arch Trails
+  - Wickham Arch Trails, Thistledown
+  - Wickham Arch Thistledown
+  E9006:
+  - Kestrel Wharf Salon
+  - Kestrel Wharf
+  - The Kestrel Wharf Salon
+  - Kestrel Wharf Salon, Kestrelby
+  - Kestrel Wharf Kestrelby
+  E9007:
+  - Thistle Reach Fitness Rooms
+  - Thistle Reach
+  - The Thistle Reach Fitness Rooms
+  - Thistle Reach Fitness Rooms, Aldermist
+  - Thistle Reach Aldermist
+  E9008:
+  - Ambergris Bourne Reading Rooms
+  - Ambergris Bourne
+  - The Ambergris Bourne Reading Rooms
+  - Ambergris Bourne Reading Rooms, Cinderwharf
+  - Ambergris Bourne Cinderwharf

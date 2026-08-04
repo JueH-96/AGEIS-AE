@@ -1,0 +1,1197 @@
+metadata:
+  schema_version: '1.0'
+  generator: registry/entity_generator.py
+  generator_version: '1.0'
+  lexicon_version: '1.0'
+  master_seed: 42
+  contract_ref: CONTRACT.md Section 5.1
+  machine_readable_entity_id_channel: x-aegis-entity-id
+  machine_readable_note: Entity IDs are published to parsers through an HTML <meta> channel and never
+    appear in visible prose (CONTRACT.md Section 8, item 3). The channel carries the target entity ID
+    and an opaque page ID only; page role, attack template and factor levels are held in the side manifest
+    so the channel cannot leak a label.
+  status_enum:
+  - active
+  - fabricated_control
+  counts:
+    entity_templates: 80
+    fabricated_control_templates: 8
+    controlled_entities: 160
+    fabricated_control_entities: 8
+addresses:
+  A0001:
+    address_id: A0001
+    street: 114 Verdant Crescent
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-9730
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0002:
+    address_id: A0002
+    street: 82 Quillon Way
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-2753
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0003:
+    address_id: A0003
+    street: 106 Corvid Close
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-3446
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0004:
+    address_id: A0004
+    street: 236 Bramble Mews
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-2368
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0005:
+    address_id: A0005
+    street: 123 Verdant Crescent
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-3300
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0006:
+    address_id: A0006
+    street: 202 Lamplighter Row
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-4022
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0007:
+    address_id: A0007
+    street: 168 Corvid Close
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-7112
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0008:
+    address_id: A0008
+    street: 112 Verdant Crescent
+    city: Vellumgate
+    region: ZZ
+    postal_code: ZZ-1540
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0009:
+    address_id: A0009
+    street: 192 Corvid Close
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-7286
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0010:
+    address_id: A0010
+    street: 239 Quillon Way
+    city: Fernhollow
+    region: ZZ
+    postal_code: ZZ-1882
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0011:
+    address_id: A0011
+    street: 66 Solstice Terrace
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-7845
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0012:
+    address_id: A0012
+    street: 86 Corvid Close
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-9811
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0013:
+    address_id: A0013
+    street: 109 Wickham Bank
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-2118
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0014:
+    address_id: A0014
+    street: 189 Ambergris Lane
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-0953
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0015:
+    address_id: A0015
+    street: 108 Lamplighter Row
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-4058
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0016:
+    address_id: A0016
+    street: 9 Pellucid Parade
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-1741
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0017:
+    address_id: A0017
+    street: 231 Ambergris Lane
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-3750
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0018:
+    address_id: A0018
+    street: 209 Lamplighter Row
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-7782
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0019:
+    address_id: A0019
+    street: 28 Solstice Terrace
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-8048
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0020:
+    address_id: A0020
+    street: 74 Marlowe Walk
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-3832
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0021:
+    address_id: A0021
+    street: 181 Bramble Mews
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-8297
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0022:
+    address_id: A0022
+    street: 63 Cobalt Steps
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-0099
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0023:
+    address_id: A0023
+    street: 100 Bramble Mews
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-8952
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0024:
+    address_id: A0024
+    street: 188 Cobalt Steps
+    city: Fernhollow
+    region: ZZ
+    postal_code: ZZ-9261
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0025:
+    address_id: A0025
+    street: 169 Verdant Crescent
+    city: Fernhollow
+    region: ZZ
+    postal_code: ZZ-7488
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0026:
+    address_id: A0026
+    street: 189 Quillon Way
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-2141
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0027:
+    address_id: A0027
+    street: 43 Ambergris Lane
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-8581
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0028:
+    address_id: A0028
+    street: 29 Cobalt Steps
+    city: Fernhollow
+    region: ZZ
+    postal_code: ZZ-5602
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0029:
+    address_id: A0029
+    street: 64 Pellucid Parade
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-6848
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0030:
+    address_id: A0030
+    street: 69 Pellucid Parade
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-6505
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0031:
+    address_id: A0031
+    street: 99 Marlowe Walk
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-7860
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0032:
+    address_id: A0032
+    street: 65 Corvid Close
+    city: Fernhollow
+    region: ZZ
+    postal_code: ZZ-7443
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0033:
+    address_id: A0033
+    street: 118 Ambergris Lane
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-3021
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0034:
+    address_id: A0034
+    street: 126 Ambergris Lane
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-7349
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0035:
+    address_id: A0035
+    street: 240 Corvid Close
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-2189
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0036:
+    address_id: A0036
+    street: 25 Solstice Terrace
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-3625
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0037:
+    address_id: A0037
+    street: 93 Solstice Terrace
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-4145
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0038:
+    address_id: A0038
+    street: 26 Marlowe Walk
+    city: Vellumgate
+    region: ZZ
+    postal_code: ZZ-9827
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0039:
+    address_id: A0039
+    street: 213 Solstice Terrace
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-1966
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0040:
+    address_id: A0040
+    street: 83 Pellucid Parade
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-5888
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0041:
+    address_id: A0041
+    street: 91 Wickham Bank
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-0866
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0042:
+    address_id: A0042
+    street: 127 Lamplighter Row
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-1593
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0043:
+    address_id: A0043
+    street: 32 Marlowe Walk
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-0561
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0044:
+    address_id: A0044
+    street: 204 Solstice Terrace
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-0299
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0045:
+    address_id: A0045
+    street: 217 Quillon Way
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-8017
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0046:
+    address_id: A0046
+    street: 46 Pellucid Parade
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-3129
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0047:
+    address_id: A0047
+    street: 154 Bramble Mews
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-0634
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0048:
+    address_id: A0048
+    street: 68 Quillon Way
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-3536
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0049:
+    address_id: A0049
+    street: 61 Cobalt Steps
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-9201
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0050:
+    address_id: A0050
+    street: 91 Verdant Crescent
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-8578
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0051:
+    address_id: A0051
+    street: 219 Cobalt Steps
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-6858
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0052:
+    address_id: A0052
+    street: 14 Corvid Close
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-7821
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0053:
+    address_id: A0053
+    street: 131 Juniper Rise
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-8465
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0054:
+    address_id: A0054
+    street: 36 Quillon Way
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-4120
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0055:
+    address_id: A0055
+    street: 122 Quillon Way
+    city: Vellumgate
+    region: ZZ
+    postal_code: ZZ-1265
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0056:
+    address_id: A0056
+    street: 16 Cobalt Steps
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-2243
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0057:
+    address_id: A0057
+    street: 166 Ambergris Lane
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-6019
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0058:
+    address_id: A0058
+    street: 92 Juniper Rise
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-1032
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0059:
+    address_id: A0059
+    street: 93 Quillon Way
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-4493
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0060:
+    address_id: A0060
+    street: 233 Verdant Crescent
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-3404
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0061:
+    address_id: A0061
+    street: 56 Corvid Close
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-9360
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0062:
+    address_id: A0062
+    street: 140 Solstice Terrace
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-1185
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0063:
+    address_id: A0063
+    street: 146 Verdant Crescent
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-3742
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0064:
+    address_id: A0064
+    street: 170 Pellucid Parade
+    city: Vellumgate
+    region: ZZ
+    postal_code: ZZ-2931
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0065:
+    address_id: A0065
+    street: 10 Verdant Crescent
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-2786
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0066:
+    address_id: A0066
+    street: 152 Corvid Close
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-2126
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0067:
+    address_id: A0067
+    street: 133 Quillon Way
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-9511
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0068:
+    address_id: A0068
+    street: 190 Marlowe Walk
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-4339
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0069:
+    address_id: A0069
+    street: 204 Ambergris Lane
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-4646
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0070:
+    address_id: A0070
+    street: 185 Ambergris Lane
+    city: Vellumgate
+    region: ZZ
+    postal_code: ZZ-5140
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0071:
+    address_id: A0071
+    street: 203 Ambergris Lane
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-6306
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0072:
+    address_id: A0072
+    street: 184 Quillon Way
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-9607
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0073:
+    address_id: A0073
+    street: 19 Juniper Rise
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-3847
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0074:
+    address_id: A0074
+    street: 32 Wickham Bank
+    city: Fernhollow
+    region: ZZ
+    postal_code: ZZ-6419
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0075:
+    address_id: A0075
+    street: 48 Cobalt Steps
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-3202
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0076:
+    address_id: A0076
+    street: 158 Juniper Rise
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-5446
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0077:
+    address_id: A0077
+    street: 217 Bramble Mews
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-2236
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0078:
+    address_id: A0078
+    street: 201 Quillon Way
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-4591
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0079:
+    address_id: A0079
+    street: 151 Ambergris Lane
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-8800
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0080:
+    address_id: A0080
+    street: 35 Corvid Close
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-5180
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0081:
+    address_id: A0081
+    street: 156 Quillon Way
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-4104
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0082:
+    address_id: A0082
+    street: 199 Corvid Close
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-2254
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0083:
+    address_id: A0083
+    street: 193 Solstice Terrace
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-7511
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0084:
+    address_id: A0084
+    street: 238 Verdant Crescent
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-2782
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0085:
+    address_id: A0085
+    street: 123 Pellucid Parade
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-9550
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0086:
+    address_id: A0086
+    street: 174 Juniper Rise
+    city: Fernhollow
+    region: ZZ
+    postal_code: ZZ-9194
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0087:
+    address_id: A0087
+    street: 29 Cobalt Steps
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-1645
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0088:
+    address_id: A0088
+    street: 93 Lamplighter Row
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-2871
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0089:
+    address_id: A0089
+    street: 59 Lamplighter Row
+    city: Vellumgate
+    region: ZZ
+    postal_code: ZZ-6597
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0090:
+    address_id: A0090
+    street: 187 Marlowe Walk
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-8696
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0091:
+    address_id: A0091
+    street: 33 Marlowe Walk
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-4671
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0092:
+    address_id: A0092
+    street: 236 Bramble Mews
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-3663
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0093:
+    address_id: A0093
+    street: 185 Wickham Bank
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-4139
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0094:
+    address_id: A0094
+    street: 110 Pellucid Parade
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-3467
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0095:
+    address_id: A0095
+    street: 56 Solstice Terrace
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-0484
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0096:
+    address_id: A0096
+    street: 195 Cobalt Steps
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-2937
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0097:
+    address_id: A0097
+    street: 226 Bramble Mews
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-4884
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0098:
+    address_id: A0098
+    street: 113 Corvid Close
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-6914
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0099:
+    address_id: A0099
+    street: 101 Marlowe Walk
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-0377
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0100:
+    address_id: A0100
+    street: 117 Wickham Bank
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-2471
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0101:
+    address_id: A0101
+    street: 139 Corvid Close
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-8780
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0102:
+    address_id: A0102
+    street: 94 Ambergris Lane
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-8600
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0103:
+    address_id: A0103
+    street: 177 Marlowe Walk
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-6211
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0104:
+    address_id: A0104
+    street: 51 Ambergris Lane
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-0332
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0105:
+    address_id: A0105
+    street: 122 Ambergris Lane
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-3968
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0106:
+    address_id: A0106
+    street: 199 Marlowe Walk
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-1064
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0107:
+    address_id: A0107
+    street: 38 Bramble Mews
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-6912
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0108:
+    address_id: A0108
+    street: 110 Solstice Terrace
+    city: Fernhollow
+    region: ZZ
+    postal_code: ZZ-3826
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0109:
+    address_id: A0109
+    street: 51 Cobalt Steps
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-7020
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0110:
+    address_id: A0110
+    street: 228 Cobalt Steps
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-2982
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0111:
+    address_id: A0111
+    street: 164 Pellucid Parade
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-3719
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0112:
+    address_id: A0112
+    street: 72 Quillon Way
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-3724
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0113:
+    address_id: A0113
+    street: 92 Ambergris Lane
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-2815
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0114:
+    address_id: A0114
+    street: 206 Corvid Close
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-4177
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0115:
+    address_id: A0115
+    street: 115 Cobalt Steps
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-9338
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0116:
+    address_id: A0116
+    street: 169 Cobalt Steps
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-6052
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0117:
+    address_id: A0117
+    street: 82 Wickham Bank
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-9604
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0118:
+    address_id: A0118
+    street: 44 Juniper Rise
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-5426
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0119:
+    address_id: A0119
+    street: 234 Wickham Bank
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-3011
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0120:
+    address_id: A0120
+    street: 1 Pellucid Parade
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-1423
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0121:
+    address_id: A0121
+    street: 131 Juniper Rise
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-3222
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0122:
+    address_id: A0122
+    street: 7 Wickham Bank
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-8042
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0123:
+    address_id: A0123
+    street: 8 Lamplighter Row
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-3612
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0124:
+    address_id: A0124
+    street: 76 Corvid Close
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-7325
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0125:
+    address_id: A0125
+    street: 8 Marlowe Walk
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-1722
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0126:
+    address_id: A0126
+    street: 236 Solstice Terrace
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-3326
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0127:
+    address_id: A0127
+    street: 133 Verdant Crescent
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-8251
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0128:
+    address_id: A0128
+    street: 3 Corvid Close
+    city: Vellumgate
+    region: ZZ
+    postal_code: ZZ-1304
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0129:
+    address_id: A0129
+    street: 38 Marlowe Walk
+    city: Vellumgate
+    region: ZZ
+    postal_code: ZZ-6873
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0130:
+    address_id: A0130
+    street: 186 Quillon Way
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-4843
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0131:
+    address_id: A0131
+    street: 163 Corvid Close
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-1785
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0132:
+    address_id: A0132
+    street: 141 Lamplighter Row
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-7536
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0133:
+    address_id: A0133
+    street: 48 Pellucid Parade
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-5740
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0134:
+    address_id: A0134
+    street: 66 Lamplighter Row
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-9670
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0135:
+    address_id: A0135
+    street: 233 Bramble Mews
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-7276
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0136:
+    address_id: A0136
+    street: 131 Ambergris Lane
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-1221
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0137:
+    address_id: A0137
+    street: 84 Bramble Mews
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-3685
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0138:
+    address_id: A0138
+    street: 117 Marlowe Walk
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-6251
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0139:
+    address_id: A0139
+    street: 100 Juniper Rise
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-7450
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0140:
+    address_id: A0140
+    street: 100 Corvid Close
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-9722
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0141:
+    address_id: A0141
+    street: 192 Wickham Bank
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-3854
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0142:
+    address_id: A0142
+    street: 221 Verdant Crescent
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-7176
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0143:
+    address_id: A0143
+    street: 138 Lamplighter Row
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-3819
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0144:
+    address_id: A0144
+    street: 184 Corvid Close
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-2027
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0145:
+    address_id: A0145
+    street: 74 Wickham Bank
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-5708
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0146:
+    address_id: A0146
+    street: 217 Bramble Mews
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-7794
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0147:
+    address_id: A0147
+    street: 52 Pellucid Parade
+    city: Fernhollow
+    region: ZZ
+    postal_code: ZZ-1431
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0148:
+    address_id: A0148
+    street: 164 Solstice Terrace
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-4281
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0149:
+    address_id: A0149
+    street: 194 Verdant Crescent
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-1548
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0150:
+    address_id: A0150
+    street: 102 Quillon Way
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-0969
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0151:
+    address_id: A0151
+    street: 132 Wickham Bank
+    city: Selkie Point
+    region: ZZ
+    postal_code: ZZ-8160
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0152:
+    address_id: A0152
+    street: 236 Quillon Way
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-5599
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0153:
+    address_id: A0153
+    street: 29 Lamplighter Row
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-9704
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0154:
+    address_id: A0154
+    street: 92 Corvid Close
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-4126
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0155:
+    address_id: A0155
+    street: 178 Quillon Way
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-2688
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0156:
+    address_id: A0156
+    street: 148 Cobalt Steps
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-1237
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0157:
+    address_id: A0157
+    street: 207 Wickham Bank
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-4890
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0158:
+    address_id: A0158
+    street: 130 Wickham Bank
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-5726
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0159:
+    address_id: A0159
+    street: 192 Pellucid Parade
+    city: Halcyon Reach
+    region: ZZ
+    postal_code: ZZ-2524
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A0160:
+    address_id: A0160
+    street: 24 Cobalt Steps
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-1050
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A9001:
+    address_id: A9001
+    street: 40 Pellucid Parade
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-0739
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A9002:
+    address_id: A9002
+    street: 89 Bramble Mews
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-9968
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A9003:
+    address_id: A9003
+    street: 233 Lamplighter Row
+    city: Orrery Hill
+    region: ZZ
+    postal_code: ZZ-0273
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A9004:
+    address_id: A9004
+    street: 57 Solstice Terrace
+    city: Bramblemoor
+    region: ZZ
+    postal_code: ZZ-3064
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A9005:
+    address_id: A9005
+    street: 152 Verdant Crescent
+    city: Thistledown
+    region: ZZ
+    postal_code: ZZ-5840
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A9006:
+    address_id: A9006
+    street: 194 Corvid Close
+    city: Kestrelby
+    region: ZZ
+    postal_code: ZZ-7217
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A9007:
+    address_id: A9007
+    street: 197 Bramble Mews
+    city: Aldermist
+    region: ZZ
+    postal_code: ZZ-6348
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
+  A9008:
+    address_id: A9008
+    street: 132 Corvid Close
+    city: Cinderwharf
+    region: ZZ
+    postal_code: ZZ-9019
+    country_note: synthetic ISO-3166 user-assigned region ZZ; not a real jurisdiction
